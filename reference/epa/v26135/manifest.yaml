@@ -132,16 +132,34 @@ assets:
     type: sample-archive
     name: AERMOD Sample Run
     url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Sample_Run.zip
-    reported_size: 91.5 MB
-    materialized: false
-    sha256: null
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:29:33Z"
+    size_bytes: 95949615
+    sha256: 3ee2180fd0ad9c954350bbbe3ca3567ce02df91a2869cec5f6c45178bff32da0
+    http_last_modified: "Thu, 09 Jul 2026 19:45:27 GMT"
+    http_etag: '"5b8132f-65632dda9f1bd"'
+    zip_entry_count: 28
+    archive_index: archive-index/sample-run.csv
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8701338088
+    github_artifact_digest: 08232f189bbbf5e74ea07c8c401b1eb87dbc52906fd53d16848b6161fb98937c
   - id: test-cases
     type: test-archive
     name: AERMOD Test Cases
     url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_test_cases.zip
-    reported_size: 466 MB
-    materialized: false
-    sha256: null
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:24:33Z"
+    size_bytes: 488669681
+    sha256: fc5ad71de5ba64a50ed72d4d19c45b32ad14447353b1216c3d1f420ce84beff8
+    http_last_modified: "Thu, 09 Jul 2026 19:50:21 GMT"
+    http_etag: '"1d2081f1-65632ef2c5d40"'
+    zip_entry_count: 1931
+    archive_index: archive-index/test-cases.csv.gz
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8701201873
+    github_artifact_digest: 0c237c57eefcdde1d4ab05495bf8260539d1d76d75de8e9fecf712bb38e5a291
 
 fortran_compile_units_from_official_manifest:
   - modules.f
@@ -189,5 +207,5 @@ runtime_notes:
   - The local working container could not resolve gaftp.epa.gov; GitHub-hosted runners successfully downloaded the official source archive.
   - The source ZIP hash was computed by GitHub Actions and independently verified after artifact download.
   - The retained local aermod_userguide.pdf is the October 2023 guide and must not be treated as the 2026 v26135 guide.
-  - Sample-run and test-case checksums remain pending until their independent snapshot jobs complete.
+  - Source, sample-run, and test-case archives were materialized and hashed by independent GitHub Actions jobs.
   - Large official archives are indexed and referenced, not committed directly to Git.
