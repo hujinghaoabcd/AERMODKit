@@ -6,10 +6,10 @@ not a claim that the v26135 keyword specification is already complete.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from datetime import date
 from importlib.resources import files
-import json
 from typing import Final
 
 from .model_version import ModelVersion
@@ -39,7 +39,7 @@ def get_supported_versions() -> tuple[ModelVersion, ...]:
     """Return versions with bundled metadata, sorted oldest to newest."""
 
     root = files("aermodkit.spec.versions")
-    versions = []
+    versions: list[ModelVersion] = []
     for child in root.iterdir():
         if child.is_dir() and child.name.startswith("v"):
             try:
