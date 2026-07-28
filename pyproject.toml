@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aermodkit"
+version = "0.0.1.dev0"
+description = "GIS-first Python tooling for the U.S. EPA AERMOD modelling ecosystem"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "AERMODKit contributors" }]
+keywords = ["aermod", "air-quality", "dispersion", "gis", "environmental-modelling"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Atmospheric Science",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.10",
+  "pytest>=8.2",
+  "pytest-cov>=5",
+  "ruff>=0.5",
+]
+
+[project.urls]
+Repository = "https://github.com/hujinghaoabcd/AERMODKit"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+aermodkit = ["py.typed", "spec/versions/*/*.json"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --strict-config -ra"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["aermodkit"]
+mypy_path = "src"
