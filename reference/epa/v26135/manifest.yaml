@@ -1,7 +1,7 @@
 # AERMODKit official-reference manifest
 # Evidence snapshot created 2026-07-29. URLs are canonical EPA SCRAM locations.
 # Large official binaries are not committed. Source was materialized through an auditable GitHub Actions snapshot.
-manifest_version: 2
+manifest_version: 3
 model_family: AERMOD
 baseline:
   component: AERMOD
@@ -160,6 +160,33 @@ assets:
     github_actions_run_id: 30391161469
     github_artifact_id: 8701201873
     github_artifact_digest: 0c237c57eefcdde1d4ab05495bf8260539d1d76d75de8e9fecf712bb38e5a291
+
+regression_validation:
+  official_configuration: aermet26135_aermod26135
+  fixture_snapshot:
+    github_actions_run_id: 30392777428
+    github_artifact_id: 8701857473
+    github_artifact_digest: 61df675b1d85ec660e164176aee03c81d766cf5528484c3bfdcb8ebf669fb89a
+    fixture_count: 273
+    fixture_total_bytes: 72473324
+    input_decks: 53
+    meteorology_and_support_files: 18
+    expected_output_files: 189
+  reproduced_build:
+    compiler: GNU Fortran 14.2.0
+    compile_flags: -fbounds-check -Wuninitialized -O2 -static
+    link_flags: -static -O2
+    executable_sha256: e8313b430047472ccf9a6cbd49b573c8e638aafaca25805e42c0f9c7a14341a5
+  result:
+    successful_cases: 53
+    failed_cases: 0
+    canonical_exact_cases: 27
+    representation_or_tie_equivalent_cases: 10
+    minor_floating_point_drift_cases: 9
+    moderate_floating_point_drift_cases: 6
+    compiler_sensitive_investigation_cases: 1
+    flagged_case: capped
+    report: regression/REGRESSION_VALIDATION.md
 
 fortran_compile_units_from_official_manifest:
   - modules.f

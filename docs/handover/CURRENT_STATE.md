@@ -4,7 +4,7 @@
 - Branch: `agent/bootstrap-project-foundation`
 - Pull request: #1 (draft)
 - Package version: `0.0.1.dev0`
-- Development phase: Phase 0 official capability inventory
+- Development phase: Phase 0 official specification and parity baseline
 - Repository visibility: public
 
 ## What exists
@@ -13,52 +13,65 @@
 - structured diagnostics and AERMOD release identifiers;
 - a resource-backed v26135 metadata registry explicitly labelled incomplete;
 - an official v26135 asset manifest with independent component versions;
-- a broad evidence-ranked keyword/pathway inventory;
-- an official source-type inventory including 12 confirmed LOCATION types;
-- an output-control inventory and parser-priority seed;
-- a provisional/confirmed Fortran source-map seed;
-- a clean-room PyAERMOD gap-audit seed;
+- SHA256 and archive indexes for the official source, sample-run, and test-case ZIPs;
+- the complete 29-unit official Fortran build order and supplied GNU/Intel build flags;
+- 566 declaration-level Fortran program-unit records;
+- exact pathway dispatchers and a source branch map for 120 primary runstream records;
+- a broad evidence-ranked keyword/pathway inventory and 12 confirmed LOCATION source types;
+- an official test-fixture registry for 53 current input decks, 80 observed pathway/keyword combinations, and 12 source types;
+- an official regression baseline comparing a reproduced GNU build with EPA expected outputs;
+- a reproducible regression-validation tool that isolates ordinary cases and preserves the PM10 MULTYEAR dependency chain;
 - architecture, source-of-truth, clean-room, worklog, and handover records.
 
-## Verified locally
+## Official asset state
 
-- editable setuptools installation succeeds;
-- 7 pytest tests pass;
-- `src/` and `tests/` compile to bytecode;
-- generated CSV files parse successfully and contain evidence-status fields.
+- `aermod_source.zip`: 674,503 bytes; SHA256 `5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed`;
+- `AERMOD_Sample_Run.zip`: 95,949,615 bytes; SHA256 `3ee2180fd0ad9c954350bbbe3ca3567ce02df91a2869cec5f6c45178bff32da0`;
+- `aermod_test_cases.zip`: 488,669,681 bytes; SHA256 `fc5ad71de5ba64a50ed72d4d19c45b32ad14447353b1216c3d1f420ce84beff8`;
+- current test configuration: `aermet26135_aermod26135`;
+- current regression fixture snapshot: 273 files, 72,473,324 bytes;
+- large EPA ZIPs are not committed to Git; metadata, hashes, indexes, and bounded artifacts are retained.
+
+## Build and regression state
+
+The unmodified EPA source was compiled with GNU Fortran 14.2.0 using the EPA-supplied GNU flags and exact unit order:
+
+```text
+compile: -fbounds-check -Wuninitialized -O2 -static
+link:    -static -O2
+```
+
+Results:
+
+- all 29 Fortran source units compile and link;
+- the generated executable is a statically linked x86-64 ELF;
+- executable SHA256: `e8313b430047472ccf9a6cbd49b573c8e638aafaca25805e42c0f9c7a14341a5`;
+- all 53 official input decks return zero and contain `AERMOD Finishes Successfully`;
+- the PM10 1986–1990 decks are validated as an ordered MULTYEAR chain;
+- all 189 official expected output filenames are produced by at least one corresponding run;
+- main-output classifications: 27 canonical exact, 10 representation/tie equivalent, 9 minor floating-point drift, 6 moderate floating-point drift, and 1 compiler-sensitive investigation.
+
+The only materially flagged case is `capped`. It completes successfully, but the extracted result values reach a maximum relative difference of approximately 5.2613% under GNU Fortran 14.2 and the EPA GNU flags. This is an open compiler/optimization parity investigation, not a model-run failure. `capped_nostd` is canonical exact.
 
 ## CI state
 
-GitHub Actions run `30389503437` is green across the full matrix:
+The latest ordinary GitHub Actions matrix is green across:
 
-- operating systems: Ubuntu, Windows, and macOS;
-- Python versions: 3.11, 3.12, and 3.13;
-- checks: Ruff, strict mypy, and pytest with coverage.
+- Ubuntu, Windows, and macOS;
+- Python 3.11, 3.12, and 3.13;
+- Ruff, strict mypy, and pytest with coverage.
 
-The earlier zero-step failures disappeared after the repository was made public and the failed workflow was rerun. The first actionable code failures were then identified and fixed:
-
-- Ruff `UP035`: import `Mapping` from `collections.abc`;
-- mypy argument narrowing in `ModelVersion.parse()`.
-
-The exact private-repository billing or policy message was not captured, so the original platform-side cause should be described as strongly indicated rather than proven from a GitHub error message.
-
-## Reference-material state
-
-- current EPA web metadata and parsed current PDF text were inspected;
-- current v26135 binaries/source/sample/test archives are not materialized locally;
-- SHA256 values are therefore not available;
-- the retained local User Guide PDF is the October 2023 edition and is historical only;
-- AERMAP remains 24142 while AERMOD, AERMET, AERMINUTE, AERSURFACE, and AERPLOT are recorded as 26135.
+The EPA asset snapshot workflows and current-fixture snapshot workflow also complete successfully. Heavy numerical regression is not yet a permanent PR check.
 
 ## What does not exist yet
 
-- no line-level, source-verified complete keyword schema;
-- no exact argument/range/default/dependency matrix for every keyword;
+- no complete argument/type/unit/default/range/dependency/error schema for every keyword;
+- no completed official-versus-PyAERMOD capability audit;
 - no AERMOD input lexer, parser, AST, writer, or semantic project model;
-- no executable runner;
-- no output parser;
+- no production runner abstraction;
+- no production output parser;
 - no GIS code;
-- no claim of complete AERMOD support;
+- no claim of complete AERMOD support or universal compiler parity;
 - no final open-source licence decision.
 
 ## Non-negotiable constraints
@@ -66,7 +79,7 @@ The exact private-repository billing or policy message was not captured, so the 
 1. Official EPA material is authoritative.
 2. Third-party projects are comparison references only.
 3. Unsupported official content must not be silently discarded.
-4. Every material session ends with updated handover and worklog records.
-5. CI failures must be traced to concrete logs before changing behavior.
-6. Inventory evidence levels must not be promoted without official support.
-7. The cross-platform CI matrix must remain green before merging or beginning parser implementation.
+4. EPA numerical source is not modified merely to force expected-output agreement.
+5. Every material session ends with updated handover and worklog records.
+6. CI and parity failures must be traced to concrete evidence before behavior changes.
+7. Heavy regression tolerances must be documented by output family and compiler/platform.

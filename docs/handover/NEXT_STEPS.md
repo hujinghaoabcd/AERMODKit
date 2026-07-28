@@ -1,51 +1,68 @@
 # Next Steps
 
-## Immediate next task
+## Immediate next task: resolve the `capped` parity finding
 
-Turn the **v26135 capability-inventory seed** into a source-verified specification.
+The source/build/test pipeline is now operational. The next evidence task is to determine why the official `capped` expected output differs materially from the GNU Fortran 14.2 reproduction while `capped_nostd` is canonical exact.
 
-### Required deliverables
+### Required investigation
 
-1. download and hash the official `aermod_source.zip`, sample-run archive, and test-case archive;
-2. record archive contents and exact compiler/build instructions;
-3. expand every keyword row with exact syntax, argument types, units, required/optional status, repeatability, defaults, ranges, dependencies, conflicts, regulatory/development status, and error behavior;
-4. map every keyword to exact Fortran file, subroutine/symbol, and source-line range;
-5. link each capability to official sample/test fixtures and expected outputs;
-6. complete the official-versus-PyAERMOD coverage audit without copying implementation code;
-7. decide and document how generated schemas are built, validated, and bundled.
+1. obtain and hash the EPA-distributed Windows executable;
+2. run `capped` and `capped_nostd` with that executable against the same official fixtures;
+3. build with Intel oneAPI `ifx` using EPA's `/O2 /Qipo /Qprec-div` flags when an appropriate runner is available;
+4. compare GNU compiler versions and controlled optimization/precision variants without changing EPA source;
+5. isolate the first divergent output section and trace it to capped/horizontal-stack downwash routines;
+6. document whether the EPA expected output is compiler-specific and define the correct parity rule.
 
-## Implementation after source verification
+## Complete the source-verified keyword specification
+
+1. expand every keyword row with exact syntax and positional arguments;
+2. record argument types, units, required/optional status, repeatability, defaults, ranges, dependencies, conflicts, and regulatory/development status;
+3. attach exact Fortran branch and called-handler locations;
+4. map each keyword and feature to official sample/test fixtures;
+5. capture associated fatal, warning, and informational diagnostics;
+6. complete the official-versus-PyAERMOD clean-room coverage audit;
+7. decide how generated schemas are validated and bundled.
+
+## Parser implementation after acceptance
 
 Begin the loss-aware runstream layer in this order:
 
 1. token and source-location model;
 2. pathway/block splitter;
 3. blank-line, comment, include, and unknown-record preservation;
-4. immutable syntax-tree nodes that retain original spelling and spacing;
+4. immutable syntax-tree nodes retaining original spelling and spacing;
 5. format-preserving writer;
-6. golden byte/semantic round-trip tests using official sample decks;
+6. golden byte/semantic round-trip tests using official decks;
 7. semantic project mapping only after syntax preservation is reliable.
 
 ## Acceptance criteria before parser work
 
-- [ ] all official top-level keywords inventoried with current references;
-- [ ] official source archive materialized and hashed;
-- [ ] pathway dispatch and keyword handlers mapped at least to subroutine level;
-- [ ] representative official sample decks available for CO, SO, RE, ME, EV, and OU;
-- [ ] unknown/development-option preservation policy covered by tests;
-- [x] CI fixed with actionable logs and green across Ubuntu, Windows, macOS and Python 3.11–3.13.
+- [x] official source, sample, and test archives materialized and hashed;
+- [x] exact official build order and flags recorded;
+- [x] pathway dispatch and all currently inventoried primary records mapped to source branches;
+- [x] current 53-deck official fixture set indexed;
+- [x] reproduced executable completes all 53 official decks;
+- [x] expected and generated outputs kept separate during validation;
+- [ ] `capped` compiler-sensitive difference resolved or governed by an explicit parity policy;
+- [ ] every keyword has an exact argument and validation schema;
+- [ ] representative EV-pathway and unknown/development-option preservation fixtures selected;
+- [ ] clean-room third-party coverage audit completed;
+- [ ] parser preservation policy covered by tests.
 
-## CI maintenance
+## CI and regression maintenance
 
 - keep Ruff, strict mypy, and pytest green on every PR;
-- monitor the Node runtime deprecation warnings emitted by `actions/checkout@v4` and `actions/setup-python@v5`;
-- update action versions in a separate maintenance change after checking current official releases;
-- do not reduce the matrix merely to hide platform-specific failures.
+- retain asset snapshot workflows as manual/path-triggered jobs;
+- add heavy official regression as a manual, scheduled, or release-gate workflow rather than every small commit;
+- store expected tolerances by compiler, platform, case, and output family;
+- monitor Node runtime deprecation warnings for GitHub Actions dependencies;
+- do not reduce checks merely to hide platform-specific failures.
 
 ## Known decisions still pending
 
 - final licence;
 - exact project persistence format;
 - CLI framework;
-- whether generated schema artifacts live in the wheel or are built at release time;
-- policy for distributing or downloading EPA executables and official test assets.
+- generated-schema distribution policy;
+- policy for distributing/downloading EPA executables and official test assets;
+- supported compiler/platform parity tiers.

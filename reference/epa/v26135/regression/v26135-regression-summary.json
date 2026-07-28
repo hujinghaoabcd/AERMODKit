@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "compiler": "GNU Fortran 14.2.0",
+  "compile_flags": "-fbounds-check -Wuninitialized -O2 -static",
+  "link_flags": "-static -O2",
+  "official_test_configuration": "aermet26135_aermod26135",
+  "official_test_archive_sha256": "fc5ad71de5ba64a50ed72d4d19c45b32ad14447353b1216c3d1f420ce84beff8",
+  "cases": 53,
+  "successful_cases": 53,
+  "failed_cases": 0,
+  "total_elapsed_seconds": 216.885,
+  "classification_counts": {
+    "canonical-exact": 27,
+    "representation-or-tie-equivalent": 10,
+    "minor-floating-point-drift": 9,
+    "moderate-floating-point-drift": 6,
+    "compiler-sensitive-investigation": 1
+  },
+  "official_output_files": 189,
+  "official_output_names_generated": 189,
+  "text_output_files": 183,
+  "canonical_text_output_matches": 131,
+  "binary_output_files": 6,
+  "flagged_case": "capped",
+  "flagged_case_metric_max_abs": 2.2248099999997066,
+  "flagged_case_metric_max_rel": 0.05261304117984862
+}
