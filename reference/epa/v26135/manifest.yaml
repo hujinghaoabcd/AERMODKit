@@ -1,7 +1,7 @@
 # AERMODKit official-reference manifest
 # Evidence snapshot created 2026-07-29. URLs are canonical EPA SCRAM locations.
-# Binary assets were not committed or materialized in the working runtime.
-manifest_version: 1
+# Large official binaries are not committed. Source was materialized through an auditable GitHub Actions snapshot.
+manifest_version: 2
 model_family: AERMOD
 baseline:
   component: AERMOD
@@ -35,8 +35,18 @@ assets:
     name: AERMOD Source Code
     component_version: "26135"
     url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip
-    materialized: false
-    sha256: null
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:16:25Z"
+    size_bytes: 674503
+    sha256: 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed
+    http_last_modified: "Thu, 09 Jul 2026 19:44:32 GMT"
+    http_etag: '"a4ac7-65632da69ce02"'
+    zip_entry_count: 32
+    archive_index: archive-index/aermod-source.csv
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8700977820
+    github_artifact_digest: 1bcdb91ccec3572126da48dff67f3924628ff394530270094d16b8a2278201ca
   - id: aermod-executable
     type: executable
     name: AERMOD 64-bit Executable
@@ -176,6 +186,8 @@ evidence_priority:
 runtime_notes:
   - Current EPA PDF text was inspected through the web document parser.
   - PDF page screenshots failed with cache-miss errors in the current tool environment.
-  - Direct downloads from gaftp.epa.gov failed because DNS/name resolution was unavailable.
+  - The local working container could not resolve gaftp.epa.gov; GitHub-hosted runners successfully downloaded the official source archive.
+  - The source ZIP hash was computed by GitHub Actions and independently verified after artifact download.
   - The retained local aermod_userguide.pdf is the October 2023 guide and must not be treated as the 2026 v26135 guide.
-  - Checksums remain null until original assets are materialized and hashed.
+  - Sample-run and test-case checksums remain pending until their independent snapshot jobs complete.
+  - Large official archives are indexed and referenced, not committed directly to Git.

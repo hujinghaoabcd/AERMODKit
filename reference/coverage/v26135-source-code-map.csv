@@ -1,20 +1,25 @@
-pathway_or_feature,keyword_or_scope,fortran_file,subroutine_or_symbol,evidence_status,evidence,verification_needed,notes
-program,main program,aermod.f,,provisional-file-level,official compile-unit list,inspect source archive,Main model driver inferred from official filename.
-CO,control pathway parser,coset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,Do not treat file-level mapping as complete keyword mapping.
-SO,source pathway parser,soset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
-RE,receptor pathway parser,reset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
-ME,meteorology pathway parser,meset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
-OU,output pathway parser,ouset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
-EV,event pathway parser,evset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
-input summary,input summary generation,inpsum.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
-output,general output generation,output.f,,provisional-file-level,official compile-unit list and filename,map each output keyword/file,
-event,event calculations,evcalc.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
-event,event output,evoutput.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
-RLINE/RLINEXT,road-source algorithms,rline.f,,provisional-file-level,official compile-unit list and filename,"map barriers, depression, edge effects and ALPHA/BETA options",
-BUOYLINE,buoyant-line algorithms,bline.f,,provisional-file-level,official compile-unit list and filename,map BLPINPUT/BLPGROUP processing,
-GRSM,chemistry,grsm.f,,provisional-file-level,official compile-unit list and filename,map GRSM control/source/output interactions,
-CO,OZONEVAL/O3VALUES,coset.f,O3VAL,confirmed-release-note,AERMOD MCB19 explicitly names coset.f and O3VAL,locate exact branches/line numbers in source archive,Bug fix concerns field checking for annual values.
-CO,NOXVALUE/NOX_VALS,coset.f,NOXVAL,confirmed-release-note,AERMOD MCB19 explicitly names coset.f and NOXVAL,locate exact branches/line numbers in source archive,Bug fix concerns field checking for annual values.
-RLINE/RLINEXT,road concentration calculation,,POINT_CONC,confirmed-release-note,AERMOD MCB19 names POINT_CONC,identify containing file and call graph,
-aircraft,plume rise,arise.f,,confirmed-release-note,AERMOD MCB19 explicitly names arise.f,identify exact routine and changed formulas,
-aircraft,dispersion calculation,calc1.f,ADISY;f2int,confirmed-release-note,"AERMOD MCB19 explicitly names calc1.f, ADISY and f2int",identify exact code ranges and tests,
+pathway_or_feature,keyword_or_scope,fortran_file,subroutine_or_symbol,source_line_range,evidence_status,evidence,verification_needed,notes
+program,main program,aermod.f,AERMOD,1-736,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Official program entry point.
+CO,control pathway parser,coset.f,COCARD,1-1447,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Dispatches 36 inventoried CO keywords; see v26135-keyword-dispatch.csv.
+SO,source pathway parser,soset.f,SOCARD,1-1008,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Dispatches 36 inventoried SO keywords.
+RE,receptor pathway parser,reset.f,RECARD,1-207,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Dispatches seven primary RE keywords; nested grid records are handled by downstream routines.
+ME,meteorology pathway parser,meset.f,MECARD,1-307,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Dispatches 21 inventoried ME keywords.
+OU,output pathway parser,ouset.f,OUCARD,1-210,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Dispatches normal-mode OU keywords.
+EV,event pathway parser,evset.f,EVCARD,1-175,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,"Dispatches EVENTPER, EVENTLOC, and INCLUDED."
+OU event mode,event output pathway parser,evset.f,EV_OUCARD,776-848,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Handles EVENTOUT and FILEFORM when processing events.
+input summary,input summary generation,inpsum.f,INPSUM,1-84,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+output,general output orchestration,output.f,OUTPUT,599-733,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+event,event calculations,evcalc.f,EVCALC,1-160,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+event,event output,evoutput.f,EV_OUTPUT,88-125,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+RLINE/RLINEXT,road-source driver,rline.f,RLCALC,1-446,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+RLINE/RLINEXT,point integration kernel,rline.f,POINT_CONC,2185-2665,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Containing symbol for MCB19 POINT_CONC reference.
+BUOYLINE,buoyant-line calculation,bline.f,BL_CALC,1-837,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+GRSM,chemistry driver,grsm.f,GRSM_CALC,1-564,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+CO,OZONEVAL/O3VALUES,coset.f,O3VAL,5429-5570,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Source confirms MCB19 symbol and exact line range.
+CO,NOXVALUE/NOX_VALS,coset.f,NOXVAL,5571-5708,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,Source confirms MCB19 symbol and exact line range.
+aircraft,ARCFTSRC input handler,soset.f,AIRCRAFT,9701-9793,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+aircraft,initial aircraft fluxes,arise.f,AFLUXES,1-170,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+aircraft,plume rise increment,arise.f,ADELTAH,171-314,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+aircraft,plume trajectory,arise.f,PLUME_TRAJ,315-633,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+aircraft,horizontal dispersion,calc1.f,ADISY,6205-6265,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
+aircraft/deposition,MCB19 f2int function,calc1.f,F2INT,8480-8808,confirmed-source,EPA v26135 source archive SHA256 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed,,
