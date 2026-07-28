@@ -35,7 +35,7 @@ class ModelVersion:
         return 2000 + int(self.code[:2])
 
     @property
-       def julian_day(self) -> int:
+    def julian_day(self) -> int:
         """Return the Julian release day encoded by the final three digits."""
 
         return int(self.code[2:])
