@@ -164,8 +164,7 @@ def _run_case(inputs: Path, outputs: Path, input_file: Path) -> dict[str, object
     completed = subprocess.run(
         ["./aermod.exe", input_file.name, f"../Outputs/{main_output.name}"],
         cwd=inputs,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
         timeout=900,
         check=False,
     )
