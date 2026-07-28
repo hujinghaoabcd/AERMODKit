@@ -5,6 +5,7 @@
 - Pull request: #1 (draft)
 - Package version: `0.0.1.dev0`
 - Development phase: Phase 0 official capability inventory
+- Repository visibility: public
 
 ## What exists
 
@@ -28,7 +29,18 @@
 
 ## CI state
 
-The first GitHub Actions matrix run failed before useful step/log information was returned by the connector. The exact cause remains unresolved. Ruff and mypy have not yet been observed passing in GitHub Actions and were unavailable locally.
+GitHub Actions run `30389503437` is green across the full matrix:
+
+- operating systems: Ubuntu, Windows, and macOS;
+- Python versions: 3.11, 3.12, and 3.13;
+- checks: Ruff, strict mypy, and pytest with coverage.
+
+The earlier zero-step failures disappeared after the repository was made public and the failed workflow was rerun. The first actionable code failures were then identified and fixed:
+
+- Ruff `UP035`: import `Mapping` from `collections.abc`;
+- mypy argument narrowing in `ModelVersion.parse()`.
+
+The exact private-repository billing or policy message was not captured, so the original platform-side cause should be described as strongly indicated rather than proven from a GitHub error message.
 
 ## Reference-material state
 
@@ -55,5 +67,6 @@ The first GitHub Actions matrix run failed before useful step/log information wa
 2. Third-party projects are comparison references only.
 3. Unsupported official content must not be silently discarded.
 4. Every material session ends with updated handover and worklog records.
-5. Unknown CI failures must remain explicitly unknown until supported by logs.
+5. CI failures must be traced to concrete logs before changing behavior.
 6. Inventory evidence levels must not be promoted without official support.
+7. The cross-platform CI matrix must remain green before merging or beginning parser implementation.
