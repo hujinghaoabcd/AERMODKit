@@ -61,7 +61,7 @@ The latest ordinary GitHub Actions matrix is green across:
 - Python 3.11, 3.12, and 3.13;
 - Ruff, strict mypy, and pytest with coverage.
 
-The EPA asset snapshot workflows and current-fixture snapshot workflow also complete successfully. Heavy numerical regression is not yet a permanent PR check.
+The EPA asset and current-fixture snapshot workflows have completed successfully and are now manual-only (`workflow_dispatch`) to avoid redownloading large official archives on every PR synchronization. Heavy numerical regression is not yet a permanent PR check.
 
 ## What does not exist yet
 

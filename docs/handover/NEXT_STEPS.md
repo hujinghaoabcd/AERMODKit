@@ -52,7 +52,7 @@ Begin the loss-aware runstream layer in this order:
 ## CI and regression maintenance
 
 - keep Ruff, strict mypy, and pytest green on every PR;
-- retain asset snapshot workflows as manual/path-triggered jobs;
+- retain EPA asset and current-fixture snapshot workflows as manual-only jobs;
 - add heavy official regression as a manual, scheduled, or release-gate workflow rather than every small commit;
 - store expected tolerances by compiler, platform, case, and output family;
 - monitor Node runtime deprecation warnings for GitHub Actions dependencies;

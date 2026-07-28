@@ -2,10 +2,6 @@ name: EPA current test fixtures
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - .github/workflows/epa-current-test-fixtures.yml
-      - tools/snapshot_epa_current_test_fixtures.py
 
 permissions:
   contents: read

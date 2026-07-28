@@ -27,6 +27,7 @@ All notable project changes will be recorded here.
 - corrected strict-mypy narrowing in `ModelVersion.parse()`;
 - restored a fully green GitHub Actions matrix after the repository became public and actionable CI logs became available;
 - prevented official expected outputs from being overwritten during local numerical validation;
+- changed EPA archive and fixture snapshot workflows to manual-only triggers to prevent repeated large downloads on every PR update;
 - corrected PM10 1987–1990 validation by preserving the required MULTYEAR state-file chain.
 
 ### Documentation

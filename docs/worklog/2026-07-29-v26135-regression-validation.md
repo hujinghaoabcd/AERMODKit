@@ -22,7 +22,8 @@ Turn the Phase 0 inventory into an auditable source/build/test baseline using cu
 - verified that all 189 official expected output filenames were generated;
 - compared every main output using limited, documented canonicalization;
 - classified parity outcomes and flagged `capped` for compiler-sensitive investigation;
-- added a reusable validation tool and machine-readable reports.
+- added a reusable validation tool and machine-readable reports;
+- changed EPA asset and current-fixture snapshot workflows to manual-only triggers after identifying cumulative PR path matching that caused repeated large downloads.
 
 ## Important findings
 
