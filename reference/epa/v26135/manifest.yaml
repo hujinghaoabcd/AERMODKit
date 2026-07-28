@@ -1,0 +1,181 @@
+# AERMODKit official-reference manifest
+# Evidence snapshot created 2026-07-29. URLs are canonical EPA SCRAM locations.
+# Binary assets were not committed or materialized in the working runtime.
+manifest_version: 1
+model_family: AERMOD
+baseline:
+  component: AERMOD
+  version: "26135"
+  release_date: "2026-07-09"
+  publisher: U.S. EPA SCRAM
+  verification_date: "2026-07-29"
+  evidence_status: confirmed-current
+
+component_versions:
+  AERMOD: "26135"
+  AERMET: "26135"
+  AERMINUTE: "26135"
+  AERSURFACE: "26135"
+  AERPLOT: "26135"
+  AERMAP: "24142"
+
+version_notes:
+  - AERMOD and AERMET were updated in the 2026-07-09 release.
+  - AERMAP was not updated with this release and remains at regulatory version 24142.
+  - Component versions must be tracked independently; do not label the entire toolchain 26135.
+
+canonical_pages:
+  release_page: https://www.epa.gov/scram/air-quality-dispersion-modeling-preferred-and-recommended-models
+  directory: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/
+  related_programs: https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs
+
+assets:
+  - id: aermod-source
+    type: source
+    name: AERMOD Source Code
+    component_version: "26135"
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip
+    materialized: false
+    sha256: null
+  - id: aermod-executable
+    type: executable
+    name: AERMOD 64-bit Executable
+    component_version: "26135"
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip
+    materialized: false
+    sha256: null
+  - id: user-guide
+    type: manual
+    name: AERMOD User's Guide
+    document_number: EPA-454/B-26-001
+    pages: 352
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_userguide.pdf
+    materialized: false
+    sha256: null
+  - id: implementation-guide
+    type: manual
+    name: AERMOD Implementation Guide
+    document_number: EPA-454/B-26-002
+    pages: 44
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_implementation_guide.pdf
+    materialized: false
+    sha256: null
+  - id: model-formulation
+    type: manual
+    name: AERMOD Model Formulation Document
+    document_number: EPA-454/B-26-003
+    pages: 179
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_mfd.pdf
+    materialized: false
+    sha256: null
+  - id: model-evaluation
+    type: manual
+    name: AERMOD Model Evaluation Document
+    document_number: EPA-454/B-26-004
+    pages: 58
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_med.pdf
+    materialized: false
+    sha256: null
+  - id: quick-reference
+    type: manual
+    name: AERMOD Quick Reference Guide
+    pages: 27
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_quick-reference-guide.pdf
+    materialized: false
+    sha256: null
+  - id: transmittal
+    type: release-note
+    name: AERMOD Modeling System Transmittal Memorandum
+    pages: 4
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_26135_transmittal_memo.pdf
+    materialized: false
+    sha256: null
+  - id: mcb19
+    type: release-note
+    name: AERMOD Model Change Bulletin 19
+    pages: 3
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_mcb19.pdf
+    materialized: false
+    sha256: null
+  - id: errata
+    type: errata
+    name: AERMOD System Bugs, Errata, and Related Guidance
+    pages: 2
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_System_Bugs_and_Related_Guidance.pdf
+    materialized: false
+    sha256: null
+  - id: data-resources
+    type: support
+    name: AERMOD Modeling System Data Resources
+    pages: 7
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Data_Resources.pdf
+    materialized: false
+    sha256: null
+  - id: sample-run-instructions
+    type: sample-documentation
+    name: AERMOD Sample Run Instructions
+    pages: 34
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Sample_Run_Instructions.pdf
+    materialized: false
+    sha256: null
+  - id: sample-run
+    type: sample-archive
+    name: AERMOD Sample Run
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Sample_Run.zip
+    reported_size: 91.5 MB
+    materialized: false
+    sha256: null
+  - id: test-cases
+    type: test-archive
+    name: AERMOD Test Cases
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_test_cases.zip
+    reported_size: 466 MB
+    materialized: false
+    sha256: null
+
+fortran_compile_units_from_official_manifest:
+  - modules.f
+  - grsm.f
+  - aermod.f
+  - setup.f
+  - coset.f
+  - soset.f
+  - reset.f
+  - meset.f
+  - ouset.f
+  - inpsum.f
+  - metext.f
+  - iblval.f
+  - siggrid.f
+  - tempgrid.f
+  - windgrid.f
+  - calc1.f
+  - calc2.f
+  - prise.f
+  - arise.f
+  - prime.f
+  - sigmas.f
+  - pitarea.f
+  - uninam.f
+  - output.f
+  - evset.f
+  - evcalc.f
+  - evoutput.f
+  - rline.f
+  - bline.f
+
+evidence_priority:
+  - EPA v26135 source code and observed official executable behavior
+  - EPA v26135 User's Guide and Quick Reference Guide
+  - EPA v26135 release notes, MCB, transmittal, and errata
+  - EPA formulation, implementation, evaluation, sample, and test materials
+  - independently verified AERMODKit tests
+  - commercial software workflow references
+  - third-party open-source implementations
+
+runtime_notes:
+  - Current EPA PDF text was inspected through the web document parser.
+  - PDF page screenshots failed with cache-miss errors in the current tool environment.
+  - Direct downloads from gaftp.epa.gov failed because DNS/name resolution was unavailable.
+  - The retained local aermod_userguide.pdf is the October 2023 guide and must not be treated as the 2026 v26135 guide.
+  - Checksums remain null until original assets are materialized and hashed.

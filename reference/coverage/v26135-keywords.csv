@@ -1,0 +1,138 @@
+pathway,record_type,keyword,repeatability,applicability,evidence_status,source_mapping_status,notes
+CO,primary,TITLEONE,non-repeatable,all runs,confirmed-current,provisional:coset.f,first title line
+CO,primary,TITLETWO,non-repeatable,all runs,confirmed-current,provisional:coset.f,second title line
+CO,primary,MODELOPT,non-repeatable,all runs,confirmed-current,provisional:coset.f,"dispersion, terrain, chemistry, deposition, regulatory and development options; Contains DFAULT, ALPHA, BETA and other mode switches."
+CO,primary,AVERTIME,non-repeatable,concentration/deposition runs,confirmed-current,provisional:coset.f,one or more averaging periods
+CO,primary,URBANOPT,repeatable,urban sources,confirmed-current,provisional:coset.f,urban area identifier and population
+CO,primary,POLLUTID,non-repeatable,all runs,confirmed-current,provisional:coset.f,pollutant identifier
+CO,primary,HALFLIFE,non-repeatable,decay calculations,confirmed-current,provisional:coset.f,pollutant half-life; Mutually exclusive semantics with DCAYCOEF require detailed validation.
+CO,primary,DCAYCOEF,non-repeatable,decay calculations,confirmed-current,provisional:coset.f,decay coefficient
+CO,primary,GASDEPDF,non-repeatable,gas deposition,confirmed-current,provisional:coset.f,default gas deposition parameters
+CO,primary,GASDEPVD,non-repeatable,gas deposition,confirmed-current,provisional:coset.f,user-specified gas deposition velocity
+CO,primary,GDLANUSE,repeatability-to-verify,gas deposition,confirmed-current,provisional:coset.f,gas-deposition land-use categories
+CO,primary,GDSEASON,repeatability-to-verify,gas deposition,confirmed-current,provisional:coset.f,gas-deposition seasonal category
+CO,primary,LOW_WIND,non-repeatable,low-wind processing,confirmed-current,provisional:coset.f,low-wind options and thresholds
+CO,primary,AWMADWNW,non-repeatable,meteorological processing,confirmed-current,provisional:coset.f,minimum wind-direction window option
+CO,primary,ORD_DWNW,non-repeatable,meteorological processing,confirmed-current,provisional:coset.f,ordered direction-window option
+CO,primary,NO2EQUIL,non-repeatable,NO2 chemistry,confirmed-current,provisional:coset.f,NO2 equilibrium ratio settings
+CO,primary,NO2STACK,repeatability-to-verify,NO2 chemistry,confirmed-current,provisional:coset.f,in-stack NO2/NOx ratio settings
+CO,primary,ARMRATIO,non-repeatable,ARM2,confirmed-current,provisional:coset.f,ARM2 minimum and maximum ratios
+CO,primary,O3SECTOR,repeatable,OLM/PVMRM/GRSM chemistry,confirmed-current,provisional:coset.f,ozone-sector definitions
+CO,primary,OZONEFIL,non-repeatable,ozone-limited chemistry,confirmed-current,provisional:coset.f,hourly ozone file
+CO,primary,OZONEVAL,non-repeatable,ozone-limited chemistry,confirmed-current,provisional:coset.f,uniform ozone value
+CO,primary,O3VALUES,repeatable,ozone-limited chemistry,confirmed-current,provisional:coset.f,period-varying ozone values
+CO,primary,OZONUNIT,non-repeatable,ozone-limited chemistry,confirmed-current,provisional:coset.f,ozone input units
+CO,primary,NOXSECTR,repeatable,GRSM or related chemistry,confirmed-current,provisional:coset.f,ambient NOx-sector definitions
+CO,primary,NOX_FILE,non-repeatable,GRSM or related chemistry,confirmed-current,provisional:coset.f,hourly ambient NOx file
+CO,primary,NOXVALUE,non-repeatable,GRSM or related chemistry,confirmed-current,provisional:coset.f,uniform ambient NOx value
+CO,primary,NOX_VALS,repeatable,GRSM or related chemistry,confirmed-current,provisional:coset.f,period-varying ambient NOx values
+CO,primary,NOX_UNIT,non-repeatable,GRSM or related chemistry,confirmed-current,provisional:coset.f,ambient NOx input units
+CO,primary,FLAGPOLE,non-repeatable,receptors,confirmed-current,provisional:coset.f,default flagpole receptor height
+CO,primary,ARCFTOPT,non-repeatable,aircraft sources,confirmed-current,provisional:coset.f,aircraft plume-rise and dispersion options
+CO,primary,RUNORNOT,non-repeatable,all runs,confirmed-current,provisional:coset.f,run or input-check mode
+CO,primary,EVENTFIL,non-repeatable,event processing,confirmed-current,provisional:coset.f,event-processing input file
+CO,primary,SAVEFILE,non-repeatable,restart runs,confirmed-current,provisional:coset.f,restart/intermediate save file
+CO,primary,INITFILE,non-repeatable,restart runs,confirmed-current,provisional:coset.f,restart initialization file
+CO,primary,MULTYEAR,non-repeatable,multi-year runs,confirmed-current,provisional:coset.f,multiple-year processing option
+CO,primary,DEBUGOPT,repeatable,diagnostics,confirmed-current,provisional:coset.f,one debug-output selector per record; DEBUGOPT made repeatable in v26135; Repeatability changed/clarified in v26135.
+SO,primary,ELEVUNIT,non-repeatable,all source types,confirmed-current,provisional:soset.f,source elevation units
+SO,primary,LOCATION,repeatable,all source types,confirmed-current,provisional:soset.f,"source identifier, source type, coordinates and elevation; Defines the official LOCATION source-type vocabulary."
+SO,primary,SRCPARAM,repeatable,all source types,confirmed-current,provisional:soset.f,source-type-specific physical and emission parameters; Signature depends on source type.
+SO,primary,BUILDHGT,repeatable,downwash-enabled sources,confirmed-current,provisional:soset.f,direction-specific building heights
+SO,primary,BUILDLEN,repeatable,downwash-enabled sources,confirmed-current,provisional:soset.f,direction-specific building lengths
+SO,primary,BUILDWID,repeatable,downwash-enabled sources,confirmed-current,provisional:soset.f,direction-specific building widths
+SO,primary,XBADJ,repeatable,downwash-enabled sources,confirmed-current,provisional:soset.f,direction-specific along-wind building adjustment
+SO,primary,YBADJ,repeatable,downwash-enabled sources,confirmed-current,provisional:soset.f,direction-specific cross-wind building adjustment
+SO,primary,AREAVERT,repeatable,AREAPOLY,confirmed-current,provisional:soset.f,area-polygon vertices
+SO,primary,RBARRIER,repeatable,RLINE/RLINEXT,confirmed-current,provisional:soset.f,roadway barrier definition
+SO,primary,RDEPRESS,repeatable,RLINE/RLINEXT,confirmed-current,provisional:soset.f,depressed roadway geometry
+SO,primary,SBARRIER,repeatable,RLINEXT,confirmed-current,provisional:soset.f,solid or vegetative barrier definition; RLINEXT solid/vegetative barrier enhancements in v26135; ALPHA RLINEXT barrier enhancements are part of v26135.
+SO,primary,BLPINPUT,repeatable,BUOYLINE,confirmed-current,provisional:soset.f,buoyant-line group inputs; Quick reference contains legacy/group signatures; semantic disambiguation is required.
+SO,primary,URBANSRC,repeatable,eligible sources,confirmed-current,provisional:soset.f,assign sources to urban area
+SO,primary,EMISFACT,repeatable,eligible sources,confirmed-current,provisional:soset.f,emission scaling factors by period
+SO,primary,EMISUNIT,non-repeatable-or-scoped,eligible sources,confirmed-current,provisional:soset.f,emission input units; Detailed scope must be verified.
+SO,primary,RLEMCONV,repeatable-to-verify,RLINE/RLINEXT,confirmed-current,provisional:soset.f,road-line emission conversion
+SO,primary,CONCUNIT,repeatable-to-verify,all concentration runs,confirmed-current,provisional:soset.f,concentration output conversion and labels
+SO,primary,DEPOUNIT,repeatable-to-verify,deposition runs,confirmed-current,provisional:soset.f,deposition output conversion and labels
+SO,primary,PARTDIAM,repeatable,particle deposition,confirmed-current,provisional:soset.f,particle diameter categories
+SO,primary,MASSFRAX,repeatable,particle deposition,confirmed-current,provisional:soset.f,particle mass fractions
+SO,primary,PARTDENS,repeatable,particle deposition,confirmed-current,provisional:soset.f,particle densities
+SO,primary,METHOD_2,repeatable,particle deposition,confirmed-current,provisional:soset.f,alternate particle deposition method inputs
+SO,primary,GASDEPOS,repeatable,gas deposition,confirmed-current,provisional:soset.f,source-level gas deposition parameters
+SO,primary,NO2RATIO,repeatable,NO2 chemistry,confirmed-current,provisional:soset.f,source-specific in-stack NO2/NOx ratio
+SO,primary,HOUREMIS,repeatable,temporally varying emissions,confirmed-current,provisional:soset.f,hourly emission-rate file and source selection; multiple hourly files supported in v26135; v26135 supports multiple hourly emission-rate files.
+SO,primary,BGSECTOR,repeatable,background concentrations,confirmed-current,provisional:soset.f,background concentration sector definitions
+SO,primary,BACKGRND,repeatable,background concentrations,confirmed-current,provisional:soset.f,background concentration values/files
+SO,primary,BACKUNIT,non-repeatable,background concentrations,confirmed-current,provisional:soset.f,background concentration units
+SO,primary,INCLUDED,repeatable,source pathway,confirmed-current,provisional:soset.f,external source-pathway include file
+SO,primary,OLMGROUP,repeatable,OLM,confirmed-current,provisional:soset.f,source grouping for combined-plume OLM processing; Distinct from output SRCGROUP.
+SO,primary,BLPGROUP,repeatable,BUOYLINE,confirmed-current,provisional:soset.f,buoyant-line source groups
+SO,primary,PSDGROUP,repeatable,PSD credit analyses,confirmed-current,provisional:soset.f,PSD increment source groups
+SO,primary,HBPSRCID,repeatable-to-verify,special analyses,confirmed-current,provisional:soset.f,hourly background/paired source identifiers; Exact semantics require detailed guide/source verification.
+SO,primary,ARCFTSRC,repeatable,AREA/VOLUME aircraft sources,confirmed-current,provisional:soset.f,sources treated using aircraft options; Aircraft is an option over AREA/VOLUME rather than a LOCATION source type.
+SO,primary,SRCGROUP,repeatable,all source types,confirmed-current,provisional:soset.f,output source-group definitions; Controls grouped model outputs.
+RE,primary,ELEVUNIT,non-repeatable,all receptors,confirmed-current,provisional:reset.f,receptor elevation units
+RE,primary,GRIDCART,repeatable,Cartesian grids,confirmed-current,provisional:reset.f,"Cartesian receptor-grid definition block; Uses secondary records STA, XYINC or XPNTS/YPNTS, ELEV, HILL, FLAG and END."
+RE,primary,GRIDPOLR,repeatable,polar grids,confirmed-current,provisional:reset.f,"polar receptor-grid definition block; Uses secondary records STA, ORIG, DIST, DDIR/GDIR, ELEV, HILL, FLAG and END."
+RE,primary,DISCCART,repeatable,discrete receptors,confirmed-current,provisional:reset.f,discrete Cartesian receptor
+RE,primary,DISCPOLR,repeatable,discrete receptors,confirmed-current,provisional:reset.f,discrete polar receptor
+RE,primary,EVALCART,repeatable,evaluation receptors,confirmed-current,provisional:reset.f,evaluation Cartesian receptor
+RE,primary,INCLUDED,repeatable,receptor pathway,confirmed-current,provisional:reset.f,external receptor-pathway include file
+RE,secondary,GRIDCART.STA,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.XYINC,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.XPNTS,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.YPNTS,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.ELEV,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.HILL,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.FLAG,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDCART.END,block-scoped,Cartesian grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.STA,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.ORIG,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.DIST,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.DDIR,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.GDIR,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.ELEV,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.HILL,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.FLAG,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+RE,secondary,GRIDPOLR.END,block-scoped,polar grids,confirmed-current,provisional:reset.f,secondary receptor-grid record
+ME,primary,SURFFILE,non-repeatable,all standard runs,confirmed-current,provisional:meset.f,AERMET surface file
+ME,primary,PROFFILE,non-repeatable,all standard runs,confirmed-current,provisional:meset.f,AERMET profile file
+ME,primary,SURFDATA,non-repeatable,surface meteorology,confirmed-current,provisional:meset.f,surface station identifiers and year
+ME,primary,UAIRDATA,non-repeatable,profile meteorology,confirmed-current,provisional:meset.f,upper-air station identifiers and year
+ME,primary,SITEDATA,non-repeatable,onsite meteorology,confirmed-current,provisional:meset.f,onsite station identifiers
+ME,primary,PROFBASE,non-repeatable,profile meteorology,confirmed-current,provisional:meset.f,profile base elevation
+ME,primary,STARTEND,non-repeatable,date-limited runs,confirmed-current,provisional:meset.f,explicit start and end dates
+ME,primary,DAYRANGE,repeatable,date-limited runs,confirmed-current,provisional:meset.f,day ranges to process
+ME,primary,NUMYEARS,non-repeatable,multi-year runs,confirmed-current,provisional:meset.f,number of meteorological years
+ME,primary,NOSA,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,exclude stable/convective category; exact code semantics to verify
+ME,primary,NOSACO,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,meteorological exclusion option
+ME,primary,NOSAST,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,meteorological exclusion option
+ME,primary,NOSW,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,meteorological exclusion option
+ME,primary,NOSWCO,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,meteorological exclusion option
+ME,primary,NOSWST,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,meteorological exclusion option
+ME,primary,NOTURB,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,exclude turbulence option
+ME,primary,NOTURBCO,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,exclude convective turbulence option
+ME,primary,NOTURBST,repeatable-to-verify,meteorological filtering,confirmed-current,provisional:meset.f,exclude stable turbulence option
+ME,primary,SCIMBYHR,repeatable,SCIM,confirmed-current,provisional:meset.f,hour-specific SCIM settings
+ME,primary,WDROTATE,non-repeatable,all runs,confirmed-current,provisional:meset.f,wind-direction rotation
+ME,primary,WINDCATS,non-repeatable,wind-category output/processing,confirmed-current,provisional:meset.f,wind-speed category definitions
+EV,primary,EVENTPER,repeatable,event processing,confirmed-current,provisional:evset.f,event period definition
+EV,primary,EVENTLOC,repeatable,event processing,confirmed-current,provisional:evset.f,event receptor/location definition
+EV,primary,INCLUDED,repeatable,event pathway,confirmed-current,provisional:evset.f,external event-pathway include file
+OU,primary,RECTABLE,repeatable,main output,confirmed-current,provisional:ouset.f/output.f,receptor summary tables
+OU,primary,MAXTABLE,repeatable,main output,confirmed-current,provisional:ouset.f/output.f,maximum-value tables
+OU,primary,DAYTABLE,repeatable,main output,confirmed-current,provisional:ouset.f/output.f,daily-value tables
+OU,primary,MAXIFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,maximum-value/threshold sequential file; v26135 fixes duplicate records in restart processing.; v26135 fixes duplicate records in restart processing.
+OU,primary,POSTFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,sequential results for postprocessing; v26135 fixes first-hour behavior with MULTYR.; v26135 fixes first-hour behavior with MULTYR.
+OU,primary,PLOTFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,high-value summary for plotting
+OU,primary,TOXXFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,TOXX model input
+OU,primary,RANKFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,ranked-value output
+OU,primary,EVALFILE,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,evaluation receptor results
+OU,primary,SEASONHR,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,season-by-hour output
+OU,primary,MAXDAILY,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,maximum daily value output
+OU,primary,MXDYBYYR,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,maximum daily values by year
+OU,primary,MAXDCONT,repeatable,external file,confirmed-current,provisional:ouset.f/output.f,maximum design-value source contributions; v26135 adds/fixes GRSM source-group contributions.; v26135 adds/fixes GRSM source-group contributions.
+OU,primary,SUMMFILE,non-repeatable-or-repeatable-to-verify,external file,confirmed-current,provisional:ouset.f/output.f,run summary file
+OU,primary,FILEFORM,repeatable-or-global-to-verify,external files,confirmed-current,provisional:ouset.f/output.f,external output format selector
+OU,primary,NOHEADER,repeatable-or-global-to-verify,external files,confirmed-current,provisional:ouset.f/output.f,suppress selected file headers
+OU,primary,EVENTOUT,repeatable,event output,confirmed-current,provisional:ouset.f/output.f,event-processing output control

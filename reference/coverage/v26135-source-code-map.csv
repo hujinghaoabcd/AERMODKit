@@ -1,0 +1,20 @@
+pathway_or_feature,keyword_or_scope,fortran_file,subroutine_or_symbol,evidence_status,evidence,verification_needed,notes
+program,main program,aermod.f,,provisional-file-level,official compile-unit list,inspect source archive,Main model driver inferred from official filename.
+CO,control pathway parser,coset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,Do not treat file-level mapping as complete keyword mapping.
+SO,source pathway parser,soset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
+RE,receptor pathway parser,reset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
+ME,meteorology pathway parser,meset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
+OU,output pathway parser,ouset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
+EV,event pathway parser,evset.f,,provisional-file-level,official compile-unit list and naming convention,confirm dispatch and every keyword handler,
+input summary,input summary generation,inpsum.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
+output,general output generation,output.f,,provisional-file-level,official compile-unit list and filename,map each output keyword/file,
+event,event calculations,evcalc.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
+event,event output,evoutput.f,,provisional-file-level,official compile-unit list and filename,inspect source archive,
+RLINE/RLINEXT,road-source algorithms,rline.f,,provisional-file-level,official compile-unit list and filename,"map barriers, depression, edge effects and ALPHA/BETA options",
+BUOYLINE,buoyant-line algorithms,bline.f,,provisional-file-level,official compile-unit list and filename,map BLPINPUT/BLPGROUP processing,
+GRSM,chemistry,grsm.f,,provisional-file-level,official compile-unit list and filename,map GRSM control/source/output interactions,
+CO,OZONEVAL/O3VALUES,coset.f,O3VAL,confirmed-release-note,AERMOD MCB19 explicitly names coset.f and O3VAL,locate exact branches/line numbers in source archive,Bug fix concerns field checking for annual values.
+CO,NOXVALUE/NOX_VALS,coset.f,NOXVAL,confirmed-release-note,AERMOD MCB19 explicitly names coset.f and NOXVAL,locate exact branches/line numbers in source archive,Bug fix concerns field checking for annual values.
+RLINE/RLINEXT,road concentration calculation,,POINT_CONC,confirmed-release-note,AERMOD MCB19 names POINT_CONC,identify containing file and call graph,
+aircraft,plume rise,arise.f,,confirmed-release-note,AERMOD MCB19 explicitly names arise.f,identify exact routine and changed formulas,
+aircraft,dispersion calculation,calc1.f,ADISY;f2int,confirmed-release-note,"AERMOD MCB19 explicitly names calc1.f, ADISY and f2int",identify exact code ranges and tests,
