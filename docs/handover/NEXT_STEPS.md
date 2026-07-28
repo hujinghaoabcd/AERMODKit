@@ -28,12 +28,19 @@ Begin the loss-aware runstream layer in this order:
 
 ## Acceptance criteria before parser work
 
-- all official top-level keywords inventoried with current references;
-- official source archive materialized and hashed;
-- pathway dispatch and keyword handlers mapped at least to subroutine level;
-- representative official sample decks available for CO, SO, RE, ME, EV, and OU;
-- unknown/development-option preservation policy covered by tests;
-- CI failure either fixed or documented with actionable platform evidence.
+- [ ] all official top-level keywords inventoried with current references;
+- [ ] official source archive materialized and hashed;
+- [ ] pathway dispatch and keyword handlers mapped at least to subroutine level;
+- [ ] representative official sample decks available for CO, SO, RE, ME, EV, and OU;
+- [ ] unknown/development-option preservation policy covered by tests;
+- [x] CI fixed with actionable logs and green across Ubuntu, Windows, macOS and Python 3.11–3.13.
+
+## CI maintenance
+
+- keep Ruff, strict mypy, and pytest green on every PR;
+- monitor the Node runtime deprecation warnings emitted by `actions/checkout@v4` and `actions/setup-python@v5`;
+- update action versions in a separate maintenance change after checking current official releases;
+- do not reduce the matrix merely to hide platform-specific failures.
 
 ## Known decisions still pending
 
