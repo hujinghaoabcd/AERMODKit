@@ -96,6 +96,7 @@ ASSETS = (
         ),
     ),
 )
+_ASSETS_BY_ID = {asset.asset_id: asset for asset in ASSETS}
 
 
 def _download(spec: AssetSpec, destination: Path) -> tuple[dict[str, str], str]:
@@ -248,15 +249,19 @@ def _write_summary(output_dir: Path, results: list[AssetResult]) -> None:
     (output_dir / "SUMMARY.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def create_snapshot(output_dir: Path) -> None:
-    """Create the complete reference snapshot."""
+def create_snapshot(output_dir: Path, asset_ids: set[str] | None = None) -> None:
+    """Create a reference snapshot for all or selected official assets."""
+
+    selected_specs = ASSETS
+    if asset_ids is not None:
+        selected_specs = tuple(_ASSETS_BY_ID[asset_id] for asset_id in sorted(asset_ids))
 
     output_dir.mkdir(parents=True, exist_ok=True)
     downloads_dir = output_dir / "downloads"
     downloads_dir.mkdir(exist_ok=True)
     results: list[AssetResult] = []
 
-    for spec in ASSETS:
+    for spec in selected_specs:
         archive = downloads_dir / spec.filename
         headers, sha256 = _download(spec, archive)
         zip_entry_count = _write_zip_index(spec.asset_id, archive, output_dir)
@@ -298,8 +303,15 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--asset",
+        action="append",
+        choices=sorted(_ASSETS_BY_ID),
+        help="Asset identifier to process; repeat to select multiple assets.",
+    )
     args = parser.parse_args()
-    create_snapshot(args.output)
+    asset_ids = set(args.asset) if args.asset else None
+    create_snapshot(args.output, asset_ids)
 
 
 if __name__ == "__main__":
