@@ -111,7 +111,7 @@ def _download(spec: AssetSpec, destination: Path) -> tuple[dict[str, str], str]:
     for attempt in range(1, 4):
         try:
             digest = hashlib.sha256()
-            with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310
+            with urllib.request.urlopen(request, timeout=120) as response:
                 headers = {key.lower(): value for key, value in response.headers.items()}
                 with partial.open("wb") as stream:
                     while chunk := response.read(_CHUNK_SIZE):
