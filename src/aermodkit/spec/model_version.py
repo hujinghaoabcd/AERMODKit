@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 _VERSION_PATTERN = re.compile(r"^(?:v)?(?P<code>\d{5})$", re.IGNORECASE)
 
