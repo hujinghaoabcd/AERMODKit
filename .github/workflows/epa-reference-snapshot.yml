@@ -2,9 +2,7 @@ name: EPA reference snapshot
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - agent/bootstrap-project-foundation
+  pull_request:
     paths:
       - .github/workflows/epa-reference-snapshot.yml
       - tools/snapshot_epa_reference_assets.py
