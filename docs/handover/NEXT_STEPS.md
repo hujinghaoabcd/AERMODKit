@@ -1,24 +1,26 @@
 # Next Steps
 
-## Immediate: complete the recovery gate
+## Next major stage: whole-spec acceptance
 
-1. Verify the recovery PR diff and two-parent ancestry.
-2. Require the ordinary Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 CI matrix to pass.
-3. Merge the recovery PR without force-pushing `main`.
-4. Confirm the PR #2 tree remains available at `archive/pr2-parallel-prototype-20260729`.
+1. Generate one deterministic whole-spec acceptance report covering CO, SO, RE, ME, EV, ordinary OU, and event-output mode.
+2. Run the remaining targeted official-executable behavior probes for retained source/manual ambiguities.
+3. Finish the clean-room third-party capability audit without copying implementations or treating third-party APIs as authoritative.
+4. Freeze representative official and synthetic fixtures for unknown, future, development, include, continuation, nested-grid, line-ending, and malformed syntax.
+5. Record the acceptance result, uncovered ambiguities, and explicit parser-entry criteria in the worklog and handover.
 
-## Next major stage: whole-spec acceptance and loss-aware syntax
+## After whole-spec acceptance: loss-aware syntax
 
-1. Run the remaining official-executable behavior probes for retained source/manual ambiguities across all pathways.
-2. Finish the clean-room third-party capability audit without copying implementation.
-3. Generate a deterministic whole-spec acceptance report covering CO, SO, RE, ME, EV, ordinary OU, and event-output mode.
-4. Select representative fixtures for unknown, future, development, include, continuation, and nested-grid syntax.
-5. Implement the loss-aware lexer and concrete syntax tree while preserving comments, blank lines, original case, spacing, line endings, unknown records and fields, include boundaries, and nested grid blocks.
-6. Add a format-preserving writer and byte/normalized round-trip tests before introducing semantic project models.
+1. Implement tokens with exact source spans and original text.
+2. Implement a loss-aware lexer that preserves comments, blank lines, original case, whitespace, tabs, quoting, and original line endings.
+3. Implement an immutable concrete syntax tree for pathway boundaries, known records, unknown records, unknown fields, include boundaries, continuations, and nested grid blocks.
+4. Add a format-preserving writer whose default output reproduces original bytes when no edits are made.
+5. Add byte-exact and normalized round-trip tests across the frozen fixture set.
+6. Keep any canonical formatter separate from the format-preserving writer.
 
-## After syntax round-trip invariants are stable
+## Only after syntax round-trip invariants are stable
 
 - implement typed semantic project models and cross-pathway validation;
+- review the archived PR #2 prototype only for independently useful requirements or tests;
 - add runner/executable management and isolated workspaces;
 - add output parsing and provenance-aware result objects;
 - add GIS integrations only after the syntax, semantic, and execution layers are stable.
