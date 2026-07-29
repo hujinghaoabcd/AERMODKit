@@ -22,9 +22,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-      - name: Reconstruct verified ME, EV, and OU payload
+      - name: Reconstruct verified ME, EV, and OU payload and clean stage
         if: ${{ hashFiles('.me_ev_ou_stage/chunk_*.txt') != '' }}
-        run: python .me_ev_ou_stage/reconstruct.py
+        run: python .me_ev_ou_stage/reconstruct.py --clean-stage
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
       - run: ruff check .
