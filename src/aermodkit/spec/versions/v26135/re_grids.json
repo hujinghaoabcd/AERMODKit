@@ -96,13 +96,19 @@
         },
         {
           "rule": "Network records may omit the repeated NetID while a block is active; that lexical form must be preserved."
+        },
+        {
+          "rule": "Within an active block, secondary lines accept three lexical forms: keyword and NetID omitted; keyword omitted with NetID repeated; or fully explicit pathway keyword plus NetID. The original lexical form must be preserved."
+        },
+        {
+          "rule": "A different NetID inside an active block is rejected with E170 and may cause follow-on incomplete-block diagnostics."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
           "code": "170",
-          "condition": "invalid secondary keyword"
+          "condition": "secondary line names a different NetID or invalid secondary keyword inside the active block"
         },
         {
           "severity": "error",
@@ -147,7 +153,7 @@
           "inputs/Test20_Urban_cart_3cond_SNC.inp:31"
         ]
       },
-      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "evidence_status": "v26135-source-manual-fixture-and-official-executable-verified",
       "secondary_records": {
         "STA": {
           "required": true,
@@ -208,6 +214,19 @@
         "END": 10,
         "XPNTS": 1,
         "YPNTS": 1
+      },
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "re_gridcart_keyword_and_id_omitted_control",
+          "re_gridcart_keyword_omitted_id_present",
+          "re_gridcart_full_explicit_control",
+          "re_gridcart_wrong_id_in_active_block"
+        ],
+        "source_rule": "A recognized field-3 secondary keyword inherits PNETID; field 3 equal to PNETID shifts the secondary keyword to field 4."
       }
     },
     {
@@ -252,9 +271,20 @@
         },
         {
           "rule": "ELEV/HILL/FLAG arrays must match distance-by-direction dimensions."
+        },
+        {
+          "rule": "Within an active block, secondary lines accept three lexical forms: keyword and NetID omitted; keyword omitted with NetID repeated; or fully explicit pathway keyword plus NetID. The original lexical form must be preserved."
+        },
+        {
+          "rule": "A different NetID inside an active block is rejected with E170 and may cause follow-on incomplete-block diagnostics."
         }
       ],
       "diagnostics": [
+        {
+          "severity": "error",
+          "code": "170",
+          "condition": "secondary line names a different NetID or invalid secondary keyword inside the active block"
+        },
         {
           "severity": "error",
           "code": "160",
@@ -303,7 +333,7 @@
           "inputs/allsrcs.inp:141"
         ]
       },
-      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "evidence_status": "v26135-source-manual-fixture-and-official-executable-verified",
       "secondary_records": {
         "STA": {
           "required": true,
@@ -370,6 +400,19 @@
         "DIST": 19,
         "GDIR": 18,
         "END": 30
+      },
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "re_gridpolr_keyword_and_id_omitted_control",
+          "re_gridpolr_keyword_omitted_id_present",
+          "re_gridpolr_full_explicit_control",
+          "re_gridpolr_wrong_id_in_active_block"
+        ],
+        "source_rule": "A recognized field-3 secondary keyword inherits PNETID; field 3 equal to PNETID shifts the secondary keyword to field 4."
       }
     }
   ]
