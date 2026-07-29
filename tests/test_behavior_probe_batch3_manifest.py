@@ -1,8 +1,11 @@
 import json
 from pathlib import Path
 
+from tools.merge_v26135_behavior_probe_manifests import merge_manifests
+
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "reference/probes/v26135/batch3/manifest.json"
+CORRECTIONS = ROOT / "reference/probes/v26135/batch3/corrections.json"
 SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch3/source-searches.json"
 AIRCRAFT_HOURLY = ROOT / "reference/probes/v26135/batch3/aircraft_hourly.dat"
 
@@ -36,7 +39,7 @@ MAXDCONT_CASES = {
 
 
 def _manifest() -> dict[str, object]:
-    return json.loads(MANIFEST.read_text(encoding="utf-8"))
+    return merge_manifests(MANIFEST, [CORRECTIONS])
 
 
 def test_batch3_manifest_has_expected_unique_cases() -> None:
@@ -88,6 +91,16 @@ def test_aircraft_cases_use_ordered_hourly_and_aircraft_cards() -> None:
         hourly_index = replacements.index("   HOUREMIS aircraft_hourly.dat AREA")
         source_index = replacements.index("   ARCFTSRC AREA")
         assert hourly_index < source_index
+
+
+def test_aircraft_corrections_keep_official_all_group() -> None:
+    cases = {str(case["id"]): case for case in _manifest()["cases"]}
+    for identifier in AIRCRAFT_CASES:
+        contains = {
+            str(item["contains"])
+            for item in cases[identifier]["replace_line_once"]
+        }
+        assert "SRCGROUP  ALL" not in contains
 
 
 def test_aircraft_hourly_support_file_is_frozen() -> None:
