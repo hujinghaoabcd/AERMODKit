@@ -1,0 +1,195 @@
+import csv
+import hashlib
+import json
+from copy import deepcopy
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = ROOT / "reference/probes/v26135/batch3/manifest.json"
+CORRECTIONS = ROOT / "reference/probes/v26135/batch3/corrections.json"
+SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch3/source-searches.json"
+AIRCRAFT_HOURLY = ROOT / "reference/probes/v26135/batch3/aircraft_hourly.dat"
+RESULT = ROOT / "reference/probes/v26135/batch3/result.json"
+CASE_EVIDENCE = ROOT / "reference/probes/v26135/batch3/case-evidence.csv"
+
+DEPENDENCY_RECORDS = {
+    "gdseason",
+    "gasdepdf",
+    "gdlanuse",
+    "gasdepvd",
+    "low_wind",
+    "awmadwnw",
+    "ord_dwnw",
+}
+AIRCRAFT_CASES = {
+    "co_arcft_valid_control",
+    "co_arcftopt_no_payload",
+    "co_arcftopt_repeated_same",
+    "co_arcftopt_repeated_different",
+    "co_arcftopt_extra_fields",
+    "co_arcft_no_alpha",
+    "co_arcft_dfault_alpha",
+    "co_arcft_missing_arcftsrc",
+    "co_arcft_missing_houremis",
+    "co_arcftsrc_without_arcftopt",
+}
+MAXDCONT_CASES = {
+    "ou_maxdcont_secondary_rank_control",
+    "ou_maxdcont_secondary_rank_unit",
+    "ou_maxdcont_thresh_control",
+    "ou_maxdcont_thresh_unit",
+}
+
+
+def _manifest() -> dict[str, object]:
+    payload = deepcopy(json.loads(MANIFEST.read_text(encoding="utf-8")))
+    corrections = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    cases = {str(case["id"]): case for case in payload["cases"]}
+    for patch in corrections["case_patches"]:
+        case = cases[str(patch["id"])]
+        mutations = case["replace_line_once"]
+        for contains in patch.get("delete_replace_line_contains", []):
+            matches = [
+                index
+                for index, mutation in enumerate(mutations)
+                if mutation["contains"] == contains
+            ]
+            assert len(matches) == 1
+            del mutations[matches[0]]
+        for contains, replacement in patch.get(
+            "set_replace_line_replacement", {}
+        ).items():
+            matches = [
+                mutation for mutation in mutations if mutation["contains"] == contains
+            ]
+            assert len(matches) == 1
+            matches[0]["replacement"] = replacement
+    return payload
+
+
+def _expected_case_ids() -> set[str]:
+    dependency_ids = {
+        f"co_{record}_{suffix}"
+        for record in DEPENDENCY_RECORDS
+        for suffix in ("alpha_control", "no_alpha", "dfault_alpha")
+    }
+    return dependency_ids | AIRCRAFT_CASES | MAXDCONT_CASES
+
+
+def test_batch3_manifest_has_expected_unique_cases() -> None:
+    cases = _manifest()["cases"]
+    assert isinstance(cases, list)
+    identifiers = [str(case["id"]) for case in cases]
+    assert set(identifiers) == _expected_case_ids()
+    assert len(identifiers) == len(set(identifiers)) == 35
+
+
+def test_batch3_controls_and_observation_targets_are_explicit() -> None:
+    cases = _manifest()["cases"]
+    controls = {
+        str(case["id"])
+        for case in cases
+        if case["expected_outcome"] == "accepted"
+    }
+    expected_controls = {
+        f"co_{record}_alpha_control" for record in DEPENDENCY_RECORDS
+    } | {
+        "co_arcft_valid_control",
+        "ou_maxdcont_secondary_rank_control",
+        "ou_maxdcont_thresh_control",
+    }
+    assert controls == expected_controls
+    assert all(case["expected_outcome"] in {"accepted", "observe"} for case in cases)
+    assert all(str(case["question"]).endswith("?") for case in cases)
+
+
+def test_aircraft_cases_use_ordered_hourly_and_aircraft_cards() -> None:
+    cases = {str(case["id"]): case for case in _manifest()["cases"]}
+    ordered_cases = AIRCRAFT_CASES - {
+        "co_arcft_missing_arcftsrc",
+        "co_arcft_missing_houremis",
+        "co_arcftsrc_without_arcftopt",
+    }
+    for identifier in ordered_cases:
+        replacements = [
+            str(item["replacement"])
+            for item in cases[identifier]["replace_line_once"]
+        ]
+        hourly_index = replacements.index("   HOUREMIS aircraft_hourly.dat AREA")
+        source_index = replacements.index("   ARCFTSRC AREA")
+        assert hourly_index < source_index
+
+
+def test_aircraft_corrections_keep_all_group_and_other_pollutant() -> None:
+    cases = {str(case["id"]): case for case in _manifest()["cases"]}
+    for identifier in AIRCRAFT_CASES:
+        mutations = cases[identifier]["replace_line_once"]
+        contains = {str(item["contains"]) for item in mutations}
+        replacements = {str(item["replacement"]) for item in mutations}
+        assert "SRCGROUP  ALL" not in contains
+        assert "   POLLUTID  OTHER" in replacements
+
+
+def test_aircraft_hourly_support_file_is_frozen() -> None:
+    lines = AIRCRAFT_HOURLY.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 6
+    assert all(line.startswith("SO HOUREMIS 90 01 01") for line in lines)
+    assert all(" AREA " in line for line in lines)
+
+
+def test_maxdcont_filenames_are_short_fixture_paths() -> None:
+    cases = {
+        str(case["id"]): case
+        for case in _manifest()["cases"]
+        if str(case["id"]).startswith("ou_maxdcont")
+    }
+    for case in cases.values():
+        replacement = str(case["replace_line_once"][-1]["replacement"])
+        filename = next(token for token in replacement.split() if token.startswith("../Outputs/"))
+        assert len(filename) < 40
+
+
+def test_batch3_source_searches_cover_target_diagnostics() -> None:
+    payload = json.loads(SOURCE_SEARCHES.read_text(encoding="utf-8"))
+    identifiers = {str(item["id"]) for item in payload["searches"]}
+    assert identifiers == {
+        "dfault-conflict-e196",
+        "alpha-required-e198",
+        "alpha-required-e133",
+        "aircraft-dfault-e204",
+        "aircraft-arcftopt-missing-e821",
+        "aircraft-hourly-missing-e823",
+        "arcftopt-dispatch",
+        "maxdcont-handler",
+    }
+
+
+def test_batch3_reviewed_result_and_case_hashes_are_current() -> None:
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["workflow_evidence"]["run_id"] == 30461120811
+    assert result["workflow_evidence"]["artifact_id"] == 8727721661
+    assert result["totals"] == {
+        "items": 35,
+        "accepted": 16,
+        "rejected": 19,
+        "indeterminate": 0,
+        "expectations_met": 35,
+    }
+    assert hashlib.sha256(CASE_EVIDENCE.read_bytes()).hexdigest() == result[
+        "raw_evidence"
+    ]["case_evidence_sha256"]
+
+    with CASE_EVIDENCE.open(encoding="utf-8", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    assert {row["case_id"] for row in rows} == _expected_case_ids()
+    assert sum(row["outcome"] == "accepted" for row in rows) == 16
+    assert sum(row["outcome"] == "rejected" for row in rows) == 19
+    assert all(row["outcome"] != "indeterminate" for row in rows)
+
+
+def test_official_executable_hash_matches_retained_evidence() -> None:
+    assets = _manifest()["official_assets"]
+    assert assets["executable_sha256"] == (
+        "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da"
+    )
+    assert assets["fixture_artifact_id"] == 8701857473

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "searches": [
+    {"id": "dfault-conflict-e196", "pattern": "ERRHDL\\(.*'196'", "context_lines": 10},
+    {"id": "alpha-required-e198", "pattern": "ERRHDL\\(.*'198'", "context_lines": 10},
+    {"id": "alpha-required-e133", "pattern": "ERRHDL\\(.*'133'", "context_lines": 10},
+    {"id": "aircraft-dfault-e204", "pattern": "ERRHDL\\(.*'204'", "context_lines": 10},
+    {"id": "aircraft-arcftopt-missing-e821", "pattern": "ERRHDL\\(.*'821'", "context_lines": 10},
+    {"id": "aircraft-hourly-missing-e823", "pattern": "ERRHDL\\(.*'823'", "context_lines": 10},
+    {"id": "arcftopt-dispatch", "pattern": "ARCFTOPT", "context_lines": 12},
+    {"id": "maxdcont-handler", "pattern": "SUBROUTINE\\s+OUMAXD_CONT", "context_lines": 16}
+  ]
+}

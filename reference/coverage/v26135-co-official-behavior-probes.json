@@ -11,10 +11,7 @@
       "result": "Two distinct-sector OZONEFIL records completed successfully. Two different files assigned to the same sector were rejected with CO E501 from O3FILE.",
       "evidence": {
         "result_file": "reference/probes/v26135/batch1/result.json",
-        "cases": [
-          "co_ozonefil_distinct_sectors_control",
-          "co_ozonefil_same_sector_duplicate"
-        ],
+        "cases": ["co_ozonefil_distinct_sectors_control", "co_ozonefil_same_sector_duplicate"],
         "workflow_run_id": 30447131971,
         "artifact_id": 8721942233
       }
@@ -27,19 +24,37 @@
       "result": "Two distinct-sector NOX_FILE records completed successfully. Two different files assigned to the same sector were rejected with CO E501 from NOXFILE.",
       "evidence": {
         "result_file": "reference/probes/v26135/batch1/result.json",
-        "cases": [
-          "co_nox_file_distinct_sectors_control",
-          "co_nox_file_same_sector_duplicate"
-        ],
+        "cases": ["co_nox_file_distinct_sectors_control", "co_nox_file_same_sector_duplicate"],
         "workflow_run_id": 30447131971,
         "artifact_id": 8721942233
       }
     },
     {
       "id": "arcftopt_repeat_extra_fields",
-      "records": ["ARCFTOPT"],
+      "records": ["ARCFTOPT", "ARCFTSRC", "HOUREMIS"],
       "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?",
-      "status": "planned-manual-official-executable-probe"
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "A complete aircraft control, ARCFTOPT without a payload, repeated same-ID and different-ID ARCFTOPT cards, and ARCFTOPT with an extra payload field all completed. The source assigns AFTID(1) only when IFC equals 3, so a one-payload repeat is last-assignment-wins while no-payload or extra-field cards are preserved but do not assign AFTID(1). Aircraft dependencies were also retained: E198 without ALPHA, E204 with DFAULT, E821 without ARCFTOPT, E822 without ARCFTSRC, and E823 without preceding HOUREMIS.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch3/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch3/case-evidence.csv",
+        "cases": [
+          "co_arcft_valid_control",
+          "co_arcftopt_no_payload",
+          "co_arcftopt_repeated_same",
+          "co_arcftopt_repeated_different",
+          "co_arcftopt_extra_fields",
+          "co_arcft_no_alpha",
+          "co_arcft_dfault_alpha",
+          "co_arcft_missing_arcftsrc",
+          "co_arcft_missing_houremis",
+          "co_arcftsrc_without_arcftopt"
+        ],
+        "source_patterns": ["arcftopt-dispatch", "aircraft-dfault-e204", "aircraft-arcftopt-missing-e821", "aircraft-hourly-missing-e823"],
+        "workflow_run_id": 30461120811,
+        "artifact_id": 8727721661
+      },
+      "boundary": "The six-hour positive fixture uses POLLUTID OTHER to avoid an unrelated annual criteria-pollutant completeness check. Last-assignment-wins is a source-state conclusion because the official output does not expose AFTID directly."
     },
     {
       "id": "temporal_vector_incomplete",
@@ -59,10 +74,7 @@
           "co_nox_vals_sector_month_complete_control",
           "co_nox_vals_sector_month_incomplete"
         ],
-        "source_patterns": [
-          "o3values-incomplete-e261",
-          "nox-vals-incomplete-e603"
-        ],
+        "source_patterns": ["o3values-incomplete-e261", "nox-vals-incomplete-e603"],
         "workflow_run_id": 30452705724,
         "artifact_id": 8724254777
       },
@@ -70,18 +82,18 @@
     },
     {
       "id": "alpha_dependency_matrix",
-      "records": [
-        "GDSEASON",
-        "GASDEPDF",
-        "GDLANUSE",
-        "GASDEPVD",
-        "LOW_WIND",
-        "AWMADWNW",
-        "ORD_DWNW",
-        "ARCFTOPT"
-      ],
+      "records": ["GDSEASON", "GASDEPDF", "GDLANUSE", "GASDEPVD", "LOW_WIND", "AWMADWNW", "ORD_DWNW", "ARCFTOPT"],
       "question": "Confirm official executable diagnostics for no-ALPHA and DFAULT conflicts.",
-      "status": "source-verified-probe-pending"
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "All seven dedicated ALPHA controls completed. Official source gives E196 with DFAULT and E198 without ALPHA for GDSEASON, GASDEPDF, GDLANUSE, and GASDEPVD; LOW_WIND has an immediate E133 branch without ALPHA. DFAULT plus ALPHA produced target E133, E122, and E123 for LOW_WIND, AWMADWNW, and ORD_DWNW respectively. Complete aircraft sources produced E198 without ALPHA and E198/E204 under DFAULT plus ALPHA.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch3/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch3/case-evidence.csv",
+        "workflow_run_id": 30461120811,
+        "artifact_id": 8727721661,
+        "source_patterns": ["dfault-conflict-e196", "alpha-required-e198", "alpha-required-e133", "aircraft-dfault-e204"]
+      },
+      "boundary": "The no-ALPHA allsrcs decks also contain RLINEXT and their observed E198 alone is not attributed to every injected target. Target-specific no-ALPHA rules are promoted only where the exact official source branches are retained."
     }
   ]
 }

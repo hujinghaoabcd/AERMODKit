@@ -21,10 +21,21 @@ def test_v26135_probe_inventory_is_explicit() -> None:
     acceptance = evaluate_v26135_whole_spec(ROOT / "reference/coverage")
 
     assert acceptance.probes.total == 19
-    assert acceptance.probes.executed == 7
+    assert acceptance.probes.executed == 10
     assert acceptance.probes.source_resolved == 1
-    assert acceptance.probes.official_executable_pending == 11
+    assert acceptance.probes.official_executable_pending == 8
     assert len({str(item["id"]) for item in acceptance.probes.entries}) == 19
+
+    executed = {
+        str(item["id"])
+        for item in acceptance.probes.entries
+        if item["classification"] == "executed"
+    }
+    assert {
+        "alpha_dependency_matrix",
+        "arcftopt_repeat_extra_fields",
+        "OU-MAXDCONT-FORMS",
+    } <= executed
 
 
 def test_v26135_acceptance_serialization_is_stable() -> None:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge one base behavior-probe manifest with case-only fragments."""
+"""Merge one base behavior-probe manifest with case fragments and patches."""
 
 from __future__ import annotations
 
@@ -18,12 +18,67 @@ def _object(value: object, *, context: str) -> dict[str, Any]:
 
 def _cases(payload: dict[str, Any], *, context: str) -> list[dict[str, Any]]:
     raw_cases = payload.get("cases")
+    if raw_cases is None:
+        return []
     if not isinstance(raw_cases, list):
         raise ValueError(f"{context}.cases must be an array")
     result: list[dict[str, Any]] = []
     for index, item in enumerate(raw_cases):
         result.append(_object(item, context=f"{context}.cases[{index}]"))
     return result
+
+
+def _patches(payload: dict[str, Any], *, context: str) -> list[dict[str, Any]]:
+    raw_patches = payload.get("case_patches")
+    if raw_patches is None:
+        return []
+    if not isinstance(raw_patches, list):
+        raise ValueError(f"{context}.case_patches must be an array")
+    result: list[dict[str, Any]] = []
+    for index, item in enumerate(raw_patches):
+        result.append(_object(item, context=f"{context}.case_patches[{index}]"))
+    return result
+
+
+def _mutation_indexes(
+    mutations: list[object], *, contains: str, context: str
+) -> list[int]:
+    matches = [
+        index
+        for index, item in enumerate(mutations)
+        if isinstance(item, dict) and item.get("contains") == contains
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            f"{context} expected one mutation containing {contains!r}, found {len(matches)}"
+        )
+    return matches
+
+
+def _apply_patch(case: dict[str, Any], patch: dict[str, Any], *, context: str) -> None:
+    mutations = case.get("replace_line_once")
+    if not isinstance(mutations, list):
+        raise ValueError(f"case {case.get('id')!r} has no replace_line_once array")
+
+    raw_deletions = patch.get("delete_replace_line_contains", [])
+    if not isinstance(raw_deletions, list) or not all(
+        isinstance(item, str) and item for item in raw_deletions
+    ):
+        raise ValueError(f"{context}.delete_replace_line_contains must be a string array")
+    for contains in raw_deletions:
+        del mutations[_mutation_indexes(mutations, contains=contains, context=context)[0]]
+
+    raw_replacements = patch.get("set_replace_line_replacement", {})
+    replacements = _object(
+        raw_replacements,
+        context=f"{context}.set_replace_line_replacement",
+    )
+    for contains, replacement in replacements.items():
+        if not isinstance(replacement, str):
+            raise ValueError(f"{context} replacement for {contains!r} must be a string")
+        index = _mutation_indexes(mutations, contains=contains, context=context)[0]
+        mutation = _object(mutations[index], context=f"{context}.mutation")
+        mutation["replacement"] = replacement
 
 
 def merge_manifests(base_path: Path, fragment_paths: list[Path]) -> dict[str, Any]:
@@ -36,9 +91,7 @@ def merge_manifests(base_path: Path, fragment_paths: list[Path]) -> dict[str, An
     merged = deepcopy(base)
     merged_cases = list(_cases(merged, context=str(base_path)))
 
-    evidence: list[dict[str, str]] = [
-        {"role": "base", "path": base_path.as_posix()}
-    ]
+    evidence: list[dict[str, str]] = [{"role": "base", "path": base_path.as_posix()}]
     for fragment_path in fragment_paths:
         fragment = _object(
             json.loads(fragment_path.read_text(encoding="utf-8")),
@@ -46,8 +99,28 @@ def merge_manifests(base_path: Path, fragment_paths: list[Path]) -> dict[str, An
         )
         if str(fragment.get("model_version")) != str(merged.get("model_version")):
             raise ValueError(f"{fragment_path} model_version does not match base")
-        merged_cases.extend(_cases(fragment, context=str(fragment_path)))
-        evidence.append({"role": "case-fragment", "path": fragment_path.as_posix()})
+
+        appended = _cases(fragment, context=str(fragment_path))
+        patches = _patches(fragment, context=str(fragment_path))
+        if not appended and not patches:
+            raise ValueError(f"{fragment_path} contains neither cases nor case_patches")
+        merged_cases.extend(appended)
+
+        by_id = {str(case.get("id", "")): case for case in merged_cases}
+        for index, patch in enumerate(patches):
+            identifier = str(patch.get("id", ""))
+            if not identifier or identifier not in by_id:
+                raise ValueError(f"{fragment_path}.case_patches[{index}] has unknown id")
+            _apply_patch(
+                by_id[identifier],
+                patch,
+                context=f"{fragment_path}.case_patches[{index}]",
+            )
+
+        role = "case-and-patch-fragment" if appended and patches else (
+            "case-fragment" if appended else "case-patch-fragment"
+        )
+        evidence.append({"role": role, "path": fragment_path.as_posix()})
 
     identifiers = [str(case.get("id", "")) for case in merged_cases]
     if any(not identifier for identifier in identifiers):
