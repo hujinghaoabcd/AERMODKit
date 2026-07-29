@@ -6,21 +6,21 @@
   "records": [
     {
       "keyword": "BUILDHGT",
-      "record_role": "building-height-by-direction",
+      "record_role": "building-height-downwash-array",
       "required": false,
       "repeatability": "repeatable",
       "syntax": [
-        "[SO] BUILDHGT <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+        "[SO] BUILDHGT <SrcID> <building_height_1> ... <building_height_36>"
       ],
       "fields": [
         {
-          "name": "source_selector",
-          "type": "source ID or range"
+          "name": "SrcID",
+          "type": "existing point-family source ID"
         },
         {
-          "name": "directional_values",
-          "type": "real list",
-          "total_items_per_source": 36,
+          "name": "building_heights",
+          "type": "real array",
+          "exact_items": 36,
           "units": "m"
         }
       ],
@@ -29,75 +29,71 @@
           "POINT",
           "POINTCAP",
           "POINTHOR"
-        ],
-        "requires_modeopt": "DFAULT or downwash-enabled mode"
+        ]
       },
       "constraints": [
         {
-          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
-        },
-        {
-          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+          "rule": "One complete 36-direction BUILDHGT array per source."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
-          "code": "234",
-          "condition": "more than 36 sectors"
+          "code": "206",
+          "condition": "source ID not found or not point-family"
         },
         {
-          "severity": "warning",
-          "code": "233",
-          "condition": "applied to non-point source"
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong number of building heights"
         }
       ],
       "source": {
         "authority": "U.S. EPA AERMOD v26135 source",
         "file": "soset.f",
         "dispatcher": "SOCARD",
-        "dispatcher_lines": "144-179",
-        "handler": "DSBLDG",
+        "dispatcher_lines": "163-179",
+        "handler": "BLDGARR",
         "handler_file": "soset.f",
-        "handler_lines": "4116-4201"
+        "handler_lines": "3191-3420"
       },
       "manual_evidence": {
         "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
         "authority": "U.S. EPA SCRAM",
         "section": "3.3 / Appendix A-3/A-4",
         "notes": [
-          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+          "One value per 10-degree flow sector."
         ]
       },
       "fixtures": {
-        "occurrences": 77,
-        "files": 19,
+        "occurrences": 31,
+        "files": 5,
         "examples": [
-          "inputs/aertest.inp:25",
-          "inputs/allsrcs.inp:46",
-          "inputs/capped.inp:27",
-          "inputs/capped.inp:59"
+          "inputs/allsrcs.inp:76",
+          "inputs/allsrcs.inp:77",
+          "inputs/allsrcs.inp:78",
+          "inputs/allsrcs.inp:79"
         ]
       },
       "evidence_status": "v26135-source-manual-and-fixture-verified"
     },
     {
       "keyword": "BUILDWID",
-      "record_role": "building-width-by-direction",
+      "record_role": "building-width-downwash-array",
       "required": false,
       "repeatability": "repeatable",
       "syntax": [
-        "[SO] BUILDWID <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+        "[SO] BUILDWID <SrcID> <building_width_1> ... <building_width_36>"
       ],
       "fields": [
         {
-          "name": "source_selector",
-          "type": "source ID or range"
+          "name": "SrcID",
+          "type": "existing point-family source ID"
         },
         {
-          "name": "directional_values",
-          "type": "real list",
-          "total_items_per_source": 36,
+          "name": "building_widths",
+          "type": "real array",
+          "exact_items": 36,
           "units": "m"
         }
       ],
@@ -106,75 +102,71 @@
           "POINT",
           "POINTCAP",
           "POINTHOR"
-        ],
-        "requires_modeopt": "DFAULT or downwash-enabled mode"
+        ]
       },
       "constraints": [
         {
-          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
-        },
-        {
-          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+          "rule": "One complete 36-direction BUILDWID array per source."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
-          "code": "234",
-          "condition": "more than 36 sectors"
+          "code": "206",
+          "condition": "source ID not found or not point-family"
         },
         {
-          "severity": "warning",
-          "code": "233",
-          "condition": "applied to non-point source"
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong number of building widths"
         }
       ],
       "source": {
         "authority": "U.S. EPA AERMOD v26135 source",
         "file": "soset.f",
         "dispatcher": "SOCARD",
-        "dispatcher_lines": "144-179",
-        "handler": "DSBLDG",
+        "dispatcher_lines": "202-218",
+        "handler": "BLDGARR",
         "handler_file": "soset.f",
-        "handler_lines": "4116-4201"
+        "handler_lines": "3191-3420"
       },
       "manual_evidence": {
         "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
         "authority": "U.S. EPA SCRAM",
         "section": "3.3 / Appendix A-3/A-4",
         "notes": [
-          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+          "One value per 10-degree flow sector."
         ]
       },
       "fixtures": {
-        "occurrences": 162,
-        "files": 19,
+        "occurrences": 31,
+        "files": 5,
         "examples": [
-          "inputs/aertest.inp:26",
-          "inputs/aertest.inp:27",
-          "inputs/aertest.inp:28",
-          "inputs/aertest.inp:29"
+          "inputs/allsrcs.inp:81",
+          "inputs/allsrcs.inp:82",
+          "inputs/allsrcs.inp:83",
+          "inputs/allsrcs.inp:84"
         ]
       },
       "evidence_status": "v26135-source-manual-and-fixture-verified"
     },
     {
       "keyword": "BUILDLEN",
-      "record_role": "building-length-by-direction",
+      "record_role": "building-length-downwash-array",
       "required": false,
       "repeatability": "repeatable",
       "syntax": [
-        "[SO] BUILDLEN <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+        "[SO] BUILDLEN <SrcID> <building_length_1> ... <building_length_36>"
       ],
       "fields": [
         {
-          "name": "source_selector",
-          "type": "source ID or range"
+          "name": "SrcID",
+          "type": "existing point-family source ID"
         },
         {
-          "name": "directional_values",
-          "type": "real list",
-          "total_items_per_source": 36,
+          "name": "building_lengths",
+          "type": "real array",
+          "exact_items": 36,
           "units": "m"
         }
       ],
@@ -183,75 +175,71 @@
           "POINT",
           "POINTCAP",
           "POINTHOR"
-        ],
-        "requires_modeopt": "DFAULT or downwash-enabled mode"
+        ]
       },
       "constraints": [
         {
-          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
-        },
-        {
-          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+          "rule": "One complete 36-direction BUILDLEN array per source."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
-          "code": "234",
-          "condition": "more than 36 sectors"
+          "code": "206",
+          "condition": "source ID not found or not point-family"
         },
         {
-          "severity": "warning",
-          "code": "233",
-          "condition": "applied to non-point source"
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong number of building lengths"
         }
       ],
       "source": {
         "authority": "U.S. EPA AERMOD v26135 source",
         "file": "soset.f",
         "dispatcher": "SOCARD",
-        "dispatcher_lines": "144-179",
-        "handler": "DSBLDG",
+        "dispatcher_lines": "219-235",
+        "handler": "BLDGARR",
         "handler_file": "soset.f",
-        "handler_lines": "4116-4201"
+        "handler_lines": "3191-3420"
       },
       "manual_evidence": {
         "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
         "authority": "U.S. EPA SCRAM",
         "section": "3.3 / Appendix A-3/A-4",
         "notes": [
-          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+          "One value per 10-degree flow sector."
         ]
       },
       "fixtures": {
-        "occurrences": 162,
-        "files": 19,
+        "occurrences": 31,
+        "files": 5,
         "examples": [
-          "inputs/aertest.inp:32",
-          "inputs/aertest.inp:33",
-          "inputs/aertest.inp:34",
-          "inputs/aertest.inp:35"
+          "inputs/allsrcs.inp:86",
+          "inputs/allsrcs.inp:87",
+          "inputs/allsrcs.inp:88",
+          "inputs/allsrcs.inp:89"
         ]
       },
       "evidence_status": "v26135-source-manual-and-fixture-verified"
     },
     {
       "keyword": "XBADJ",
-      "record_role": "building-x-adjustment-by-direction",
+      "record_role": "building-x-adjustment-array",
       "required": false,
       "repeatability": "repeatable",
       "syntax": [
-        "[SO] XBADJ <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+        "[SO] XBADJ <SrcID> <x_adjustment_1> ... <x_adjustment_36>"
       ],
       "fields": [
         {
-          "name": "source_selector",
-          "type": "source ID or range"
+          "name": "SrcID",
+          "type": "existing point-family source ID"
         },
         {
-          "name": "directional_values",
-          "type": "real list",
-          "total_items_per_source": 36,
+          "name": "x_adjustments",
+          "type": "real array",
+          "exact_items": 36,
           "units": "m"
         }
       ],
@@ -260,75 +248,71 @@
           "POINT",
           "POINTCAP",
           "POINTHOR"
-        ],
-        "requires_modeopt": "DFAULT or downwash-enabled mode"
+        ]
       },
       "constraints": [
         {
-          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
-        },
-        {
-          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+          "rule": "One complete 36-direction XBADJ array per source."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
-          "code": "234",
-          "condition": "more than 36 sectors"
+          "code": "206",
+          "condition": "source ID not found or not point-family"
         },
         {
-          "severity": "warning",
-          "code": "233",
-          "condition": "applied to non-point source"
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong number of x adjustments"
         }
       ],
       "source": {
         "authority": "U.S. EPA AERMOD v26135 source",
         "file": "soset.f",
         "dispatcher": "SOCARD",
-        "dispatcher_lines": "144-179",
-        "handler": "DSBLDG",
+        "dispatcher_lines": "236-252",
+        "handler": "BLDGARR",
         "handler_file": "soset.f",
-        "handler_lines": "4116-4201"
+        "handler_lines": "3191-3420"
       },
       "manual_evidence": {
         "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
         "authority": "U.S. EPA SCRAM",
         "section": "3.3 / Appendix A-3/A-4",
         "notes": [
-          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+          "One value per 10-degree flow sector."
         ]
       },
       "fixtures": {
-        "occurrences": 162,
-        "files": 19,
+        "occurrences": 31,
+        "files": 5,
         "examples": [
-          "inputs/aertest.inp:38",
-          "inputs/aertest.inp:39",
-          "inputs/aertest.inp:40",
-          "inputs/aertest.inp:41"
+          "inputs/allsrcs.inp:91",
+          "inputs/allsrcs.inp:92",
+          "inputs/allsrcs.inp:93",
+          "inputs/allsrcs.inp:94"
         ]
       },
       "evidence_status": "v26135-source-manual-and-fixture-verified"
     },
     {
       "keyword": "YBADJ",
-      "record_role": "building-y-adjustment-by-direction",
+      "record_role": "building-y-adjustment-array",
       "required": false,
       "repeatability": "repeatable",
       "syntax": [
-        "[SO] YBADJ <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+        "[SO] YBADJ <SrcID> <y_adjustment_1> ... <y_adjustment_36>"
       ],
       "fields": [
         {
-          "name": "source_selector",
-          "type": "source ID or range"
+          "name": "SrcID",
+          "type": "existing point-family source ID"
         },
         {
-          "name": "directional_values",
-          "type": "real list",
-          "total_items_per_source": 36,
+          "name": "y_adjustments",
+          "type": "real array",
+          "exact_items": 36,
           "units": "m"
         }
       ],
@@ -337,54 +321,50 @@
           "POINT",
           "POINTCAP",
           "POINTHOR"
-        ],
-        "requires_modeopt": "DFAULT or downwash-enabled mode"
+        ]
       },
       "constraints": [
         {
-          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
-        },
-        {
-          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+          "rule": "One complete 36-direction YBADJ array per source."
         }
       ],
       "diagnostics": [
         {
           "severity": "error",
-          "code": "234",
-          "condition": "more than 36 sectors"
+          "code": "206",
+          "condition": "source ID not found or not point-family"
         },
         {
-          "severity": "warning",
-          "code": "233",
-          "condition": "applied to non-point source"
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong number of y adjustments"
         }
       ],
       "source": {
         "authority": "U.S. EPA AERMOD v26135 source",
         "file": "soset.f",
         "dispatcher": "SOCARD",
-        "dispatcher_lines": "144-179",
-        "handler": "DSBLDG",
+        "dispatcher_lines": "253-269",
+        "handler": "BLDGARR",
         "handler_file": "soset.f",
-        "handler_lines": "4116-4201"
+        "handler_lines": "3191-3420"
       },
       "manual_evidence": {
         "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
         "authority": "U.S. EPA SCRAM",
         "section": "3.3 / Appendix A-3/A-4",
         "notes": [
-          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+          "One value per 10-degree flow sector."
         ]
       },
       "fixtures": {
-        "occurrences": 162,
-        "files": 19,
+        "occurrences": 31,
+        "files": 5,
         "examples": [
-          "inputs/aertest.inp:44",
-          "inputs/aertest.inp:45",
-          "inputs/aertest.inp:46",
-          "inputs/aertest.inp:47"
+          "inputs/allsrcs.inp:96",
+          "inputs/allsrcs.inp:97",
+          "inputs/allsrcs.inp:98",
+          "inputs/allsrcs.inp:99"
         ]
       },
       "evidence_status": "v26135-source-manual-and-fixture-verified"
@@ -429,6 +409,15 @@
       "constraints": [
         {
           "rule": "One PLATFORM record per source; non-point source types are rejected."
+        },
+        {
+          "rule": "The record must be processed before source-group cards; the source-definition ordering rule remains active."
+        },
+        {
+          "rule": "The official v26135 handler accepts additional numeric payload fields, converts them, and assigns only the first three PLATFORM values. Extra numeric fields are preservation-only and must not become semantic parameters."
+        },
+        {
+          "rule": "PLATFORM and PRIME building parameters cannot be applied to the same source."
         }
       ],
       "diagnostics": [
@@ -439,6 +428,11 @@
         },
         {
           "severity": "error",
+          "code": "208",
+          "condition": "a required or trailing PLATFORM payload field is nonnumeric"
+        },
+        {
+          "severity": "error",
           "code": "631",
           "condition": "non-point source"
         },
@@ -446,6 +440,11 @@
           "severity": "error",
           "code": "632",
           "condition": "duplicate source PLATFORM"
+        },
+        {
+          "severity": "error",
+          "code": "633",
+          "condition": "PLATFORM and PRIME building inputs target the same source"
         }
       ],
       "source": {
@@ -470,7 +469,23 @@
         "files": 0,
         "examples": []
       },
-      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+      "evidence_status": "v26135-source-manual-and-official-executable-verified",
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "so_platform_valid_control",
+          "so_platform_one_extra_numeric",
+          "so_platform_two_extra_numeric",
+          "so_platform_one_extra_text",
+          "so_platform_duplicate_same_source",
+          "so_platform_nonpoint_area",
+          "so_platform_prime_conflict"
+        ],
+        "boundary": "Executable evidence covers up to two trailing numeric fields. They are accepted but semantically ignored; the syntax layer must preserve them verbatim."
+      }
     }
   ]
 }
