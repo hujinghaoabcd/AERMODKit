@@ -20,105 +20,27 @@
     "source_archive_size": 674503,
     "source_archive_sha256": "5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed"
   },
-  "source_evidence": [
-    {
-      "file": "coset.f",
-      "sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a",
-      "ranges": [[559, 680], [6444, 7031]],
-      "snippet_sha256": "a1c833354fcb9a9d435cbe7d4d6fc73221492521450e6cee640001bf963d4369"
+  "source_evidence": {
+    "source_pattern_file": "source-pattern-evidence.json",
+    "source_pattern_sha256": "2cb334736d9acba9bd1c4fbd5cc9503cd9dd38c63e4433195e4ed9c31b4a55de",
+    "source_files": {
+      "coset.f": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a",
+      "soset.f": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5",
+      "rline.f": "b23aaf75abda92d210df76d3f274f9fd7f8aa9272b23ec6d477a0bbfc9f52494",
+      "evset.f": "cdc8dd1642215ada3377d5a23f8a54b2e38ab6e2a6e3652d2be78282893e54bd",
+      "ouset.f": "373d4689869e88cee62963889517ef0a895473087c56ebe28c5b2d339b38f4a1"
     },
-    {
-      "file": "soset.f",
-      "sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5",
-      "ranges": [[8529, 8731]],
-      "snippet_sha256": "db394ed76fbcf118ebba1923a5e322ab8bba1eacf75ffcd0afc39243ac54cbad"
-    },
-    {
-      "file": "evset.f",
-      "sha256": "cdc8dd1642215ada3377d5a23f8a54b2e38ab6e2a6e3652d2be78282893e54bd",
-      "ranges": [[776, 900]],
-      "snippet_sha256": "1fb4bf0a56d9b36b851af46274f4ba2f32ea29d2c5adcc50eea4b67e48f7f774"
-    },
-    {
-      "file": "ouset.f",
-      "sha256": "373d4689869e88cee62963889517ef0a895473087c56ebe28c5b2d339b38f4a1",
-      "ranges": [[114, 122], [3206, 3295]],
-      "snippet_sha256": "48417ca84f5e85c0dfca390383c33a5f531d4f56007e23e8a0d1edd41fa278ea"
+    "diagnostic_patterns": {
+      "E261": ["coset.f:1023", "coset.f:1046", "coset.f:1052", "coset.f:1067", "coset.f:1082"],
+      "E603": ["coset.f:1106", "coset.f:1128", "coset.f:1134", "coset.f:1149", "coset.f:1163"],
+      "E371": ["soset.f:8594", "soset.f:8649"],
+      "E372": ["soset.f:8605", "soset.f:8660"],
+      "E373": ["soset.f:8623", "soset.f:8678"],
+      "E374": ["soset.f:8634", "soset.f:8689"],
+      "W375": ["soset.f:8711", "soset.f:8720"],
+      "W620": ["rline.f:588", "rline.f:769"],
+      "W595": ["ouset.f:3258"]
     }
-  ],
-  "source_pattern_evidence": {
-    "path": "source-pattern-evidence.json",
-    "sha256": "b4d5bc9af3c0f5d6e7fc2436647b71369f796711a1eb6c18537162b080e3c4cd",
-    "searches": [
-      {
-        "id": "o3values-incomplete-e261",
-        "matches": [
-          {"file": "aermod_source_v26135/coset.f", "line": 1023, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1046, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1052, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1067, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1082, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"}
-        ]
-      },
-      {
-        "id": "nox-vals-incomplete-e603",
-        "matches": [
-          {"file": "aermod_source_v26135/coset.f", "line": 1106, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1128, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1134, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1149, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"},
-          {"file": "aermod_source_v26135/coset.f", "line": 1163, "source_sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a"}
-        ]
-      },
-      {
-        "id": "vbarrier-range-e371",
-        "matches": [
-          {"file": "aermod_source_v26135/soset.f", "line": 8594, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"},
-          {"file": "aermod_source_v26135/soset.f", "line": 8649, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"}
-        ]
-      },
-      {
-        "id": "vbarrier-range-e372",
-        "matches": [
-          {"file": "aermod_source_v26135/soset.f", "line": 8605, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"},
-          {"file": "aermod_source_v26135/soset.f", "line": 8660, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"}
-        ]
-      },
-      {
-        "id": "vbarrier-range-e373",
-        "matches": [
-          {"file": "aermod_source_v26135/soset.f", "line": 8623, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"},
-          {"file": "aermod_source_v26135/soset.f", "line": 8678, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"}
-        ]
-      },
-      {
-        "id": "vbarrier-range-e374",
-        "matches": [
-          {"file": "aermod_source_v26135/soset.f", "line": 8634, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"},
-          {"file": "aermod_source_v26135/soset.f", "line": 8689, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"}
-        ]
-      },
-      {
-        "id": "vbarrier-nearest-w375",
-        "matches": [
-          {"file": "aermod_source_v26135/soset.f", "line": 8711, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"},
-          {"file": "aermod_source_v26135/soset.f", "line": 8720, "source_sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"}
-        ]
-      },
-      {
-        "id": "vbarrier-runtime-w620",
-        "matches": [
-          {"file": "aermod_source_v26135/rline.f", "line": 588, "source_sha256": "b23aaf75abda92d210df76d3f274f9fd7f8aa9272b23ec6d477a0bbfc9f52494"},
-          {"file": "aermod_source_v26135/rline.f", "line": 769, "source_sha256": "b23aaf75abda92d210df76d3f274f9fd7f8aa9272b23ec6d477a0bbfc9f52494"}
-        ]
-      },
-      {
-        "id": "fileform-reset-w595",
-        "matches": [
-          {"file": "aermod_source_v26135/ouset.f", "line": 3258, "source_sha256": "373d4689869e88cee62963889517ef0a895473087c56ebe28c5b2d339b38f4a1"}
-        ]
-      }
-    ]
   },
   "totals": {
     "preparations": {
@@ -140,275 +62,72 @@
     {
       "id": "event_input_seed",
       "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W403": 1},
-      "deck_sha256": "1d9a774e2df76a3200d8444f684fa897bde9c1a2d10ce657bd56e045d1909d78",
-      "output_sha256": "af8a12d379df89833c5ead9fbff2609ea7de5b44438d167373af039128d03eae",
       "generated_event_input_sha256": "ac66da3b1ea79ea33ce2213cc426615d06e588a41af68c763b08a8d58d63eb71"
     }
   ],
   "cases": [
-    {
-      "id": "co_o3values_month_complete_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"I440": 671, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "aa5bbce0a5c45fbf75dcbb44d36a0c1a02e9751572555c1306674b1ea1be3781",
-      "output_sha256": "6f44b6fc44361a1ee10078e5b2bead968c0b91acb6b50f486c239e32fd54e5fc"
-    },
-    {
-      "id": "co_o3values_month_incomplete",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E261": 1, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "98be4e2df62de55daed07441d9fffd873c9c22b83921dadfc6125b108fa92a30",
-      "output_sha256": "385b477e00d534c7327e7f5f81a3d6cabfb665765c53ab6c42568c67fba1da3e",
-      "fatal_diagnostic": {"code": "E261", "module": "COCARD", "message": "Not Enough O3VALUES Ozone Concentrations Specified NumVals=  11"}
-    },
-    {
-      "id": "co_nox_vals_month_complete_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"I440": 671, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "fcdf78e17bc1a8c7615abfd1efaf37c75539e73cd1234fef1f24cf7ce339c84e",
-      "output_sha256": "69fc06a298053d2c21360a5d3e209dd598fa65da50af70c9f565c5d94adaef40"
-    },
-    {
-      "id": "co_nox_vals_month_incomplete",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E603": 1, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "74a09816717c3d3385a40228d218aa535a0d72140ec9ab5641481ae4f5224a0d",
-      "output_sha256": "79ee45137ed7f0a0d21c1585945eda4190ba491fddafcae46e2aa180a814e1ed",
-      "fatal_diagnostic": {"code": "E603", "module": "COCARD", "message": "Not Enough NOx Concentrations Specified NumVals  11"}
-    },
-    {
-      "id": "so_vbarrier_all_min_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "680135ff50d10812536dbc28b4691c6a2fdf7f0b459c3a17b22af7555ef95332",
-      "output_sha256": "6f2d34a3f7f04b4dc0b1275989079422ae7f04906a0b54a6372733b16e68fb86"
-    },
-    {
-      "id": "so_vbarrier_all_max_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "e3b279421e6548312533ac200cf236666036a09004721ac329cdf2d400840d2c",
-      "output_sha256": "c74aa27458de94bcc163e88ce4b9164c7942f528f1495619c78ffaeec998f7bc"
-    },
-    {
-      "id": "so_vbarrier_ht_below_min",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E371": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "6b8f0511d6beecb2526e1da4536cc037e9f2a93e28ef3543fc0e7c3f262d334f",
-      "output_sha256": "b20a540e8002a0622b6144336c6dc1a18c7a0d53b799a9941b5352bf99c4aa03",
-      "fatal_diagnostic": {"code": "E371", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER Height: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_ht_above_max",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E371": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "61b7b2f0690260b1eb13abb895418f5e723494673dd32b58f5caa328f18f6cb2",
-      "output_sha256": "1f88f50d7298838efde8137ed6d3cd5f4c9f99958807085a55a3636bf2578ce1",
-      "fatal_diagnostic": {"code": "E371", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER Height: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_wt_below_min",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E372": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "3d93b97915be7be13184c47c76784e963937025bc2f6f03fdc0cde954fb7dd51",
-      "output_sha256": "c2c3eab0f960b4392312547c8b88f079b66b2fd64a3457168046de1fa32ef305",
-      "fatal_diagnostic": {"code": "E372", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER Width: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_wt_above_max",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E372": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "1a55dc13af575ea5b177dd1db7f218e1818fac1afed876d11a763e2478ea4507",
-      "output_sha256": "df980f1684134a8108cf9f5200ab849291a18a0e58def870f9ba0b7493df672c",
-      "fatal_diagnostic": {"code": "E372", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER Width: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_lai_below_min",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E373": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "ae7dc700586d7b6fc9b201f4abbda6b1c98105ddaf1b6487d5cb13967f182062",
-      "output_sha256": "f174583e976ba8ad6c29eff3d7275cbfd6c927911a01385e3a8de7d0cce88fec",
-      "fatal_diagnostic": {"code": "E373", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER LAI: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_lai_above_max",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E373": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "429e31e696bb09069031a8f4321cc48a076f2a72d5eb8b9be4826bf4546fa64d",
-      "output_sha256": "7a9cf34bb1eef7887638d3e3843a641a50d5f019756ec8b95d89ff7213f4cbf",
-      "fatal_diagnostic": {"code": "E373", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER LAI: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_lm_below_min",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E374": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "5a49b1a1dc7924def72f92b2e9b2432f872afec5c5a546f18f5cb090799b1a77",
-      "output_sha256": "2eff1ccfd375d0a944836cdcbeb7ae118790185b824ac809b3d3f12542a0fc09",
-      "fatal_diagnostic": {"code": "E374", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER LAD: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_lm_above_max",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E374": 1, "W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "de6a874aa19f45bb670a30992ff315453fe0d57259d89c0e90c3e5f8f0572474",
-      "output_sha256": "22a55aef788c879423f0c5b93b8249f8c3ec691e5cf067f631e483dd2bf9331b",
-      "fatal_diagnostic": {"code": "E374", "module": "VEGBAR", "message": "Invalid Value Entered for VBARRIER LAD: VBARRIER"}
-    },
-    {
-      "id": "so_vbarrier_same_side_first_closer",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W375": 1, "W403": 1},
-      "deck_sha256": "7793a2ef3491397145a525105e23df7aacaae7e82e65373581ef0205573dd318",
-      "output_sha256": "a374e7c08edfab3bc66d7a005c90b16bb3d4416d464ab4b00b7c4def324339d0",
-      "target_diagnostics": [{"code": "W375", "module": "VEGBAR", "message": "Two VBARRIERs on Same Side; Using Closer Barrier: VBARRIER 1"}],
-      "debug_sha256": "25fd8f5af02d0abe5db251ece47b28b727a810fae99b2a7531f62461e8d56460"
-    },
-    {
-      "id": "so_vbarrier_same_side_second_closer",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W375": 1, "W403": 1},
-      "deck_sha256": "e880af3c579ef3e391f979b264c62c6068923ce34b6a9f8f076697dbe9abdf7e",
-      "output_sha256": "352018b4829646bce81d8c42763a4dc5370672420fb0736f4527d340fb76dfcc",
-      "target_diagnostics": [{"code": "W375", "module": "VEGBAR", "message": "Two VBARRIERs on Same Side; Using Closer Barrier: VBARRIER 2"}],
-      "debug_sha256": "ba62c1089a56c982e055af23cb3a44d944b9bbff0183d45daf62225c59b63faf"
-    },
-    {
-      "id": "ou_event_fileform_exp_nondfault_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W403": 1},
-      "deck_sha256": "ea73ee1fff2d0852313ce2d2604255efa4db8570e61faaa6f0ce658997a26bb7",
-      "output_sha256": "e46fe17d8ade676d514c2b79b686d806352a9c8f8a7f11f2d700a6b538e43598"
-    },
-    {
-      "id": "ou_event_fileform_exp_dfault_other_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W206": 1, "W403": 1},
-      "deck_sha256": "c981e1a432aa448985aa8bb800534226a996b2dba56510fb20decd515e36228e",
-      "output_sha256": "9af9445ba60721fb4e1bea85ac33e51014ec584ee75ac739262fa1341e5a44da"
-    },
-    {
-      "id": "ou_event_fileform_fix_dfault_so2_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W206": 1, "W403": 1},
-      "deck_sha256": "da6505b24011ae6fb486925f23eaf0e625e5dd94fd50d979b637d1e97b45e712",
-      "output_sha256": "37229058eaa83dac80552d39a5f1a629954bf7a1db5ce222d39ef2047800d120"
-    },
-    {
-      "id": "ou_event_fileform_exp_dfault_so2",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W206": 1, "W403": 1, "W595": 1},
-      "deck_sha256": "d5cd3500cbd172c00b2980b85aeeafbcea73c6d4bf75d4f5b190835bc95c920b",
-      "output_sha256": "1f842e419ab6baaf4b3d89cc3d2589e7de7ef95d1d1b97b66c5dace6860fe269",
-      "target_diagnostics": [{"code": "W595", "module": "FILFRM", "message": "Option to output results using EXP format not used: SO2"}]
-    },
-    {
-      "id": "co_o3values_sector_month_complete_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"I440": 1342, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "a6fc87aa4d5cfbd6e4a66ae94e2b9ed1e5f59c632395a5a030d6683bd70d8e24",
-      "output_sha256": "220c581091797f51e0cd30bf88b99e65958ebf6ca20931c302f7bd3e8148c02a"
-    },
-    {
-      "id": "co_o3values_sector_month_incomplete",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E261": 1, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "84bcc56c66b84f63699929f989e1ef2af45bc20fbbdef59c42d5c1ef4a11027c",
-      "output_sha256": "5d401f93bad7d11de5b149805f7afabebd64df3d57089e70cdf345bb41bb6c66",
-      "fatal_diagnostic": {"code": "E261", "module": "COCARD", "message": "Not Enough O3VALUES Ozone Concentrations Specified O3SECT1 N=11"}
-    },
-    {
-      "id": "co_nox_vals_sector_month_complete_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"I440": 1342, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "651e9d6256f19e1e4e552e6562d46305e624551f79f900403d4b887ee6dbc858",
-      "output_sha256": "50266f36641c01397fd35af58787a692a6ba4442539b333b663b2a5cda989f5"
-    },
-    {
-      "id": "co_nox_vals_sector_month_incomplete",
-      "observed_outcome": "rejected",
-      "returncode": 0,
-      "diagnostic_counts": {"E603": 1, "W187": 1, "W298": 1, "W361": 1},
-      "deck_sha256": "9e89fdd17a0124d21d5cb5af7a99cce31d9bcd9e8715a75ac2662abe390e91b3",
-      "output_sha256": "bc355ebc625b96ded671f98997134fa7865cc9ade1db608329e026d82f364774",
-      "fatal_diagnostic": {"code": "E603", "module": "COCARD", "message": "Not Enough NOx Concentrations Specified NOXSCT1 N=11"}
-    },
-    {
-      "id": "so_vbarrier_second_all_min_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "f31d25a715f96e9637e6de7bd64bf8f0c8dd4c86a913de2709d1717015f1ed00",
-      "output_sha256": "3a83c8b94c506aa8f02272d7287b894926c501d09256fb2211d5ce7e3b0e303c"
-    },
-    {
-      "id": "so_vbarrier_second_all_max_control",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
-      "deck_sha256": "2581ce40d68d2cb9706a41cad25b5e1a09fe6a1abaf8c1d01c16e15981906f0a",
-      "output_sha256": "bffbd2d6d3a15b3beaa21b381fbef8fc7edcfa153a690922a8df08b94783c11a"
-    },
-    {
-      "id": "so_vbarrier_same_side_equal_distance",
-      "observed_outcome": "accepted",
-      "returncode": 0,
-      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1, "W620": 56},
-      "deck_sha256": "45247bf92d040f1249f742c77eb46caed9b0f1a0a17d40d3f497b2427361a23f",
-      "output_sha256": "f4e1fd5ee43d3511fd61cb93feee7776c2ebbd0c1310d9d030024b23b605e52f",
-      "target_diagnostics": [{"code": "W620", "module": "RLINE", "message": "Both RLINE barriers on same side of SRCID: BASE"}],
-      "debug_sha256": "966c9e360ec163f542b85502e32f02e348705ea5926570787557415d43281ab2"
-    }
+    {"id": "co_o3values_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_o3values_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E261 NumVals=11"},
+    {"id": "co_nox_vals_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_nox_vals_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E603 NumVals=11"},
+    {"id": "co_o3values_sector_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_o3values_sector_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E261 O3SECT1 N=11"},
+    {"id": "co_nox_vals_sector_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_nox_vals_sector_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E603 NOXSCT1 N=11"},
+    {"id": "so_vbarrier_all_min_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_all_max_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_second_all_min_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_second_all_max_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_ht_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E371"},
+    {"id": "so_vbarrier_ht_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E371"},
+    {"id": "so_vbarrier_wt_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E372"},
+    {"id": "so_vbarrier_wt_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E372"},
+    {"id": "so_vbarrier_lai_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E373"},
+    {"id": "so_vbarrier_lai_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E373"},
+    {"id": "so_vbarrier_lm_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E374"},
+    {"id": "so_vbarrier_lm_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E374"},
+    {"id": "so_vbarrier_same_side_first_closer", "observed_outcome": "accepted", "primary_diagnostic": "W375 VBARRIER 1", "debug_sha256": "25fd8f5af02d0abe5db251ece47b28b727a810fae99b2a7531f62461e8d56460"},
+    {"id": "so_vbarrier_same_side_second_closer", "observed_outcome": "accepted", "primary_diagnostic": "W375 VBARRIER 2", "debug_sha256": "ba62c1089a56c982e055af23cb3a44d944b9bbff0183d45daf62225c59b63faf"},
+    {"id": "so_vbarrier_same_side_equal_distance", "observed_outcome": "accepted", "primary_diagnostic": "W620; no W375", "debug_sha256": "966c9e360ec163f542b85502e32f02e348705ea5926570787557415d43281ab2"},
+    {"id": "ou_event_fileform_exp_nondfault_control", "observed_outcome": "accepted", "numeric_notation": "EXP"},
+    {"id": "ou_event_fileform_exp_dfault_other_control", "observed_outcome": "accepted", "numeric_notation": "EXP"},
+    {"id": "ou_event_fileform_fix_dfault_so2_control", "observed_outcome": "accepted", "numeric_notation": "FIX"},
+    {"id": "ou_event_fileform_exp_dfault_so2", "observed_outcome": "accepted", "primary_diagnostic": "W595", "numeric_notation": "FIX after reset"}
   ],
+  "selected_file_hashes": {
+    "co_o3values_month_incomplete_deck": "98be4e2df62de55daed07441d9fffd873c9c22b83921dadfc6125b108fa92a30",
+    "co_nox_vals_month_incomplete_deck": "74a09816717c3d3385a40228d218aa535a0d72140ec9ab5641481ae4f5224a0d",
+    "co_o3values_sector_month_incomplete_deck": "84bcc56c66b84f63699929f989e1ef2af45bc20fbbdef59c42d5c1ef4a11027c",
+    "co_nox_vals_sector_month_incomplete_deck": "9e89fdd17a0124d21d5cb5af7a99cce31d9bcd9e8715a75ac2662abe390e91b3",
+    "so_vbarrier_same_side_equal_distance_deck": "45247bf92d040f1249f742c77eb46caed9b0f1a0a17d40d3f497b2427361a23f",
+    "ou_event_fileform_exp_dfault_so2_deck": "d5cd3500cbd172c00b2980b85aeeafbcea73c6d4bf75d4f5b190835bc95c920b",
+    "ou_event_fileform_exp_dfault_so2_output": "1f842e419ab6baaf4b3d89cc3d2589e7de7ef95d1d1b97b66c5dace6860fe269"
+  },
   "behavior_conclusions": {
     "temporal_vector_incomplete": [
       "Complete global and sector-scoped MONTH vectors were accepted for O3VALUES and NOX_VALS.",
-      "An 11-of-12 global or sector MONTH vector was rejected at final CO processing.",
-      "O3VALUES uses E261 and identifies sector scope as O3SECTn; NOX_VALS uses E603 and identifies sector scope as NOXSCTn.",
-      "Official source compares each accumulated count with the flag-derived required maximum, so the completeness branch applies across supported time flags."
+      "An 11-of-12 O3VALUES vector was rejected with E261 and an 11-of-12 NOX_VALS vector with E603.",
+      "Sector diagnostics identify O3SECTn or NOXSCTn.",
+      "The official source compares accumulated count with the flag-derived required maximum across supported scopes and flags."
     ],
     "vbarrier_range_and_same_side": [
-      "Both barrier positions accept HT 2..10 m, WT 2.5..13 m, LAI 4..10.92, and LM/LAD 0.55..3.75 inclusively.",
-      "Values immediately below or above those limits are rejected with E371, E372, E373, and E374 respectively.",
-      "For unequal same-side absolute DCL values, input processing emits W375, retains the nearer barrier, and zeroes the farther barrier.",
-      "For equal same-side absolute DCL values, input processing emits no W375 and retains both barriers; runtime emits W620 and uses barrier 2 because the source initializes I=2 and changes to barrier 1 only for a strict less-than comparison."
+      "Both barrier positions accept HT 2..10 m, WT 2.5..13 m, LAI 4..10.92 and LM/LAD 0.55..3.75 inclusively.",
+      "Immediate outside values are rejected with E371, E372, E373 and E374.",
+      "Unequal same-side distances emit W375, retain the nearer barrier and zero the farther barrier.",
+      "Equal same-side distances emit no W375 at input, retain both records, emit W620 at runtime and select barrier 2 on the v26135 equality tie."
     ],
     "event_output_fileform": [
-      "EVENT-processing FILEFORM EXP is retained for non-DFAULT runs and for DFAULT with a non-criteria pollutant.",
+      "FILEFORM EXP remains exponential for non-DFAULT runs and DFAULT with a non-criteria pollutant.",
       "FILEFORM FIX is accepted under DFAULT for SO2.",
-      "FILEFORM EXP under DFAULT for SO2 is accepted with W595 and internally reset to FIX; the event output uses fixed numeric notation."
+      "FILEFORM EXP under DFAULT for SO2 emits W595 and is reset to fixed numeric notation."
     ]
   },
   "interpretation_boundaries": [
     "Executable observations apply to the exact deck and official executable hashes recorded here.",
-    "MONTH cases are representative executable probes; generalization across time flags is supported by the retained source count-versus-required-maximum branches.",
-    "SO2 is the tested criteria pollutant for FILEFORM reset; the retained source branches on the general PollCrit flag.",
-    "Equal-distance same-side VBARRIER runtime tie behavior follows the v26135 source default to barrier 2.",
-    "Return code zero is not sufficient for acceptance; official completion markers and fatal diagnostics control classification.",
-    "This evidence harness is not the future AERMODKit application runner."
+    "MONTH is the representative executable time flag; cross-flag generalization uses the retained source branches and cardinality table.",
+    "SO2 is the executable criteria-pollutant case; broader criteria behavior uses the retained PollCrit source branch.",
+    "The equal-distance barrier-2 tie is exact v26135 implementation behavior, not a physical recommendation.",
+    "Return code zero is not sufficient for acceptance.",
+    "The complete per-file evidence remains in workflow artifact 8724254777."
   ]
 }
