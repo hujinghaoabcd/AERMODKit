@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "reference/probes/v26135/batch3/manifest.json"
 SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch3/source-searches.json"
+AIRCRAFT_HOURLY = ROOT / "reference/probes/v26135/batch3/aircraft_hourly.dat"
 
 DEPENDENCY_RECORDS = {
     "gdseason",
@@ -14,17 +15,17 @@ DEPENDENCY_RECORDS = {
     "awmadwnw",
     "ord_dwnw",
 }
-ARCFTOPT_CASES = {
-    "co_arcftopt_single_control",
+AIRCRAFT_CASES = {
+    "co_arcft_valid_control",
     "co_arcftopt_no_payload",
     "co_arcftopt_repeated_same",
     "co_arcftopt_repeated_different",
     "co_arcftopt_extra_fields",
-    "co_arcftopt_card_no_alpha",
-    "co_arcftopt_card_dfault_alpha",
-    "co_arcftsrc_alpha_control",
-    "co_arcftsrc_no_alpha",
-    "co_arcftsrc_dfault_alpha",
+    "co_arcft_no_alpha",
+    "co_arcft_dfault_alpha",
+    "co_arcft_missing_arcftsrc",
+    "co_arcft_missing_houremis",
+    "co_arcftsrc_without_arcftopt",
 }
 MAXDCONT_CASES = {
     "ou_maxdcont_secondary_rank_control",
@@ -49,7 +50,7 @@ def test_batch3_manifest_has_expected_unique_cases() -> None:
         for record in DEPENDENCY_RECORDS
         for suffix in ("alpha_control", "no_alpha", "dfault_alpha")
     }
-    assert set(identifiers) == dependency_ids | ARCFTOPT_CASES | MAXDCONT_CASES
+    assert set(identifiers) == dependency_ids | AIRCRAFT_CASES | MAXDCONT_CASES
     assert len(identifiers) == len(set(identifiers)) == 35
 
 
@@ -63,28 +64,49 @@ def test_batch3_controls_and_observation_targets_are_explicit() -> None:
     expected_controls = {
         f"co_{record}_alpha_control" for record in DEPENDENCY_RECORDS
     } | {
-        "co_arcftopt_single_control",
-        "co_arcftsrc_alpha_control",
+        "co_arcft_valid_control",
         "ou_maxdcont_secondary_rank_control",
+        "ou_maxdcont_thresh_control",
     }
     assert controls == expected_controls
     assert all(case["expected_outcome"] in {"accepted", "observe"} for case in cases)
     assert all(str(case["question"]).endswith("?") for case in cases)
 
 
-def test_aircraft_cases_inline_the_hourly_evidence_file() -> None:
+def test_aircraft_cases_use_ordered_hourly_and_aircraft_cards() -> None:
     cases = {str(case["id"]): case for case in _manifest()["cases"]}
-    for identifier in (
-        "co_arcftsrc_alpha_control",
-        "co_arcftsrc_no_alpha",
-        "co_arcftsrc_dfault_alpha",
-    ):
-        support = cases[identifier]["support_files"]
-        assert len(support) == 1
-        assert support[0]["path"] == "aircraft_hourly.dat"
-        lines = str(support[0]["content"]).splitlines()
-        assert len(lines) == 6
-        assert all(line.startswith("SO HOUREMIS 90 01 01") for line in lines)
+    ordered_cases = AIRCRAFT_CASES - {
+        "co_arcft_missing_arcftsrc",
+        "co_arcft_missing_houremis",
+        "co_arcftsrc_without_arcftopt",
+    }
+    for identifier in ordered_cases:
+        replacements = [
+            str(item["replacement"])
+            for item in cases[identifier]["replace_line_once"]
+        ]
+        hourly_index = replacements.index("   HOUREMIS aircraft_hourly.dat AREA")
+        source_index = replacements.index("   ARCFTSRC AREA")
+        assert hourly_index < source_index
+
+
+def test_aircraft_hourly_support_file_is_frozen() -> None:
+    lines = AIRCRAFT_HOURLY.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 6
+    assert all(line.startswith("SO HOUREMIS 90 01 01") for line in lines)
+    assert all(" AREA " in line for line in lines)
+
+
+def test_maxdcont_filenames_fit_the_official_field_limit() -> None:
+    cases = {
+        str(case["id"]): case
+        for case in _manifest()["cases"]
+        if str(case["id"]).startswith("ou_maxdcont")
+    }
+    for case in cases.values():
+        replacement = str(case["replace_line_once"][-1]["replacement"])
+        filename = next(token for token in replacement.split() if token.startswith("../Outputs/"))
+        assert len(filename) < 40
 
 
 def test_batch3_source_searches_cover_target_diagnostics() -> None:
