@@ -9,6 +9,7 @@ on:
       - "tools/extract_v26135_source_pattern_evidence.py"
       - "reference/probes/v26135/batch3/manifest.json"
       - "reference/probes/v26135/batch3/source-searches.json"
+      - "reference/probes/v26135/batch3/aircraft_hourly.dat"
       - "tests/test_behavior_probe_batch3_manifest.py"
 
 permissions:
@@ -39,6 +40,9 @@ jobs:
           $uri = "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/8701857473/zip"
           Invoke-WebRequest -Uri $uri -Headers $headers -OutFile fixtures.zip
           Expand-Archive fixtures.zip -DestinationPath fixtures-snapshot
+          Copy-Item `
+            reference/probes/v26135/batch3/aircraft_hourly.dat `
+            fixtures-snapshot/fixtures/inputs/aircraft_hourly.dat
 
       - name: Download official EPA v26135 assets
         shell: pwsh
