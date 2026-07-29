@@ -98,9 +98,9 @@
   ],
   "behavior_probes": {
     "total": 19,
-    "executed": 4,
+    "executed": 7,
     "source_resolved": 1,
-    "official_executable_pending": 14,
+    "official_executable_pending": 11,
     "entries": [
       {
         "scope": "CO",
@@ -129,8 +129,8 @@
       {
         "scope": "CO",
         "id": "temporal_vector_incomplete",
-        "status": "planned-manual-official-executable-probe",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-and-source-v26135",
+        "classification": "executed",
         "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
         "records": ["O3VALUES", "NOX_VALS"]
       },
@@ -170,8 +170,8 @@
       {
         "scope": "SO/RE",
         "id": "SO-VBARRIER-RANGE-01",
-        "status": "planned-manual-official-executable-probe",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-and-source-v26135",
+        "classification": "executed",
         "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.",
         "priority": "high"
       },
@@ -250,8 +250,8 @@
       {
         "scope": "ME/EV/OU",
         "id": "OU-EVENT-FILEFORM",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-and-source-v26135",
+        "classification": "executed",
         "target": "EV_OUCARD FILEFORM",
         "question": "event output EXP behavior under DFAULT"
       },
