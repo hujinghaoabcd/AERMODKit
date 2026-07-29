@@ -274,7 +274,7 @@ def evaluate_v26135_whole_spec(reference_root: Path) -> WholeSpecAcceptance:
                     and specification.keywords.count("FINISHED") == 1
                 ),
                 syntax_present=all(record.syntax for record in specification.records),
-                preservation_policy_present=_REQUIRED_PRESERVATION <= preservation_keys,
+                preservation_policy_present=preservation_keys >= _REQUIRED_PRESERVATION,
                 source_report=filename,
             )
         )
@@ -306,7 +306,7 @@ def evaluate_v26135_whole_spec(reference_root: Path) -> WholeSpecAcceptance:
                 and event_keywords.count("FINISHED") == 1
             ),
             syntax_present=all(event_syntax),
-            preservation_policy_present=_REQUIRED_PRESERVATION <= event_preservation_keys,
+            preservation_policy_present=event_preservation_keys >= _REQUIRED_PRESERVATION,
             source_report=event_filename,
         )
     )
