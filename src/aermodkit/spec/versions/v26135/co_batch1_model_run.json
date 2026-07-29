@@ -1,0 +1,666 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "MODELOPT",
+      "record_role": "model-options",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] MODELOPT <option> [<option> ...]"
+      ],
+      "fields": [
+        {
+          "name": "options",
+          "position": "3..N",
+          "type": "case-insensitive enum token list",
+          "required": true,
+          "min_items": 1,
+          "source_card_max_items_before_warning": 12,
+          "allowed_values": [
+            "DFAULT",
+            "DEFAULT",
+            "FLAT",
+            "ELEV",
+            "BETA",
+            "ALPHA",
+            "CONC",
+            "DEPOS",
+            "DDEP",
+            "WDEP",
+            "DRYDPLT",
+            "NODRYDPLT",
+            "ROMBERG",
+            "AREADPLT",
+            "WETDPLT",
+            "NOWETDPLT",
+            "NOSTD",
+            "NOWARN",
+            "NOCHKD",
+            "WARNCHKD",
+            "SCREEN",
+            "SCIM",
+            "TOXICS",
+            "HBP",
+            "PVMRM",
+            "OLM",
+            "TTRM",
+            "TTRM2",
+            "ARM2",
+            "GRSM",
+            "PSDCREDIT",
+            "FASTAREA",
+            "FASTALL",
+            "NOURBTRAN",
+            "VECTORWS",
+            "LOW_WIND",
+            "AREAMNDR",
+            "RLINEFDH",
+            "NOMINO3",
+            "BAREDGE"
+          ]
+        }
+      ],
+      "defaults": {
+        "numeric": {
+          "SVMIN": 0.2,
+          "WSMIN": 0.2828,
+          "FRANMAX": 1.0,
+          "FRANMIN": 0.0,
+          "SWMIN": 0.02,
+          "BIGT_hours": 24.0,
+          "FAC_DISPHT": 5.0,
+          "SZCOEF": 2.15
+        },
+        "when_no_output_type": "CONC with W205"
+      },
+      "aliases": {
+        "DEFAULT": "DFAULT"
+      },
+      "option_status": {
+        "DFAULT": {
+          "class": "regulatory-default-selector",
+          "guide_status": "regulatory default",
+          "notes": "Cannot be combined with ALPHA or BETA."
+        },
+        "DEFAULT": {
+          "class": "source-alias",
+          "guide_status": "not separately listed",
+          "notes": "Source alias for DFAULT."
+        },
+        "FLAT": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory",
+          "notes": "Forces flat-terrain treatment; source-recognized."
+        },
+        "ELEV": {
+          "class": "regulatory-terrain-option",
+          "guide_status": "regulatory/default",
+          "notes": "Uses elevated terrain processing."
+        },
+        "BETA": {
+          "class": "option-family-marker",
+          "guide_status": "no actual BETA options in v26135",
+          "notes": "Non-DFAULT family flag retained by source."
+        },
+        "ALPHA": {
+          "class": "option-family-marker",
+          "guide_status": "research/experimental non-regulatory",
+          "notes": "Required by ALPHA primary/source options; incompatible with DFAULT."
+        },
+        "CONC": {
+          "class": "output-selector",
+          "guide_status": "standard",
+          "notes": "Concentration output."
+        },
+        "DEPOS": {
+          "class": "output-selector",
+          "guide_status": "standard",
+          "notes": "Total deposition output."
+        },
+        "DDEP": {
+          "class": "output-selector",
+          "guide_status": "standard",
+          "notes": "Dry deposition output."
+        },
+        "WDEP": {
+          "class": "output-selector",
+          "guide_status": "standard",
+          "notes": "Wet deposition output."
+        },
+        "DRYDPLT": {
+          "class": "depletion-toggle",
+          "guide_status": "process selector",
+          "notes": "Enables dry depletion."
+        },
+        "NODRYDPLT": {
+          "class": "depletion-toggle",
+          "guide_status": "process selector",
+          "notes": "Disables dry depletion."
+        },
+        "ROMBERG": {
+          "class": "legacy-source-token",
+          "guide_status": "not in current MODELOPT syntax",
+          "notes": "Source-recognized legacy numerical-integration token; preserve and do not advertise as current guide option."
+        },
+        "AREADPLT": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory",
+          "notes": "Area-source dry depletion option."
+        },
+        "WETDPLT": {
+          "class": "depletion-toggle",
+          "guide_status": "process selector",
+          "notes": "Enables wet depletion."
+        },
+        "NOWETDPLT": {
+          "class": "depletion-toggle",
+          "guide_status": "process selector",
+          "notes": "Disables wet depletion."
+        },
+        "NOSTD": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory",
+          "notes": "Suppresses standard building downwash treatment."
+        },
+        "NOWARN": {
+          "class": "diagnostic-control",
+          "guide_status": "operational",
+          "notes": "Suppresses selected warning output; not itself regulatory approval."
+        },
+        "NOCHKD": {
+          "class": "diagnostic-control",
+          "guide_status": "non-regulatory/operational",
+          "notes": "Disables date checking."
+        },
+        "WARNCHKD": {
+          "class": "diagnostic-control",
+          "guide_status": "operational",
+          "notes": "Date-check warnings."
+        },
+        "SCREEN": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory screening mode",
+          "notes": "Restricts averaging selections."
+        },
+        "SCIM": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory",
+          "notes": "Sampled-chronological-input mode."
+        },
+        "TOXICS": {
+          "class": "legacy-source-token",
+          "guide_status": "legacy functionality",
+          "notes": "Current guide describes former TOXICS functionality through FASTAREA/FASTALL; preserve source recognition without presenting as current primary recommendation."
+        },
+        "HBP": {
+          "class": "alpha-model-option",
+          "guide_status": "ALPHA",
+          "notes": "Horizontal buoyant plume option."
+        },
+        "PVMRM": {
+          "class": "regulatory-no2-technique",
+          "guide_status": "regulatory",
+          "notes": "Tier 3 NO2 method."
+        },
+        "OLM": {
+          "class": "regulatory-no2-technique",
+          "guide_status": "regulatory",
+          "notes": "Ozone-limiting method."
+        },
+        "TTRM": {
+          "class": "alpha-no2-technique",
+          "guide_status": "ALPHA",
+          "notes": "Research total conversion technique."
+        },
+        "TTRM2": {
+          "class": "alpha-no2-technique",
+          "guide_status": "ALPHA",
+          "notes": "Runs TTRM with another supported NO2 technique."
+        },
+        "ARM2": {
+          "class": "regulatory-no2-technique",
+          "guide_status": "regulatory",
+          "notes": "Tier 2 ambient ratio method."
+        },
+        "GRSM": {
+          "class": "regulatory-no2-technique",
+          "guide_status": "regulatory since 24142",
+          "notes": "Generic Reaction Set Method."
+        },
+        "PSDCREDIT": {
+          "class": "alpha-model-option",
+          "guide_status": "ALPHA",
+          "notes": "PSD credit option; requires PVMRM."
+        },
+        "FASTAREA": {
+          "class": "non-regulatory-performance-option",
+          "guide_status": "non-regulatory",
+          "notes": "Fast area-source algorithm."
+        },
+        "FASTALL": {
+          "class": "non-regulatory-performance-option",
+          "guide_status": "non-regulatory",
+          "notes": "Fast processing for eligible source types."
+        },
+        "NOURBTRAN": {
+          "class": "non-regulatory-model-option",
+          "guide_status": "non-regulatory",
+          "notes": "Disables urban transition treatment."
+        },
+        "VECTORWS": {
+          "class": "regulatory-compatible-meteorology-option",
+          "guide_status": "allowed with DFAULT",
+          "notes": "Uses vector wind speed."
+        },
+        "LOW_WIND": {
+          "class": "alpha-model-option-alias",
+          "guide_status": "ALPHA",
+          "notes": "MODELOPT token activates low-wind defaults; CO LOW_WIND primary record supplies overrides."
+        },
+        "AREAMNDR": {
+          "class": "alpha-model-option",
+          "guide_status": "ALPHA",
+          "notes": "Area-source meander option."
+        },
+        "RLINEFDH": {
+          "class": "alpha-model-option",
+          "guide_status": "ALPHA",
+          "notes": "RLINE finite-duration/hourly option."
+        },
+        "NOMINO3": {
+          "class": "regulatory-compatible-chemistry-option",
+          "guide_status": "allowed with DFAULT",
+          "notes": "Disables minimum ozone concentration constraint."
+        },
+        "BAREDGE": {
+          "class": "alpha-model-option",
+          "guide_status": "ALPHA",
+          "notes": "Bare-edge roadway option."
+        }
+      },
+      "constraints": [
+        {
+          "rule": "DRYDPLT and NODRYDPLT are mutually exclusive",
+          "diagnostic": "E149"
+        },
+        {
+          "rule": "WETDPLT and NOWETDPLT are mutually exclusive",
+          "diagnostic": "E149"
+        },
+        {
+          "rule": "NOCHKD and WARNCHKD are mutually exclusive",
+          "diagnostic": "E149"
+        },
+        {
+          "rule": "HBP, TTRM, TTRM2, PSDCREDIT, LOW_WIND, AREAMNDR, and RLINEFDH have ALPHA/non-DFAULT dependencies",
+          "diagnostics": [
+            "E198",
+            "E133",
+            "E139",
+            "W134",
+            "W136"
+          ]
+        },
+        {
+          "rule": "OLM, PVMRM, ARM2, GRSM, and TTRM/TTRM2 combinations are constrained",
+          "diagnostic": "E141"
+        },
+        {
+          "rule": "PSDCREDIT requires PVMRM and conflicts with event-only processing",
+          "diagnostics": [
+            "E143",
+            "E147"
+          ]
+        },
+        {
+          "rule": "FASTAREA and FASTALL together produce W192"
+        },
+        {
+          "rule": "unknown option token is rejected",
+          "diagnostic": "E203"
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword appears more than once",
+          "source_lines": "94-100"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "no option fields",
+          "source_lines": "1563-1565"
+        },
+        {
+          "severity": "warning",
+          "code": "202",
+          "condition": "more than 12 payload tokens on one card",
+          "source_lines": "1566-1568"
+        },
+        {
+          "severity": "warning",
+          "code": "205",
+          "condition": "no CONC/DEPOS/DDEP/WDEP output type; CONC selected",
+          "source_lines": "2126-2133"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "unrecognized option token",
+          "source_lines": "2038-2040"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "MODELOPT missing at FINISHED",
+          "source_lines": "546-548"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "92-101",
+        "handler": "MODOPT",
+        "handler_lines": "1495-2392"
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "capped.inp:10",
+          "Test20_Urban_cart_3cond_SNC.inp:4"
+        ]
+      },
+      "evidence_status": "source-token-complete-and-current-guide-status-audited; legacy source/guide discrepancies retained"
+    },
+    {
+      "keyword": "AVERTIME",
+      "record_role": "averaging-periods",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] AVERTIME <period> [<period> ...] [PERIOD|ANNUAL]"
+      ],
+      "fields": [
+        {
+          "name": "periods",
+          "position": "3..N",
+          "type": "enum/integer list",
+          "required": true,
+          "allowed_values": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            12,
+            24,
+            "MONTH",
+            "PERIOD",
+            "ANNUAL"
+          ],
+          "units": "hours for integer values; MONTH is represented internally as 720 hours"
+        }
+      ],
+      "constraints": [
+        {
+          "rule": "PERIOD and ANNUAL are mutually exclusive",
+          "diagnostic": "E294"
+        },
+        {
+          "rule": "numeric hours must be valid divisors of 24 under source validation",
+          "diagnostic": "E203"
+        },
+        {
+          "rule": "duplicate periods are rejected",
+          "diagnostic": "E211"
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword appears more than once",
+          "source_lines": "104-110"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "no averaging periods",
+          "source_lines": "2427-2431"
+        },
+        {
+          "severity": "error",
+          "code": "294",
+          "condition": "both PERIOD and ANNUAL",
+          "source_lines": "2443-2446"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "nonnumeric period token",
+          "source_lines": "2465-2470"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid averaging period",
+          "source_lines": "2471-2495"
+        },
+        {
+          "severity": "error",
+          "code": "211",
+          "condition": "duplicate averaging period",
+          "source_lines": "2479-2484;2503-2508"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "AVERTIME missing at FINISHED",
+          "source_lines": "549-551"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "102-111",
+        "handler": "AVETIM",
+        "handler_lines": "2394-2521"
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "scimtest.inp:5",
+          "testgas2.inp:6"
+        ]
+      },
+      "evidence_status": "source-and-current-fixture-verified"
+    },
+    {
+      "keyword": "POLLUTID",
+      "record_role": "pollutant",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] POLLUTID <pollutant-id> [H1H|H2H|INC]"
+      ],
+      "fields": [
+        {
+          "name": "pollutant_id",
+          "position": 3,
+          "type": "case-insensitive string",
+          "required": true,
+          "max_chars": 8
+        },
+        {
+          "name": "special_processing_override",
+          "position": 4,
+          "type": "enum",
+          "required": false,
+          "allowed_values": [
+            "H1H",
+            "H2H",
+            "INC"
+          ],
+          "applicable_to": [
+            "NO2",
+            "SO2",
+            "PM25",
+            "PM-2.5",
+            "PM-25",
+            "PM2.5"
+          ]
+        }
+      ],
+      "behavior": {
+        "criteria_pollutant_ids": [
+          "SOX",
+          "SO2",
+          "NOX",
+          "NO2",
+          "CO",
+          "TSP",
+          "PM10",
+          "PM-10",
+          "PM25",
+          "PM-2.5",
+          "PM2.5",
+          "PM-25",
+          "LEAD",
+          "PB"
+        ],
+        "arbitrary_noncriteria_ids": "accepted up to storage length; feature-specific checks may occur later"
+      },
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword appears more than once",
+          "source_lines": "114-120"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing pollutant ID",
+          "source_lines": "2548-2552"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "2619-2622"
+        },
+        {
+          "severity": "warning",
+          "code": "276",
+          "condition": "special processing disabled for supported pollutant",
+          "source_lines": "2584-2609"
+        },
+        {
+          "severity": "error",
+          "code": "277",
+          "condition": "H1H/H2H/INC used with unsupported pollutant",
+          "source_lines": "2564-2581;2610-2616"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "POLLUTID missing at FINISHED",
+          "source_lines": "552-554"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "112-121",
+        "handler": "POLLID",
+        "handler_lines": "2523-2639"
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "bg_no2_arm2_ppb.inp:13",
+          "testgas.inp:7"
+        ]
+      },
+      "evidence_status": "source-and-current-fixture-verified"
+    },
+    {
+      "keyword": "RUNORNOT",
+      "record_role": "execution-control",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] RUNORNOT RUN|NOT"
+      ],
+      "fields": [
+        {
+          "name": "mode",
+          "position": 3,
+          "type": "enum",
+          "required": true,
+          "allowed_values": [
+            "RUN",
+            "NOT"
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword appears more than once",
+          "source_lines": "175-181"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing RUN/NOT parameter",
+          "source_lines": "2756-2758"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many parameters",
+          "source_lines": "2753-2755"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "parameter is neither RUN nor NOT",
+          "source_lines": "2744-2752"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "RUNORNOT missing at FINISHED",
+          "source_lines": "555-557"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "173-182",
+        "handler": "RUNNOT",
+        "handler_lines": "2715-2762"
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "Test1_Base_cart_3cond_SNC.inp:8"
+        ]
+      },
+      "evidence_status": "source-and-current-fixture-verified"
+    }
+  ]
+}

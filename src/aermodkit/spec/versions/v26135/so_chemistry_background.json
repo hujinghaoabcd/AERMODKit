@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "URBANSRC",
+      "record_role": "urban-source-assignment",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] URBANSRC ALL",
+        "[SO] URBANSRC [<UrbanID>] <SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "urban_id",
+          "type": "optional CO URBANOPT ID"
+        },
+        {
+          "name": "source_selectors",
+          "type": "ALL, IDs, or ranges"
+        }
+      ],
+      "dependencies": {
+        "requires_co_record": "URBANOPT"
+      },
+      "constraints": [
+        {
+          "rule": "URBANSRC ALL is valid only for the single-urban-area form."
+        },
+        {
+          "rule": "With multiple urban areas, the first payload field is a defined UrbanID."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "279",
+          "condition": "invalid ALL form"
+        },
+        {
+          "severity": "error",
+          "code": "301",
+          "condition": "urban ID not defined"
+        },
+        {
+          "severity": "error",
+          "code": "300",
+          "condition": "source not defined"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "439-454",
+        "handler": "URBANS",
+        "handler_file": "soset.f",
+        "handler_lines": "6555-6694"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Assignments may be continued and may use source ranges."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 8,
+        "files": 4,
+        "examples": [
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:23",
+          "inputs/blp_urban.inp:34",
+          "inputs/blp_urban.inp:35",
+          "inputs/in_urban.inp:26"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "NO2RATIO",
+      "record_role": "source-specific-in-stack-no2-nox-ratio",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] NO2RATIO <SrcID|SrcID-Range> <ratio>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "ratio",
+          "type": "real",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      ],
+      "dependencies": {
+        "applicable_co_options": [
+          "OLM",
+          "PVMRM",
+          "GRSM"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Overrides applicable CO-level defaults for selected sources."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "336",
+          "condition": "ratio outside 0..1"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "455-472",
+        "handler": "NO2RAT",
+        "handler_file": "soset.f",
+        "handler_lines": "6806-6911"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Current source uses one exact ratio per record."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "OLMGROUP",
+      "record_role": "olm-source-group-definition",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] OLMGROUP <OLMGroupID|ALL> <SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "max_length": 8
+        },
+        {
+          "name": "members",
+          "type": "source IDs/ranges or ALL"
+        }
+      ],
+      "dependencies": {
+        "requires_co_mode": "OLM"
+      },
+      "constraints": [
+        {
+          "rule": "Group IDs may continue across records; each referenced source must be defined."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "245",
+          "condition": "group ID too long"
+        },
+        {
+          "severity": "error",
+          "code": "254/255",
+          "condition": "invalid source membership"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "473-489",
+        "handler": "OLMGRP",
+        "handler_file": "soset.f",
+        "handler_lines": "6912-7064"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "OLM groups are distinct from output SRCGROUP records."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/no2_1yrAK_olmgrp.inp:56",
+          "inputs/olmgrp.inp:22"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "PSDGROUP",
+      "record_role": "psd-credit-source-category-definition",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] PSDGROUP <INCRCONS|NONRBASE|RETRBASE> <SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "category",
+          "type": "enum",
+          "allowed_values": [
+            "INCRCONS",
+            "NONRBASE",
+            "RETRBASE"
+          ]
+        },
+        {
+          "name": "members",
+          "type": "source IDs/ranges"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "PSDCREDIT"
+      },
+      "constraints": [
+        {
+          "rule": "At least one PSDGROUP is mandatory for PSDCREDIT and it must be the last functional SO keyword before FINISHED."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "287",
+          "condition": "invalid PSD category"
+        },
+        {
+          "severity": "error",
+          "code": "140",
+          "condition": "later SO keyword after PSDGROUP"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "490-501",
+        "handler": "PSDGRP",
+        "handler_file": "soset.f",
+        "handler_lines": "7065-7226"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Current source maps the three fixed category IDs to IC/NB/RB flags."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 3,
+        "files": 1,
+        "examples": [
+          "inputs/psdcred.inp:27",
+          "inputs/psdcred.inp:28",
+          "inputs/psdcred.inp:29"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BACKGRND",
+      "record_role": "background-concentration-values-or-hourly-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BACKGRND [<SECT1..SECT6>] <time_flag> <value_1> ... <value_N>",
+        "[SO] BACKGRND [<SECT1..SECT6>] HOURLY <filename>"
+      ],
+      "fields": [
+        {
+          "name": "sector",
+          "type": "optional enum",
+          "allowed_values": [
+            "SECT1",
+            "SECT2",
+            "SECT3",
+            "SECT4",
+            "SECT5",
+            "SECT6"
+          ]
+        },
+        {
+          "name": "time_flag",
+          "type": "enum",
+          "allowed_values": [
+            "ANNUAL",
+            "SEASON",
+            "MONTH",
+            "HROFDY",
+            "WSPEED",
+            "SEASHR",
+            "HRDOW",
+            "HRDOW7",
+            "SHRDOW",
+            "SHRDOW7",
+            "MHRDOW",
+            "MHRDOW7",
+            "HOURLY"
+          ]
+        },
+        {
+          "name": "values_or_file",
+          "type": "real vector or filename",
+          "required_value_counts": {
+            "ANNUAL": 1,
+            "SEASON": 4,
+            "MONTH": 12,
+            "HROFDY": 24,
+            "WSPEED": 6,
+            "SEASHR": 96,
+            "HRDOW": 72,
+            "HRDOW7": 168,
+            "SHRDOW": 288,
+            "SHRDOW7": 672,
+            "MHRDOW": 864,
+            "MHRDOW7": 2016
+          }
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Global and sector-specific values follow current sector fallback semantics."
+        },
+        {
+          "rule": "Static vector length must exactly match time_flag; HOURLY uses an external file."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "260",
+          "condition": "wrong number of values"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid time flag or sector"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "502-513",
+        "handler": "BACK_GRND",
+        "handler_file": "soset.f",
+        "handler_lines": "7433-7787"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Background semantics are coupled to BGSECTOR, BACKUNIT, and SRCGROUP background switches."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 17,
+        "files": 17,
+        "examples": [
+          "inputs/bg_no2_arm2_ppb.inp:26",
+          "inputs/bg_no2_arm2_ugm3.inp:27",
+          "inputs/bg_no2_grsm_ppb.inp:27",
+          "inputs/bg_no2_grsm_ugm3.inp:30"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BACKUNIT",
+      "record_role": "background-concentration-units",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] BACKUNIT <PPB|PPM|UG/M3>"
+      ],
+      "fields": [
+        {
+          "name": "unit",
+          "type": "enum",
+          "allowed_values": [
+            "PPB",
+            "PPM",
+            "UG/M3"
+          ]
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "PPB/PPM are accepted only for pollutants with molecular-weight conversion support, including NO2, SO2, and CO."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid or pollutant-incompatible unit"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "514-530",
+        "handler": "BACK_UNIT",
+        "handler_file": "soset.f",
+        "handler_lines": "7864-7920"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Unit conversion is applied to background concentrations."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 17,
+        "files": 17,
+        "examples": [
+          "inputs/bg_no2_arm2_ppb.inp:27",
+          "inputs/bg_no2_arm2_ugm3.inp:29",
+          "inputs/bg_no2_grsm_ppb.inp:28",
+          "inputs/bg_no2_grsm_ugm3.inp:32"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BGSECTOR",
+      "record_role": "background-wind-direction-sectors",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] BGSECTOR <sector_1_upper_direction> ... <sector_N_upper_direction>"
+      ],
+      "fields": [
+        {
+          "name": "upper_direction_boundaries",
+          "type": "real list",
+          "units": "degrees",
+          "min_items": 1,
+          "max_items": 6
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Boundaries must be increasing around the compass; each sector is at least 30 degrees."
+        },
+        {
+          "rule": "Sectors narrower than 60 degrees generate a warning."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "invalid direction/sector width"
+        },
+        {
+          "severity": "warning",
+          "code": "sector-width",
+          "condition": "sector narrower than recommended 60 degrees"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "531-542",
+        "handler": "BGSECTOR",
+        "handler_file": "soset.f",
+        "handler_lines": "7921-8029"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Maximum of six sectors, matching SECT1..SECT6 BACKGRND forms."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    }
+  ]
+}

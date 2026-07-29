@@ -1,0 +1,26 @@
+{
+  "model_version": "26135",
+  "pathway": "EV",
+  "source_file": "evset.f",
+  "dispatcher": "EVCARD",
+  "source_primary_keywords": [
+    "STARTING",
+    "EVENTPER",
+    "EVENTLOC",
+    "INCLUDED",
+    "FINISHED"
+  ],
+  "bundled_keywords": [
+    "STARTING",
+    "EVENTPER",
+    "EVENTLOC",
+    "INCLUDED",
+    "FINISHED"
+  ],
+  "source_count": 5,
+  "bundled_count": 5,
+  "missing": [],
+  "extra": [],
+  "exact_match": true,
+  "method": "Non-comment executable IF/ELSEIF KEYWRD branches plus explicit STARTING/FINISHED framing."
+}

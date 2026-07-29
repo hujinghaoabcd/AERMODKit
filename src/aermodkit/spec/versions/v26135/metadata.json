@@ -1,0 +1,22 @@
+{
+  "model": "AERMOD",
+  "version": "26135",
+  "release_date": "2026-07-09",
+  "authority": "U.S. EPA SCRAM",
+  "status": "current baseline for AERMODKit bootstrap",
+  "schema_completeness": "complete source-verified CO, SO, RE, ME, EV, and OU primary pathway specifications plus the event-output submode; production parser/runner remain unimplemented",
+  "notes": [
+    "Official manuals, source code, release notes, errata, executable behavior, and test cases remain authoritative.",
+    "All 39 primary CO records dispatched by coset.f are now represented in the bundled specification.",
+    "Complete CO record coverage does not imply production parser/execution support or regulatory approval of non-default options.",
+    "Guide/source discrepancies for OZONEFIL, NOX_FILE, ARCFTOPT, ROMBERG, and TOXICS are preserved and require/retain focused behavior evidence.",
+    "CO: 39/39 primary COCARD records bundled.",
+    "SO: 40/40 primary SOCARD records bundled, including source-recognized PLATFORM and VBARRIER.",
+    "RE: 9/9 primary RECARD records bundled; GRID secondary syntax is represented as loss-aware block state machines.",
+    "ME: 23/23 MECARD records bundled.",
+    "EV: 5/5 EVCARD records bundled.",
+    "OU: 18/18 ordinary OUCARD records bundled.",
+    "Event output: 4/4 EV_OUCARD records represented as an explicit submode.",
+    "All primary pathways now have record-level source/evidence coverage; this is not a production parser or regulatory endorsement."
+  ]
+}

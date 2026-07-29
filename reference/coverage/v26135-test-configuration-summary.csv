@@ -1,0 +1,4 @@
+configuration,archive_entries,files,input_files,main_output_files,summary_files,error_files,plot_files,post_files,meteorology_sfc,meteorology_pfl,total_uncompressed_bytes
+aermet24142_aermod24142,497,490,53,103,47,10,62,143,9,9,3517701913
+aermet24142_aermod26135,497,490,53,103,47,10,62,143,9,9,3517708748
+aermet26135_aermod26135,497,490,53,103,47,10,62,143,9,9,3518557029

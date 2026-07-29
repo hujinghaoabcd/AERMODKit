@@ -1,0 +1,24 @@
+{
+  "model_version": "26135",
+  "pathway": "OU/EVENT",
+  "source_file": "evset.f",
+  "dispatcher": "EV_OUCARD",
+  "source_primary_keywords": [
+    "STARTING",
+    "EVENTOUT",
+    "FILEFORM",
+    "FINISHED"
+  ],
+  "bundled_keywords": [
+    "STARTING",
+    "EVENTOUT",
+    "FILEFORM",
+    "FINISHED"
+  ],
+  "source_count": 4,
+  "bundled_count": 4,
+  "missing": [],
+  "extra": [],
+  "exact_match": true,
+  "method": "Non-comment executable IF/ELSEIF KEYWRD branches plus explicit STARTING/FINISHED framing."
+}

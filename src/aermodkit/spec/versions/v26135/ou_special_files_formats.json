@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "OU",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "TOXXFILE",
+      "role": "toxx-input-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] TOXXFILE <MONTH|averaging_period> <threshold> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "period",
+          "type": "configured period"
+        },
+        {
+          "name": "threshold",
+          "type": "real"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "80-84",
+        "handler": "OUTOXX",
+        "handler_file": "ouset.f",
+        "handler_lines": "2401-2611"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "SEASONHR",
+      "role": "season-by-hour-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] SEASONHR <source_group> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {
+        "conflicts_with": [
+          "SCIM"
+        ]
+      },
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "85-94",
+        "handler": "OUSEAS",
+        "handler_file": "ouset.f",
+        "handler_lines": "2612-2771"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 14,
+        "files": 9,
+        "examples": [
+          "testpm25.inp:74",
+          "testprt2.inp:55",
+          "testpm10.inp:74",
+          "hrdow.inp:158"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "RANKFILE",
+      "role": "ranked-value-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] RANKFILE <MONTH|averaging_period> <rank> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "period",
+          "type": "configured period"
+        },
+        {
+          "name": "rank",
+          "type": "positive integer"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "95-99",
+        "handler": "OURANK",
+        "handler_file": "ouset.f",
+        "handler_lines": "2772-2973"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 9,
+        "files": 3,
+        "examples": [
+          "flatelev.inp:46",
+          "flatelev.inp:47",
+          "flatelev.inp:48",
+          "mcr.inp:166"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "EVALFILE",
+      "role": "evaluation-source-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] EVALFILE <source_id> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "source_id",
+          "type": "existing source ID"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {
+        "requires_receptor": "EVALCART"
+      },
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "100-104",
+        "handler": "OUEVAL",
+        "handler_file": "ouset.f",
+        "handler_lines": "2974-3133"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "SUMMFILE",
+      "role": "summary-file",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] SUMMFILE <filename>"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "case-preserved path"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "105-113",
+        "handler": "OUSUMM",
+        "handler_file": "ouset.f",
+        "handler_lines": "3134-3205"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 47,
+        "files": 47,
+        "examples": [
+          "psdcred.inp:52",
+          "multurb.inp:41",
+          "no2_1yrAK_arm2.inp:82",
+          "allsrcs.inp:168"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "FILEFORM",
+      "role": "external-file-number-format",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] FILEFORM <FIX|EXP>"
+      ],
+      "fields": [
+        {
+          "name": "format",
+          "type": "enum",
+          "allowed_values": [
+            "FIX",
+            "EXP"
+          ],
+          "default": "FIX"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Under DFAULT, EXP is reset to FIX and diagnosed."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "114-122",
+        "handler": "FILEFORM",
+        "handler_file": "ouset.f",
+        "handler_lines": "3206-3295"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 4,
+        "files": 4,
+        "examples": [
+          "testprt2.inp:57",
+          "hrdow.inp:165",
+          "in_urban.inp:409",
+          "blp_urban.inp:62"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

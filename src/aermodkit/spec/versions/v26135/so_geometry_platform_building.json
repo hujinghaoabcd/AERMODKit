@@ -1,0 +1,476 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "BUILDHGT",
+      "record_role": "building-height-by-direction",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BUILDHGT <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "directional_values",
+          "type": "real list",
+          "total_items_per_source": 36,
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ],
+        "requires_modeopt": "DFAULT or downwash-enabled mode"
+      },
+      "constraints": [
+        {
+          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
+        },
+        {
+          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "more than 36 sectors"
+        },
+        {
+          "severity": "warning",
+          "code": "233",
+          "condition": "applied to non-point source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "144-179",
+        "handler": "DSBLDG",
+        "handler_file": "soset.f",
+        "handler_lines": "4116-4201"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 77,
+        "files": 19,
+        "examples": [
+          "inputs/aertest.inp:25",
+          "inputs/allsrcs.inp:46",
+          "inputs/capped.inp:27",
+          "inputs/capped.inp:59"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BUILDWID",
+      "record_role": "building-width-by-direction",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BUILDWID <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "directional_values",
+          "type": "real list",
+          "total_items_per_source": 36,
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ],
+        "requires_modeopt": "DFAULT or downwash-enabled mode"
+      },
+      "constraints": [
+        {
+          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
+        },
+        {
+          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "more than 36 sectors"
+        },
+        {
+          "severity": "warning",
+          "code": "233",
+          "condition": "applied to non-point source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "144-179",
+        "handler": "DSBLDG",
+        "handler_file": "soset.f",
+        "handler_lines": "4116-4201"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 162,
+        "files": 19,
+        "examples": [
+          "inputs/aertest.inp:26",
+          "inputs/aertest.inp:27",
+          "inputs/aertest.inp:28",
+          "inputs/aertest.inp:29"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BUILDLEN",
+      "record_role": "building-length-by-direction",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BUILDLEN <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "directional_values",
+          "type": "real list",
+          "total_items_per_source": 36,
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ],
+        "requires_modeopt": "DFAULT or downwash-enabled mode"
+      },
+      "constraints": [
+        {
+          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
+        },
+        {
+          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "more than 36 sectors"
+        },
+        {
+          "severity": "warning",
+          "code": "233",
+          "condition": "applied to non-point source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "144-179",
+        "handler": "DSBLDG",
+        "handler_file": "soset.f",
+        "handler_lines": "4116-4201"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 162,
+        "files": 19,
+        "examples": [
+          "inputs/aertest.inp:32",
+          "inputs/aertest.inp:33",
+          "inputs/aertest.inp:34",
+          "inputs/aertest.inp:35"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "XBADJ",
+      "record_role": "building-x-adjustment-by-direction",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] XBADJ <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "directional_values",
+          "type": "real list",
+          "total_items_per_source": 36,
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ],
+        "requires_modeopt": "DFAULT or downwash-enabled mode"
+      },
+      "constraints": [
+        {
+          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
+        },
+        {
+          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "more than 36 sectors"
+        },
+        {
+          "severity": "warning",
+          "code": "233",
+          "condition": "applied to non-point source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "144-179",
+        "handler": "DSBLDG",
+        "handler_file": "soset.f",
+        "handler_lines": "4116-4201"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 162,
+        "files": 19,
+        "examples": [
+          "inputs/aertest.inp:38",
+          "inputs/aertest.inp:39",
+          "inputs/aertest.inp:40",
+          "inputs/aertest.inp:41"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "YBADJ",
+      "record_role": "building-y-adjustment-by-direction",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] YBADJ <SrcID|SrcID-Range> <directional_value_1> ... <directional_value_36>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "directional_values",
+          "type": "real list",
+          "total_items_per_source": 36,
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ],
+        "requires_modeopt": "DFAULT or downwash-enabled mode"
+      },
+      "constraints": [
+        {
+          "rule": "Values may be continued across records; each source must resolve to exactly 36 directional sectors."
+        },
+        {
+          "rule": "Negative BUILDHGT/BUILDWID/BUILDLEN values are errors; XBADJ/YBADJ may be signed."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "more than 36 sectors"
+        },
+        {
+          "severity": "warning",
+          "code": "233",
+          "condition": "applied to non-point source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "144-179",
+        "handler": "DSBLDG",
+        "handler_file": "soset.f",
+        "handler_lines": "4116-4201"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Direction-specific PRIME building arrays are accumulated by DSFILL."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 162,
+        "files": 19,
+        "examples": [
+          "inputs/aertest.inp:44",
+          "inputs/aertest.inp:45",
+          "inputs/aertest.inp:46",
+          "inputs/aertest.inp:47"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "PLATFORM",
+      "record_role": "alpha-platform-downwash-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] PLATFORM <SrcID> <platform_base_elevation> <platform_building_height> <platform_building_width>"
+      ],
+      "fields": [
+        {
+          "name": "SrcID",
+          "type": "existing point-family source ID"
+        },
+        {
+          "name": "platform_base_elevation",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "platform_building_height",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "platform_building_width",
+          "type": "real",
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "One PLATFORM record per source; non-point source types are rejected."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "ALPHA absent"
+        },
+        {
+          "severity": "error",
+          "code": "631",
+          "condition": "non-point source"
+        },
+        {
+          "severity": "error",
+          "code": "632",
+          "condition": "duplicate source PLATFORM"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "180-201",
+        "handler": "PLATFM",
+        "handler_file": "soset.f",
+        "handler_lines": "3652-3743"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "The executable branch was missing from the earlier inventory and is now promoted to the exact SO set."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    }
+  ]
+}

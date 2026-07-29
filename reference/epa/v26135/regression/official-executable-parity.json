@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "verified_at": "2026-07-29",
+  "official_archive": {
+    "url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip",
+    "sha256": "0ccf49702109637e665c8567891e365b4585a62a560faae35ce0194048683a24"
+  },
+  "official_executable": {
+    "filename": "aermod.exe",
+    "size_bytes": 3940864,
+    "sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "format": "PE32+ Windows console executable",
+    "architecture": "x86-64",
+    "linker_major_version": 14,
+    "pe_timestamp": "2026-07-13 15:23:11",
+    "intel_fortran_runtime_evidence": true,
+    "exact_compiler_frontend_version": null
+  },
+  "github_actions": {
+    "run_id": 30411529300,
+    "artifact_id": 8708575372,
+    "artifact_sha256": "7ef4ce9d2a9b26f43b399c4dc62740d57544f38734b96c7fef4a449c66865ba1"
+  },
+  "cases": [
+    {
+      "case": "capped",
+      "returncode": 0,
+      "success_marker": true,
+      "expected_line_count": 10615,
+      "generated_line_count": 10615,
+      "canonical_text_identical": true,
+      "canonical_diff_lines": 0,
+      "metric_mismatch_count": 0,
+      "metric_max_abs": 0.0,
+      "metric_max_rel": 0.0
+    },
+    {
+      "case": "capped_nostd",
+      "returncode": 0,
+      "success_marker": true,
+      "expected_line_count": 4848,
+      "generated_line_count": 4848,
+      "canonical_text_identical": true,
+      "canonical_diff_lines": 0,
+      "metric_mismatch_count": 0,
+      "metric_max_abs": 0.0,
+      "metric_max_rel": 0.0
+    }
+  ],
+  "gnu_fortran_14_2_localization": {
+    "capped_successful": true,
+    "capped_nostd_canonical_exact": true,
+    "largest_difference_source_group": "STACK1C",
+    "largest_difference_table": "2ND HIGHEST 1-HR",
+    "metric_max_rel": 0.0526130411798,
+    "period_high_stack1c_rel": 0.000021342559,
+    "single_unit_o0_tests_unchanged": [
+      "prime.f",
+      "calc1.f",
+      "calc2.f",
+      "prise.f",
+      "sigmas.f"
+    ]
+  },
+  "conclusion": "The EPA executable matches the official capped fixtures exactly; the GNU difference is compiler/build-specific and localized rather than a test-package inconsistency."
+}

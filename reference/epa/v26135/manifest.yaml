@@ -1,0 +1,267 @@
+# AERMODKit official-reference manifest
+# Evidence snapshot created 2026-07-29. URLs are canonical EPA SCRAM locations.
+# Large official binaries are not committed. Assets are materialized only in auditable evidence jobs.
+manifest_version: 4
+model_family: AERMOD
+baseline:
+  component: AERMOD
+  version: "26135"
+  release_date: "2026-07-09"
+  publisher: U.S. EPA SCRAM
+  verification_date: "2026-07-29"
+  evidence_status: confirmed-current
+
+component_versions:
+  AERMOD: "26135"
+  AERMET: "26135"
+  AERMINUTE: "26135"
+  AERSURFACE: "26135"
+  AERPLOT: "26135"
+  AERMAP: "24142"
+
+version_notes:
+  - AERMOD and AERMET were updated in the 2026-07-09 release.
+  - AERMAP was not updated with this release and remains at regulatory version 24142.
+  - Component versions must be tracked independently; do not label the entire toolchain 26135.
+
+canonical_pages:
+  release_page: https://www.epa.gov/scram/air-quality-dispersion-modeling-preferred-and-recommended-models
+  directory: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/
+  related_programs: https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs
+
+assets:
+  - id: aermod-source
+    type: source
+    name: AERMOD Source Code
+    component_version: "26135"
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:16:25Z"
+    size_bytes: 674503
+    sha256: 5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed
+    http_last_modified: "Thu, 09 Jul 2026 19:44:32 GMT"
+    http_etag: '"a4ac7-65632da69ce02"'
+    zip_entry_count: 32
+    archive_index: archive-index/aermod-source.csv
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8700977820
+    github_artifact_digest: 1bcdb91ccec3572126da48dff67f3924628ff394530270094d16b8a2278201ca
+  - id: aermod-executable
+    type: executable
+    name: AERMOD 64-bit Executable
+    component_version: "26135"
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip
+    materialized: true
+    materialization_method: GitHub Actions official executable parity probe
+    materialized_at: "2026-07-29T00:35:02Z"
+    archive_sha256: 0ccf49702109637e665c8567891e365b4585a62a560faae35ce0194048683a24
+    executable_filename: aermod.exe
+    executable_size_bytes: 3940864
+    executable_sha256: 599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da
+    executable_format: PE32+ Windows console executable
+    executable_architecture: x86-64
+    intel_fortran_runtime_evidence: true
+    exact_compiler_frontend_version: null
+    github_actions_run_id: 30411529300
+    github_artifact_id: 8708575372
+    github_artifact_digest: 7ef4ce9d2a9b26f43b399c4dc62740d57544f38734b96c7fef4a449c66865ba1
+    parity_report: regression/OFFICIAL_EXECUTABLE_PARITY.md
+  - id: user-guide
+    type: manual
+    name: AERMOD User's Guide
+    document_number: EPA-454/B-26-001
+    pages: 352
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_userguide.pdf
+    materialized: false
+    sha256: null
+  - id: implementation-guide
+    type: manual
+    name: AERMOD Implementation Guide
+    document_number: EPA-454/B-26-002
+    pages: 44
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_implementation_guide.pdf
+    materialized: false
+    sha256: null
+  - id: model-formulation
+    type: manual
+    name: AERMOD Model Formulation Document
+    document_number: EPA-454/B-26-003
+    pages: 179
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_mfd.pdf
+    materialized: false
+    sha256: null
+  - id: model-evaluation
+    type: manual
+    name: AERMOD Model Evaluation Document
+    document_number: EPA-454/B-26-004
+    pages: 58
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_med.pdf
+    materialized: false
+    sha256: null
+  - id: quick-reference
+    type: manual
+    name: AERMOD Quick Reference Guide
+    pages: 27
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_quick-reference-guide.pdf
+    materialized: false
+    sha256: null
+  - id: transmittal
+    type: release-note
+    name: AERMOD Modeling System Transmittal Memorandum
+    pages: 4
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_26135_transmittal_memo.pdf
+    materialized: false
+    sha256: null
+  - id: mcb19
+    type: release-note
+    name: AERMOD Model Change Bulletin 19
+    pages: 3
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_mcb19.pdf
+    materialized: false
+    sha256: null
+  - id: errata
+    type: errata
+    name: AERMOD System Bugs, Errata, and Related Guidance
+    pages: 2
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_System_Bugs_and_Related_Guidance.pdf
+    materialized: false
+    sha256: null
+  - id: data-resources
+    type: support
+    name: AERMOD Modeling System Data Resources
+    pages: 7
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Data_Resources.pdf
+    materialized: false
+    sha256: null
+  - id: sample-run-instructions
+    type: sample-documentation
+    name: AERMOD Sample Run Instructions
+    pages: 34
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Sample_Run_Instructions.pdf
+    materialized: false
+    sha256: null
+  - id: sample-run
+    type: sample-archive
+    name: AERMOD Sample Run
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/AERMOD_Sample_Run.zip
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:29:33Z"
+    size_bytes: 95949615
+    sha256: 3ee2180fd0ad9c954350bbbe3ca3567ce02df91a2869cec5f6c45178bff32da0
+    http_last_modified: "Thu, 09 Jul 2026 19:45:27 GMT"
+    http_etag: '"5b8132f-65632dda9f1bd"'
+    zip_entry_count: 28
+    archive_index: archive-index/sample-run.csv
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8701338088
+    github_artifact_digest: 08232f189bbbf5e74ea07c8c401b1eb87dbc52906fd53d16848b6161fb98937c
+  - id: test-cases
+    type: test-archive
+    name: AERMOD Test Cases
+    url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_test_cases.zip
+    materialized: true
+    materialization_method: GitHub Actions compact reference snapshot
+    materialized_at: "2026-07-28T19:24:33Z"
+    size_bytes: 488669681
+    sha256: fc5ad71de5ba64a50ed72d4d19c45b32ad14447353b1216c3d1f420ce84beff8
+    http_last_modified: "Thu, 09 Jul 2026 19:50:21 GMT"
+    http_etag: '"1d2081f1-65632ef2c5d40"'
+    zip_entry_count: 1931
+    archive_index: archive-index/test-cases.csv.gz
+    github_actions_run_id: 30391161469
+    github_artifact_id: 8701201873
+    github_artifact_digest: 0c237c57eefcdde1d4ab05495bf8260539d1d76d75de8e9fecf712bb38e5a291
+
+regression_validation:
+  official_configuration: aermet26135_aermod26135
+  fixture_snapshot:
+    github_actions_run_id: 30392777428
+    github_artifact_id: 8701857473
+    github_artifact_digest: 61df675b1d85ec660e164176aee03c81d766cf5528484c3bfdcb8ebf669fb89a
+    fixture_count: 273
+    fixture_total_bytes: 72473324
+    input_decks: 53
+    meteorology_and_support_files: 18
+    expected_output_files: 189
+  official_executable_tier:
+    evidence_status: confirmed-exact-for-probed-cases
+    cases:
+      - capped
+      - capped_nostd
+    canonical_diff_lines: 0
+    metric_mismatch_count: 0
+    report: regression/OFFICIAL_EXECUTABLE_PARITY.md
+    data: regression/official-executable-parity.json
+  reproduced_build_tier:
+    compiler: GNU Fortran 14.2.0
+    compile_flags: -fbounds-check -Wuninitialized -O2 -static
+    link_flags: -static -O2
+    executable_sha256: e8313b430047472ccf9a6cbd49b573c8e638aafaca25805e42c0f9c7a14341a5
+    successful_cases: 53
+    failed_cases: 0
+    canonical_exact_cases: 27
+    representation_or_tie_equivalent_cases: 10
+    minor_floating_point_drift_cases: 9
+    moderate_floating_point_drift_cases: 6
+    compiler_specific_localized_difference_cases: 1
+    flagged_case: capped
+    flagged_source_group: STACK1C
+    flagged_table: 2ND HIGHEST 1-HR
+    maximum_extracted_relative_difference: 0.0526130411798
+    report: regression/REGRESSION_VALIDATION.md
+  parity_policy:
+    - EPA-distributed executable and expected outputs define exact official release-fixture parity.
+    - Reproduced source builds are a separate compiler/platform evidence tier.
+    - Exact cross-compiler text or numeric parity is not assumed.
+    - Tolerances must be explicit by compiler, platform, case, output family, and intended use.
+    - EPA numerical source is not modified merely to force agreement.
+
+fortran_compile_units_from_official_manifest:
+  - modules.f
+  - grsm.f
+  - aermod.f
+  - setup.f
+  - coset.f
+  - soset.f
+  - reset.f
+  - meset.f
+  - ouset.f
+  - inpsum.f
+  - metext.f
+  - iblval.f
+  - siggrid.f
+  - tempgrid.f
+  - windgrid.f
+  - calc1.f
+  - calc2.f
+  - prise.f
+  - arise.f
+  - prime.f
+  - sigmas.f
+  - pitarea.f
+  - uninam.f
+  - output.f
+  - evset.f
+  - evcalc.f
+  - evoutput.f
+  - rline.f
+  - bline.f
+
+evidence_priority:
+  - EPA v26135 source code and observed official executable behavior
+  - EPA v26135 User's Guide and Quick Reference Guide
+  - EPA v26135 release notes, MCB, transmittal, and errata
+  - EPA formulation, implementation, evaluation, sample, and test materials
+  - independently verified AERMODKit tests
+  - commercial software workflow references
+  - third-party open-source implementations
+
+runtime_notes:
+  - Current EPA PDF text was inspected through the web document parser.
+  - PDF page screenshots failed with cache-miss errors in the current tool environment.
+  - The local working container could not resolve gaftp.epa.gov; GitHub-hosted runners downloaded the official assets.
+  - The retained local aermod_userguide.pdf is the October 2023 guide and must not be treated as the 2026 v26135 guide.
+  - Source, executable, sample-run, and test-case archives were materialized and hashed by auditable GitHub Actions jobs.
+  - Large official archives and executable binaries are indexed and referenced, not committed directly to Git.

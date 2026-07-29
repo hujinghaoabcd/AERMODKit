@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 2,
+  "records": [
+    {
+      "keyword": "HALFLIFE",
+      "record_role": "exponential-decay-half-life",
+      "required": false,
+      "repeatability": "once; mutually exclusive with DCAYCOEF; first decay form wins",
+      "syntax": ["[CO] HALFLIFE <half_life_seconds>"],
+      "fields": [{"name": "half_life_seconds", "position": 3, "type": "real", "required": true, "units": "s", "source_range": "not explicitly constrained by EDECAY"}],
+      "derived_behavior": {"decay_coefficient_s-1": "0.693 / half_life_seconds"},
+      "ordering": {"must_follow": ["MODELOPT", "POLLUTID"]},
+      "constraints": [
+        {"rule": "HALFLIFE and DCAYCOEF are mutually exclusive; the first encountered form is retained and the later form is ignored with W155."},
+        {"rule": "A duplicate HALFLIFE is an error E135."},
+        {"rule": "The source handler does not explicitly reject zero or negative values; AERMODKit must not invent source validation. A semantic safety policy may diagnose them separately while preserving the input."},
+        {"rule": "Under DFAULT, urban SO2 uses 4.81e-5 s-1 and an attempted override is ignored with W206; other DFAULT applications use zero decay."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "HALFLIFE repeated", "source_lines": "122-141"},
+        {"severity": "warning", "code": "155", "condition": "DCAYCOEF appeared first; HALFLIFE ignored", "source_lines": "126-130"},
+        {"severity": "error", "code": "140", "condition": "appears before MODELOPT or POLLUTID", "source_lines": "157-165"},
+        {"severity": "error", "code": "200", "condition": "missing numeric parameter", "source_lines": "2666-2669"},
+        {"severity": "error", "code": "202", "condition": "too many parameters", "source_lines": "2670-2673"},
+        {"severity": "error", "code": "208", "condition": "parameter is not numeric", "source_lines": "2676-2684"},
+        {"severity": "warning", "code": "206", "condition": "DFAULT overrides user decay setting", "source_lines": "2690-2706"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "122-166", "handler": "EDECAY", "handler_lines": "2641-2714", "runtime_file": "calc2.f", "runtime_lines": "1617-1638"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.10", "syntax_page": 106, "notes": ["Optional, non-repeatable; units seconds; DECAY = 0.693/HAFLIF."]},
+      "fixtures": {"occurrences": 0, "files": 0, "examples": []},
+      "preservation_notes": ["No active current official fixture; retain source quirks and exact numeric spelling for later executable probes."],
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "DCAYCOEF",
+      "record_role": "exponential-decay-coefficient",
+      "required": false,
+      "repeatability": "once; mutually exclusive with HALFLIFE; first decay form wins",
+      "syntax": ["[CO] DCAYCOEF <decay_coefficient>"],
+      "fields": [{"name": "decay_coefficient", "position": 3, "type": "real", "required": true, "units": "s^-1", "source_range": "not explicitly constrained by EDECAY"}],
+      "ordering": {"must_follow": ["MODELOPT", "POLLUTID"]},
+      "constraints": [
+        {"rule": "HALFLIFE and DCAYCOEF are mutually exclusive; the first encountered form is retained and the later form is ignored with W155."},
+        {"rule": "A duplicate DCAYCOEF is an error E135."},
+        {"rule": "The source handler does not explicitly reject zero or negative values; preserve source behavior and separate future semantic-policy diagnostics."},
+        {"rule": "Under DFAULT, urban SO2 uses 4.81e-5 s-1 and an attempted override is ignored with W206; other DFAULT applications use zero decay."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "DCAYCOEF repeated", "source_lines": "142-155"},
+        {"severity": "warning", "code": "155", "condition": "HALFLIFE appeared first; DCAYCOEF ignored", "source_lines": "145-149"},
+        {"severity": "error", "code": "140", "condition": "appears before MODELOPT or POLLUTID", "source_lines": "157-165"},
+        {"severity": "error", "code": "200", "condition": "missing numeric parameter", "source_lines": "2666-2669"},
+        {"severity": "error", "code": "202", "condition": "too many parameters", "source_lines": "2670-2673"},
+        {"severity": "error", "code": "208", "condition": "parameter is not numeric", "source_lines": "2676-2684"},
+        {"severity": "warning", "code": "206", "condition": "DFAULT overrides user decay setting", "source_lines": "2690-2706"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "122-166", "handler": "EDECAY", "handler_lines": "2641-2714", "runtime_file": "calc2.f", "runtime_lines": "1617-1638"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.10", "syntax_page": 106, "notes": ["Optional, non-repeatable; units s^-1; DECAY = 0.693/HAFLIF."]},
+      "fixtures": {"occurrences": 0, "files": 0, "examples": []},
+      "preservation_notes": ["No active current official fixture; retain trailing/invalid syntax for loss-aware diagnostics."],
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "FLAGPOLE",
+      "record_role": "default-receptor-flagpole-height",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] FLAGPOLE [<default_height_m>]"],
+      "fields": [{"name": "default_height_m", "position": 3, "type": "real", "required": false, "units": "m", "default": 0.0, "minimum": 0.0}],
+      "constraints": [
+        {"rule": "Presence enables flagpole receptor processing."},
+        {"rule": "Receptor-level flagpole heights override the CO default."},
+        {"rule": "A missing height is accepted with W205 and uses 0.0 m."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "167-172"},
+        {"severity": "warning", "code": "205", "condition": "height omitted; default 0.0 m used", "source_lines": "2785-2790"},
+        {"severity": "error", "code": "202", "condition": "more than one payload field", "source_lines": "2791-2794"},
+        {"severity": "error", "code": "208", "condition": "height is not numeric", "source_lines": "2797-2805"},
+        {"severity": "error", "code": "209", "condition": "height is negative", "source_lines": "2806-2811"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "167-172", "handler": "FLAGDF", "handler_lines": "2764-2823"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.11", "syntax_page": 106, "notes": ["Optional, non-repeatable; default 0.0 m; receptor values override the default."]},
+      "fixtures": {"occurrences": 5, "files": 5, "examples": ["Test1_Base_cart_3cond_SNC.inp:5", "Test20_Urban_cart_3cond_SNC.inp:5", "surfcoal.inp:8"]},
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "URBANOPT",
+      "record_role": "urban-area-definition",
+      "required": false,
+      "repeatability": "repeatable for multiple urban areas; single-area form occurs once",
+      "syntax": ["[CO] URBANOPT <population> [<urban_name> [<roughness_m>]]", "[CO] URBANOPT <urban_id> <population> [<urban_name> [<roughness_m>]]"],
+      "forms": [
+        {"name": "single-urban-area", "fields": ["population", "urban_name?", "roughness_m?"]},
+        {"name": "multiple-urban-areas", "fields": ["urban_id", "population", "urban_name?", "roughness_m?"]}
+      ],
+      "fields": [
+        {"name": "urban_id", "type": "string", "required": "multiple-area form only", "max_length": 8},
+        {"name": "population", "type": "real", "required": true, "minimum": 100.0, "warning_below": 21206.0},
+        {"name": "urban_name", "type": "string", "required": false, "note": "required positionally before roughness; name may be used as placeholder when roughness is supplied"},
+        {"name": "roughness_m", "type": "real", "required": false, "units": "m", "default": 1.0, "fatal_at_or_above": 5.0, "warning_ranges": ["<0.80", ">1.50 and <5.0"]}
+      ],
+      "ordering": {"must_follow": ["MODELOPT"], "pre_scan": "aermod.f 5853-5860 counts records and enables multiple-area parsing before normal SETUP"},
+      "constraints": [
+        {"rule": "A unique urban ID is required for each area when more than one URBANOPT is present."},
+        {"rule": "Under DFAULT, non-1.0 roughness produces W206 and is forced to 1.0 m."},
+        {"rule": "Under non-DFAULT, non-1.0 roughness marks the run non-default."},
+        {"rule": "Multiple urban areas conflict with SO URBANSRC ALL."},
+        {"rule": "Source recognition and non-default roughness acceptance do not establish regulatory approval."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "140", "condition": "appears before MODELOPT", "source_lines": "296-299"},
+        {"severity": "error", "code": "200/201/202", "condition": "wrong number of fields for selected single/multiple form", "source_lines": "5221-5269"},
+        {"severity": "error", "code": "219", "condition": "urban ID exceeds eight characters", "source_lines": "5294-5299"},
+        {"severity": "error", "code": "303", "condition": "duplicate urban ID", "source_lines": "5300-5312"},
+        {"severity": "error", "code": "208", "condition": "population or roughness is not numeric", "source_lines": "5320-5368"},
+        {"severity": "error", "code": "203", "condition": "population below 100", "source_lines": "5332-5338"},
+        {"severity": "warning", "code": "320", "condition": "population is 100 to below 21,206", "source_lines": "5339-5344"},
+        {"severity": "warning", "code": "206", "condition": "DFAULT forces roughness to 1.0 m", "source_lines": "5372-5380"},
+        {"severity": "warning", "code": "353", "condition": "roughness outside 0.80 to 1.50 m advisory band", "source_lines": "5383-5405"},
+        {"severity": "error", "code": "380", "condition": "roughness is at least 5 m", "source_lines": "5399-5405"},
+        {"severity": "error", "code": "279", "condition": "multiple urban areas used with URBANSRC ALL", "source_lines": "5412-5417"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "292-301", "handler": "URBOPT", "handler_lines": "5193-5428", "pre_scan_file": "aermod.f", "pre_scan_lines": "5853-5860"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.8", "syntax_page": 104, "notes": ["Optional; repeatable for multiple urban areas; ID up to eight characters; roughness defaults to 1.0 m."]},
+      "fixtures": {"occurrences": 7, "files": 4, "examples": ["Test20_Urban_cart_3cond_SNC.inp:7", "blp_urban.inp:8", "multurb.inp:12-15"]},
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified-regulatory-status-partial"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "pathway": "EV",
+  "batch": 1,
+  "status": "complete-source-verified-ev-pathway-specification",
+  "authority_order": [
+    "EPA v26135 executable source code",
+    "EPA v26135 manual/release material",
+    "EPA current fixtures"
+  ],
+  "scope": {
+    "included_keywords": [
+      "STARTING",
+      "EVENTPER",
+      "EVENTLOC",
+      "INCLUDED",
+      "FINISHED"
+    ],
+    "excluded_note": "No executable primary dispatcher branch remains inventory-only."
+  },
+  "preservation_policy": {
+    "original_text": true,
+    "comments": true,
+    "blank_lines": true,
+    "case": true,
+    "unknown_fields": true,
+    "unknown_records": true,
+    "include_boundaries": true,
+    "rule": "Semantic validation may diagnose content but the syntax layer must retain it verbatim."
+  },
+  "record_files": [
+    "ev_events_include_finish.json"
+  ],
+  "completion": {
+    "source_dispatch_primary_records": 5,
+    "bundled_records": 5,
+    "missing_records": [],
+    "extra_records": []
+  }
+}

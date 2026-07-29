@@ -1,0 +1,16 @@
+pathway,keyword,handler,dispatcher_lines,handler_lines,manual_section,manual_page,fixture_occurrences,evidence_status
+CO,O3VALUES,O3VALS / O3FILL,313-322,6444-6610 / 6782-6857,3.2.5.1,102,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,OZONUNIT,OZON_UNIT,333-347,6934-6982,3.2.5.1,103,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,NOXSECTR,NOXSECTOR,449-463,7140-7245,3.2.5.2,106,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,NOXVALUE,NOXVAL,464-473,5571-5706,3.2.5.2,107,1,v26135-source-manual-and-current-fixture-verified
+CO,NOX_VALS,NOXVALS / NOXFILL,474-483,6617-6781 / 6858-6933,3.2.5.2,107,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,NOX_UNIT,NOX_UNIT,484-498,6983-7031,3.2.5.2,109,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,NOX_FILE,NOXFILE,499-507,5945-6169,3.2.5.2,109,0,v26135-source-and-current-manual-verified-repeatability-discrepancy-no-active-fixture
+CO,GDSEASON,GDSEAS,237-246,4981-5051,3.2.2.13,85,2,v26135-source-manual-and-current-fixture-verified
+CO,GASDEPDF,GDDEF,247-256,4899-4980,3.2.2.15,86,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,GDLANUSE,GDLAND,257-266,5121-5192,3.2.2.14,86,2,v26135-source-manual-and-current-fixture-verified
+CO,GASDEPVD,GVSUBD,267-276,5052-5120,3.2.2.16,86,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,LOW_WIND,LOW_WND,379-391,7248-7470,3.2.3,89,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,AWMADWNW,AWMA_DOWNWASH,422-434,7471-7993,3.2.4.2,94,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,ORD_DWNW,ORD_DOWNWASH,435-448,7994-8145,3.2.4.1,93,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,ARCFTOPT,inline COCARD branch,511-526,511-526,3.2.12,118,0,v26135-source-and-current-manual-verified-dispatcher-repeatability-discrepancy-no-active-fixture

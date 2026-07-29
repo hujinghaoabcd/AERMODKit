@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "OU",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "MAXDAILY",
+      "role": "maximum-daily-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] MAXDAILY <source_group> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {
+        "requires_pollutant_mode": [
+          "NO2AVE",
+          "SO2AVE",
+          "PM25AVE"
+        ],
+        "requires_average": [
+          1,
+          24
+        ]
+      },
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "123-142",
+        "handler": "OUMAXDLY",
+        "handler_file": "ouset.f",
+        "handler_lines": "3296-3592"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "MXDYBYYR",
+      "role": "maximum-daily-by-year-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] MXDYBYYR <source_group> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {
+        "requires_pollutant_mode": [
+          "NO2AVE",
+          "SO2AVE",
+          "PM25AVE"
+        ],
+        "requires_average": [
+          1,
+          24
+        ]
+      },
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "143-162",
+        "handler": "OUMXDLY_BYYR",
+        "handler_file": "ouset.f",
+        "handler_lines": "3593-3887"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "MAXDCONT",
+      "role": "design-value-source-contribution-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] MAXDCONT <source_group> <primary_rank> <THRESH> <threshold> <filename> [<file_unit>]",
+        "[OU] MAXDCONT <source_group> <primary_rank> <secondary_rank> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "primary_rank",
+          "type": "positive integer"
+        },
+        {
+          "name": "mode",
+          "type": "THRESH or secondary rank"
+        },
+        {
+          "name": "threshold/rank",
+          "type": "real or integer"
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {
+        "requires_pollutant_mode": [
+          "NO2AVE",
+          "SO2AVE",
+          "PM25AVE"
+        ],
+        "requires_average": [
+          1,
+          24
+        ]
+      },
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "163-182",
+        "handler": "OUMAXD_CONT",
+        "handler_file": "ouset.f",
+        "handler_lines": "3888-4233"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 7,
+        "files": 7,
+        "examples": [
+          "no2_1yrAK_arm2.inp:89",
+          "no2_1yrAK_arm2min.inp:89",
+          "no2_1yrAK_olm.inp:88",
+          "no2_1yrAK_olmgrp.inp:89"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "NOHEADER",
+      "role": "suppress-external-file-headers",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] NOHEADER <ALL|MAXIFILE|POSTFILE|PLOTFILE|SEASONHR|RANKFILE|MAXDAILY|MXDYBYYR|MAXDCONT> [...]"
+      ],
+      "fields": [
+        {
+          "name": "families",
+          "type": "1..8 output-family tokens"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "ALL enables all supported suppressions; unsupported families remain diagnosable."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "183-191",
+        "handler": "NOHEADER",
+        "handler_file": "ouset.f",
+        "handler_lines": "4234-4312"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "FINISHED",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "OU FINISHED"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        },
+        {
+          "rule": "OUTQA checks missing/invalid output combinations, duplicate file units, duplicate filenames, FILEFORM relevance, EVALFILE/EVALCART consistency, and output-family dependencies."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "192-203",
+        "handler": "OUTQA",
+        "handler_file": "ouset.f",
+        "handler_lines": "211-488"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:57",
+          "multurb.inp:50",
+          "no2_1yrAK_arm2.inp:90",
+          "allsrcs.inp:182"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 2,
+  "records": [
+    {
+      "keyword": "O3SECTOR",
+      "record_role": "ozone-wind-sector-boundaries",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] O3SECTOR <start_direction_1> <start_direction_2> [<start_direction_3> ... <start_direction_6>]"],
+      "fields": [{"name": "start_directions", "position": "3..N", "type": "real array", "required": true, "min_items": 2, "max_items": 6, "units": "degrees", "minimum": 0.0, "maximum": 360.0, "order": "ascending circular sector starts"}],
+      "dependencies": {"requires_any_model_option": ["PVMRM", "OLM", "TTRM", "TTRM2", "GRSM"]},
+      "constraints": [
+        {"rule": "Each adjacent and wrap-around sector width must be at least 30 degrees; widths from 30 to below 60 degrees produce W227."},
+        {"rule": "Sector identifiers used by OZONEVAL/OZONEFIL must resolve to one of the defined SECT1..SECTN positions."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "392-399"},
+        {"severity": "error", "code": "600", "condition": "no compatible NO2 conversion model option", "source_lines": "400-405"},
+        {"severity": "error", "code": "200/201/202", "condition": "no, too few, or too many sector starts", "source_lines": "7055-7066"},
+        {"severity": "error", "code": "208", "condition": "sector start is not numeric", "source_lines": "7073-7082"},
+        {"severity": "error", "code": "380", "condition": "sector direction outside 0..360", "source_lines": "7084-7098"},
+        {"severity": "error", "code": "222", "condition": "sector starts are out of ascending order", "source_lines": "7108-7113"},
+        {"severity": "error", "code": "227", "condition": "sector width below 30 degrees", "source_lines": "7114-7118; 7125-7130"},
+        {"severity": "warning", "code": "227", "condition": "sector width from 30 to below 60 degrees", "source_lines": "7119-7122; 7131-7135"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "392-406", "handler": "O3SECTOR", "handler_lines": "7032-7139"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.1", "syntax_page": 91, "notes": ["Optional, non-repeatable; up to six sectors; minimum 30-degree width and warning below 60 degrees."]},
+      "fixtures": {"occurrences": 0, "files": 0, "examples": []},
+      "preservation_notes": ["No active current fixture. Preserve numeric spelling and sector labels for focused official-executable probes."],
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "OZONEVAL",
+      "record_role": "constant-background-ozone",
+      "required": false,
+      "repeatability": "repeatable across sector assignments; same-sector duplicate behavior needs executable probe",
+      "syntax": ["[CO] OZONEVAL <ozone_value> [<units>]", "[CO] OZONEVAL <sector_id> <ozone_value> [<units>]"],
+      "fields": [
+        {"name": "sector_id", "type": "enum", "required": "only for sector-varying form", "allowed_pattern": "SECT1..SECT6", "dependency": "O3SECTOR must be present and define that position"},
+        {"name": "ozone_value", "type": "real", "required": true, "units": "as selected then converted internally to UG/M3"},
+        {"name": "units", "type": "enum", "required": false, "allowed_values": ["UG/M3", "PPB", "PPM"], "default": "UG/M3"}
+      ],
+      "dependencies": {"requires_any_model_option": ["PVMRM", "OLM", "TTRM", "TTRM2", "GRSM"]},
+      "conversion": {"PPB_or_PPM_to_UG/M3": "reference temperature 25 C and pressure 1013.25 mb"},
+      "constraints": [
+        {"rule": "Without O3SECTOR, a leading SECT token is invalid (E171)."},
+        {"rule": "Converted values <=0 or >500 UG/M3 produce W320 but are retained by the handler."},
+        {"rule": "OZONEVAL supplies fallback values for missing OZONEFIL data."},
+        {"rule": "At FINISHED, OZONEVAL conflicts with O3VALUES globally or for the same sector (E148)."},
+        {"rule": "The source does not explicitly reject duplicate OZONEVAL records for the same sector; record for an executable probe rather than assuming last/first-wins policy."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "600", "condition": "no compatible NO2 conversion model option", "source_lines": "302-311"},
+        {"severity": "error", "code": "200/201/202", "condition": "wrong number of fields", "source_lines": "5455-5492"},
+        {"severity": "error", "code": "171", "condition": "sector form used without O3SECTOR", "source_lines": "5465-5472"},
+        {"severity": "error", "code": "203", "condition": "invalid sector ID or units", "source_lines": "5480-5487; 5536-5545"},
+        {"severity": "error", "code": "208", "condition": "ozone value is not numeric", "source_lines": "5505-5514"},
+        {"severity": "warning", "code": "320", "condition": "converted ozone <=0 or >500 UG/M3", "source_lines": "5552-5561"},
+        {"severity": "error", "code": "148", "condition": "conflicts with O3VALUES at FINISHED", "source_lines": "592-616"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "302-312", "handler": "O3VAL", "handler_lines": "5429-5570"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.1", "syntax_pages": "91-92 / Appendix A-13", "notes": ["Optional; repeatable; default units UG/M3; sector form uses SECTx."]},
+      "fixtures": {"occurrences": 16, "files": 16, "examples": ["bg_no2_grsm_ppb.inp:17", "no2_1yrAK_grsm.inp:7", "no2_1yrAK_pvmrm.inp:7"]},
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified-needs-duplicate-probe"
+    },
+    {
+      "keyword": "OZONEFIL",
+      "record_role": "hourly-background-ozone-file",
+      "required": false,
+      "repeatability": "repeatable across sector assignments; same-sector duplicate/open-unit behavior is source-managed and needs focused probes",
+      "syntax": ["[CO] OZONEFIL <filename> [<units> [<fortran_format>]]", "[CO] OZONEFIL <sector_id> <filename> [<units> [<fortran_format>]]"],
+      "fields": [
+        {"name": "sector_id", "type": "enum", "required": "sector-varying form only", "allowed_pattern": "SECT1..SECT6", "dependency": "O3SECTOR must define the sector"},
+        {"name": "filename", "type": "path/string", "required": true, "max_length": 200, "case_preserved": true, "quoted_embedded_spaces": true},
+        {"name": "units", "type": "enum", "required": false, "allowed_values": ["UG/M3", "PPB", "PPM"], "default": "UG/M3"},
+        {"name": "fortran_format", "type": "string", "required": false, "default": "FREE", "requirements": ["parenthesized", "1 to 4 integer descriptors", "exactly one real F/E/D descriptor"]}
+      ],
+      "dependencies": {"requires_any_model_option": ["PVMRM", "OLM", "TTRM", "TTRM2", "GRSM"]},
+      "file_layout": {"default_order": ["year", "month", "day", "hour", "ozone_value"], "year_digits": [2, 4], "date_period": "must match meteorological input period"},
+      "constraints": [
+        {"rule": "Without O3SECTOR, a leading SECT token is invalid (E171)."},
+        {"rule": "Missing/invalid file-open conditions use E500/E501."},
+        {"rule": "A custom format that does not contain 1..4 integer descriptors and exactly one real descriptor emits W292; the source can later fail while reading."},
+        {"rule": "Hourly values below zero or >=900 are treated as missing during meteorological processing; fallback precedence is OZONEVAL/O3VALUES, otherwise full NO-to-NO2 conversion."},
+        {"rule": "The specification preserves quoted filenames and the original custom-format field verbatim."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "600", "condition": "no compatible NO2 conversion model option", "source_lines": "323-331"},
+        {"severity": "error", "code": "200/201/202", "condition": "wrong number of fields", "source_lines": "5741-5780"},
+        {"severity": "error", "code": "171", "condition": "sector form used without O3SECTOR", "source_lines": "5751-5759"},
+        {"severity": "error", "code": "203", "condition": "invalid sector ID or units", "source_lines": "5770-5777; 5874-5883"},
+        {"severity": "error", "code": "291", "condition": "filename exceeds source field capacity", "source_lines": "5793-5799"},
+        {"severity": "error", "code": "500", "condition": "file cannot be opened", "source_lines": "5821-5831"},
+        {"severity": "error", "code": "501", "condition": "conflicting/already-open file unit", "source_lines": "5807-5818"},
+        {"severity": "warning", "code": "292", "condition": "custom Fortran format descriptor shape is suspect", "source_lines": "5901-5936"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "323-332", "handler": "O3FILE", "handler_lines": "5709-5944"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.1", "syntax_pages": "94-95", "notes": ["Optional; guide labels non-repeatable while source supports sector-indexed calls; default units UG/M3 and format FREE; filename up to 200 characters."]},
+      "fixtures": {"occurrences": 8, "files": 8, "examples": ["no2_1yrAK_grsm.inp:8", "olm.inp:7", "pvmrm.inp:7"]},
+      "preservation_notes": ["Manual type wording and source sector-indexed repeat behavior are both retained; do not collapse the evidence into an unsupported blanket repeatability claim."],
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified-manual-source-repeatability-discrepancy"
+    }
+  ]
+}

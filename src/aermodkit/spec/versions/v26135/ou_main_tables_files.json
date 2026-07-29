@@ -1,0 +1,419 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "OU",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "OU STARTING"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "39-45",
+        "handler": "OUCARD",
+        "handler_file": "ouset.f",
+        "handler_lines": "1-4312"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:49",
+          "multurb.inp:38",
+          "no2_1yrAK_arm2.inp:80",
+          "allsrcs.inp:165"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "RECTABLE",
+      "role": "main-report-high-value-table",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] RECTABLE <ALLAVE|MONTH|averaging_period> <rank-or-range> [<rank> ...]"
+      ],
+      "fields": [
+        {
+          "name": "averaging_period",
+          "type": "ALLAVE, MONTH, or configured period"
+        },
+        {
+          "name": "ranks",
+          "type": "one or more integer ranks/ranges"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "46-50",
+        "handler": "OUHIGH",
+        "handler_file": "ouset.f",
+        "handler_lines": "489-697"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 52,
+        "files": 52,
+        "examples": [
+          "psdcred.inp:50",
+          "multurb.inp:39",
+          "no2_1yrAK_arm2.inp:81",
+          "allsrcs.inp:166"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [
+        "Writes receptor high-value tables into the main report."
+      ]
+    },
+    {
+      "keyword": "MAXTABLE",
+      "role": "main-report-maximum-table",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] MAXTABLE <ALLAVE|MONTH|averaging_period> <number_of_maxima>"
+      ],
+      "fields": [
+        {
+          "name": "period",
+          "type": "configured averaging period selector"
+        },
+        {
+          "name": "count",
+          "type": "positive integer"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "51-55",
+        "handler": "OUMXVL",
+        "handler_file": "ouset.f",
+        "handler_lines": "698-800"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 25,
+        "files": 25,
+        "examples": [
+          "psdcred.inp:51",
+          "multurb.inp:40",
+          "allsrcs.inp:167",
+          "testpm25.inp:72"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "DAYTABLE",
+      "role": "main-report-daily-table",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] DAYTABLE <ALLAVE|MONTH|averaging_period> [<averaging_period> ...]"
+      ],
+      "fields": [
+        {
+          "name": "periods",
+          "type": "one or more configured periods"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "56-64",
+        "handler": "OUDALY",
+        "handler_file": "ouset.f",
+        "handler_lines": "801-886"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "testpart.inp:89",
+          "testgas.inp:93"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "MAXIFILE",
+      "role": "threshold-maximum-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] MAXIFILE <averaging_period> <source_group> <threshold> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "period",
+          "type": "configured averaging period"
+        },
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "threshold",
+          "type": "real"
+        },
+        {
+          "name": "filename",
+          "type": "path"
+        },
+        {
+          "name": "file_unit",
+          "type": "optional integer"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "65-69",
+        "handler": "OUMXFL",
+        "handler_file": "ouset.f",
+        "handler_lines": "887-1230"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "testpm25.inp:73",
+          "testpm10.inp:73"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "POSTFILE",
+      "role": "postprocessing-results-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] POSTFILE <PERIOD|ANNUAL|MONTH|averaging_period> <source_group> <UNFORM|PLOT> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "period",
+          "type": "period selector"
+        },
+        {
+          "name": "source_group",
+          "type": "existing group"
+        },
+        {
+          "name": "format",
+          "type": "enum",
+          "allowed_values": [
+            "UNFORM",
+            "PLOT"
+          ]
+        },
+        {
+          "name": "filename/unit",
+          "type": "output destination"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "70-74",
+        "handler": "OUPOST",
+        "handler_file": "ouset.f",
+        "handler_lines": "1231-1720"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 147,
+        "files": 51,
+        "examples": [
+          "psdcred.inp:55",
+          "psdcred.inp:56",
+          "multurb.inp:46",
+          "multurb.inp:47"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    },
+    {
+      "keyword": "PLOTFILE",
+      "role": "ranked-plot-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[OU] PLOTFILE <PERIOD|ANNUAL|MONTH|averaging_period> <source_group> <rank> <filename> [<file_unit>]"
+      ],
+      "fields": [
+        {
+          "name": "rank",
+          "type": "positive integer or accepted rank token"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "ouset.f",
+        "dispatcher": "OUCARD",
+        "dispatcher_lines": "75-79",
+        "handler": "OUPLOT",
+        "handler_file": "ouset.f",
+        "handler_lines": "1721-2001"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "OU pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 70,
+        "files": 25,
+        "examples": [
+          "psdcred.inp:53",
+          "psdcred.inp:54",
+          "multurb.inp:42",
+          "multurb.inp:43"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [],
+      "output_family": {
+        "file_unit": "optional integer; dynamically assigned when omitted",
+        "filename": "case-preserved path",
+        "file_form": "FIX or EXP via FILEFORM",
+        "header_control": "NOHEADER only for supported families"
+      }
+    }
+  ]
+}

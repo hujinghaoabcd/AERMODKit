@@ -1,0 +1,18 @@
+keyword,output_category,destination,content,repeatability,format_control,scope
+RECTABLE,main-report,main .out,receptor high-value tables,repeatable,not external,main report
+MAXTABLE,main-report,main .out,maximum-value tables,repeatable,not external,main report
+DAYTABLE,main-report,main .out,daily-value tables,once,not external,main report
+MAXIFILE,external,user file,threshold exceedance/maxima,repeatable,FILEFORM+NOHEADER,period+group+threshold
+POSTFILE,external,user file,postprocessing sequential results,repeatable,own UNFORM/PLOT plus FILEFORM/header,period+group
+PLOTFILE,external,user file,ranked plotting values,repeatable,FILEFORM+NOHEADER,period+group+rank
+TOXXFILE,external,user file,TOXX model input,repeatable,FILEFORM,period+threshold
+SEASONHR,external,user file,season by hour results,repeatable,FILEFORM+NOHEADER,group
+RANKFILE,external,user file,ranked values,repeatable,FILEFORM+NOHEADER,period+rank
+EVALFILE,external,user file,evaluation receptor/source results,repeatable,FILEFORM,source
+SUMMFILE,external,user file,high-ranked summary,once,fixed summary structure,global
+MAXDAILY,external,user file,maximum daily values,repeatable,FILEFORM+NOHEADER,group
+MXDYBYYR,external,user file,maximum daily values by year,repeatable,FILEFORM+NOHEADER,group
+MAXDCONT,external,user file,design-value source contributions,repeatable,FILEFORM+NOHEADER,group+rank/threshold
+EVENTOUT,event-report,event output,SOCONT or DETAIL event output,once in event mode,FILEFORM,event mode
+FILEFORM,control,all eligible external files,FIX/EXP numeric format,once,global,ordinary/event mode
+NOHEADER,control,selected external families,suppress headers,once,family selector,ordinary mode
