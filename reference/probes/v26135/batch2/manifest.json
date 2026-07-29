@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-02",
+  "purpose": "Official-executable probes for temporal-vector completion, event-output FILEFORM behavior, and VBARRIER range/selection boundaries.",
+  "official_assets": {
+    "executable_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip",
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip",
+    "fixture_artifact_id": 8701857473
+  },
+  "classification_policy": {
+    "accepted": "return code 0, official success marker present, and no E### diagnostic",
+    "rejected": "at least one E### diagnostic or official unsuccessful marker",
+    "indeterminate": "neither accepted nor rejected criteria are satisfied",
+    "observe": "targeted cases collect behavior without asserting acceptance or rejection"
+  },
+  "source_snippets": {
+    "coset.f": [[559, 680], [6444, 7031]],
+    "soset.f": [[8529, 8731]],
+    "evset.f": [[776, 900]],
+    "ouset.f": [[114, 122], [3206, 3295]]
+  },
+  "preparations": [
+    {
+      "id": "event_input_seed",
+      "question": "Can a retained short official deck generate a valid EVENT-processing input file for paired FILEFORM probes?",
+      "base_input": "Test1_Base_cart_3cond_SNC.inp",
+      "expected_outcome": "accepted",
+      "required_files": ["Outputs/event_batch2_base.inp"],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 EVENT input seed"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC FLAT"},
+        {"contains": "RUNORNOT RUN", "replacement": "   RUNORNOT RUN\n   EVENTFIL  ../Outputs/event_batch2_base.inp SOCONT"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/event_input_seed_ERRORS.OUT"},
+        {"contains": "LOCATION  BASE  RLINEXT", "replacement": "   LOCATION  BASE  POINT  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  BASE", "replacement": "   SRCPARAM  BASE  1.0  10.0  300.0  5.0  1.0"}
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "co_o3values_month_complete_control",
+      "question": "Does a complete 12-value MONTH O3VALUES vector complete successfully?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 complete O3VALUES MONTH control"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3VALUES MONTH 12*40.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_o3values_month_complete_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_o3values_month_incomplete",
+      "question": "Which final official diagnostic is emitted for an 11-of-12 MONTH O3VALUES vector?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 incomplete O3VALUES MONTH"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3VALUES MONTH 11*40.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_o3values_month_incomplete_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_nox_vals_month_complete_control",
+      "question": "Does a complete 12-value MONTH NOX_VALS vector complete successfully?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 complete NOX_VALS MONTH control"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOX_VALS MONTH 12*10.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_vals_month_complete_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_nox_vals_month_incomplete",
+      "question": "Which final official diagnostic is emitted for an 11-of-12 MONTH NOX_VALS vector?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 incomplete NOX_VALS MONTH"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOX_VALS MONTH 11*10.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_vals_month_incomplete_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_all_min_control",
+      "question": "Are HT=2.0, WT=2.5, LAI=4.0, and LM=0.55 accepted as inclusive minima?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_all_min_control"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   2.0 2.5 10.0 4.0 0.55"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_all_min_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_all_max_control",
+      "question": "Are HT=10.0, WT=13.0, LAI=10.92, and LM=3.75 accepted as inclusive maxima?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_all_max_control"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   10.0 13.0 10.0 10.92 3.75"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_all_max_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_ht_below_min",
+      "question": "Which diagnostic is emitted for HT=1.99 below the documented minimum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_ht_below_min"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   1.99 5.0 10.0 6.0 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_ht_below_min_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_ht_above_max",
+      "question": "Which diagnostic is emitted for HT=10.01 above the documented maximum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_ht_above_max"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   10.01 5.0 10.0 6.0 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_ht_above_max_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_wt_below_min",
+      "question": "Which diagnostic is emitted for WT=2.49 below the documented minimum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_wt_below_min"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 2.49 10.0 6.0 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_wt_below_min_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_wt_above_max",
+      "question": "Which diagnostic is emitted for WT=13.01 above the documented maximum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_wt_above_max"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 13.01 10.0 6.0 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_wt_above_max_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_lai_below_min",
+      "question": "Which diagnostic is emitted for LAI=3.99 below the documented minimum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_lai_below_min"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 3.99 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_lai_below_min_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_lai_above_max",
+      "question": "Which diagnostic is emitted for LAI=10.93 above the documented maximum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_lai_above_max"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 10.93 1.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_lai_above_max_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_lm_below_min",
+      "question": "Which diagnostic is emitted for LM=0.54 below the documented minimum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_lm_below_min"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 6.0 0.54"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_lm_below_min_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_lm_above_max",
+      "question": "Which diagnostic is emitted for LM=3.76 above the documented maximum?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_lm_above_max"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 6.0 3.76"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_lm_above_max_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_same_side_first_closer",
+      "question": "Does same-side input retain barrier 1 and emit W375 when |DCL1| < |DCL2|?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_same_side_first_closer"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 5.0 6.0 1.0 7.0 6.0 12.0 7.0 1.5"},
+        {"contains": "ERRORFIL", "replacement": "   DEBUGOPT  VBARRIER ../Outputs/so_vbarrier_same_side_first_closer_VBARRIER.DBG\n   ERRORFIL  ../Outputs/so_vbarrier_same_side_first_closer_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_same_side_second_closer",
+      "question": "Does same-side input retain barrier 2 and emit W375 when |DCL2| < |DCL1|?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_same_side_second_closer"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 12.0 6.0 1.0 7.0 6.0 5.0 7.0 1.5"},
+        {"contains": "ERRORFIL", "replacement": "   DEBUGOPT  VBARRIER ../Outputs/so_vbarrier_same_side_second_closer_VBARRIER.DBG\n   ERRORFIL  ../Outputs/so_vbarrier_same_side_second_closer_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "ou_event_fileform_exp_nondfault_control",
+      "question": "Does event-output FILEFORM EXP complete without DFAULT?",
+      "base_from_preparation": {"id": "event_input_seed", "path": "Outputs/event_batch2_base.inp"},
+      "expected_outcome": "accepted",
+      "replace_regex_once": [
+        {"pattern": "^\\s*(?:CO\\s+)?TITLEONE\\b.*$", "replacement": "   TITLEONE  AERMODKit batch 2 ou_event_fileform_exp_nondfault_control"},
+        {"pattern": "^\\s*(?:CO\\s+)?MODELOPT\\b.*$", "replacement": "   MODELOPT  CONC FLAT"},
+        {"pattern": "^\\s*(?:CO\\s+)?POLLUTID\\b.*$", "replacement": "   POLLUTID  OTHER"},
+        {"pattern": "^\\s*(?:CO\\s+)?ERRORFIL\\b.*$", "replacement": "   ERRORFIL  ../Outputs/ou_event_fileform_exp_nondfault_control_ERRORS.OUT"},
+        {"pattern": "^\\s*(?:OU\\s+)?EVENTOUT\\b.*$", "replacement": "   EVENTOUT  SOCONT\n   FILEFORM  EXP"}
+      ]
+    },
+    {
+      "id": "ou_event_fileform_exp_dfault_other_control",
+      "question": "Does event-output FILEFORM EXP remain accepted with DFAULT for a non-criteria pollutant?",
+      "base_from_preparation": {"id": "event_input_seed", "path": "Outputs/event_batch2_base.inp"},
+      "expected_outcome": "accepted",
+      "replace_regex_once": [
+        {"pattern": "^\\s*(?:CO\\s+)?TITLEONE\\b.*$", "replacement": "   TITLEONE  AERMODKit batch 2 ou_event_fileform_exp_dfault_other_control"},
+        {"pattern": "^\\s*(?:CO\\s+)?MODELOPT\\b.*$", "replacement": "   MODELOPT  CONC FLAT DFAULT"},
+        {"pattern": "^\\s*(?:CO\\s+)?POLLUTID\\b.*$", "replacement": "   POLLUTID  OTHER"},
+        {"pattern": "^\\s*(?:CO\\s+)?ERRORFIL\\b.*$", "replacement": "   ERRORFIL  ../Outputs/ou_event_fileform_exp_dfault_other_control_ERRORS.OUT"},
+        {"pattern": "^\\s*(?:OU\\s+)?EVENTOUT\\b.*$", "replacement": "   EVENTOUT  SOCONT\n   FILEFORM  EXP"}
+      ]
+    },
+    {
+      "id": "ou_event_fileform_fix_dfault_so2_control",
+      "question": "Does event-output FILEFORM FIX complete with DFAULT for SO2?",
+      "base_from_preparation": {"id": "event_input_seed", "path": "Outputs/event_batch2_base.inp"},
+      "expected_outcome": "accepted",
+      "replace_regex_once": [
+        {"pattern": "^\\s*(?:CO\\s+)?TITLEONE\\b.*$", "replacement": "   TITLEONE  AERMODKit batch 2 ou_event_fileform_fix_dfault_so2_control"},
+        {"pattern": "^\\s*(?:CO\\s+)?MODELOPT\\b.*$", "replacement": "   MODELOPT  CONC FLAT DFAULT"},
+        {"pattern": "^\\s*(?:CO\\s+)?POLLUTID\\b.*$", "replacement": "   POLLUTID  SO2"},
+        {"pattern": "^\\s*(?:CO\\s+)?ERRORFIL\\b.*$", "replacement": "   ERRORFIL  ../Outputs/ou_event_fileform_fix_dfault_so2_control_ERRORS.OUT"},
+        {"pattern": "^\\s*(?:OU\\s+)?EVENTOUT\\b.*$", "replacement": "   EVENTOUT  SOCONT\n   FILEFORM  FIX"}
+      ]
+    },
+    {
+      "id": "ou_event_fileform_exp_dfault_so2",
+      "question": "Does event-output FILEFORM EXP complete, warn, or reset under DFAULT for SO2?",
+      "base_from_preparation": {"id": "event_input_seed", "path": "Outputs/event_batch2_base.inp"},
+      "expected_outcome": "observe",
+      "replace_regex_once": [
+        {"pattern": "^\\s*(?:CO\\s+)?TITLEONE\\b.*$", "replacement": "   TITLEONE  AERMODKit batch 2 ou_event_fileform_exp_dfault_so2"},
+        {"pattern": "^\\s*(?:CO\\s+)?MODELOPT\\b.*$", "replacement": "   MODELOPT  CONC FLAT DFAULT"},
+        {"pattern": "^\\s*(?:CO\\s+)?POLLUTID\\b.*$", "replacement": "   POLLUTID  SO2"},
+        {"pattern": "^\\s*(?:CO\\s+)?ERRORFIL\\b.*$", "replacement": "   ERRORFIL  ../Outputs/ou_event_fileform_exp_dfault_so2_ERRORS.OUT"},
+        {"pattern": "^\\s*(?:OU\\s+)?EVENTOUT\\b.*$", "replacement": "   EVENTOUT  SOCONT\n   FILEFORM  EXP"}
+      ]
+    }
+  ]
+}
