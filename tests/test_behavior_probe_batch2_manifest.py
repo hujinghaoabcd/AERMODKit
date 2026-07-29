@@ -132,6 +132,9 @@ def test_batch2_reviewed_result_matches_manifest_and_workflow() -> None:
     assert result["review_status"] == "reviewed-official-executable-and-source-evidence"
     assert result["workflow_evidence"]["run_id"] == 30452705724
     assert result["workflow_evidence"]["artifact_id"] == 8724254777
+    assert result["source_evidence"]["source_pattern_sha256"] == (
+        "2cb334736d9acba9bd1c4fbd5cc9503cd9dd38c63e4433195e4ed9c31b4a55de"
+    )
     assert result["totals"]["preparations"]["expectations_met"] == 1
     assert result["totals"]["cases"] == {
         "items": 27,
