@@ -11,33 +11,6 @@ import tarfile
 from pathlib import Path
 
 EXPECTED_TAR_SHA256 = "1a3ae9a7d6b62fb5550ef51829cecd79ad543c0e23e277700dc0d4260f13af89"
-ORIGINAL_CI = '''name: CI
-
-on:
-  push:
-  pull_request:
-
-jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.11", "3.12", "3.13"]
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
-      - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e ".[dev]"
-      - run: ruff check .
-      - run: mypy src
-      - run: pytest --cov=aermodkit --cov-report=term-missing
-'''
 
 
 def reconstruct(*, clean: bool) -> None:
@@ -68,8 +41,6 @@ def reconstruct(*, clean: bool) -> None:
 
     if clean:
         shutil.rmtree(stage)
-        Path(".github/workflows/apply-co-complete-stage.yml").unlink(missing_ok=True)
-        Path(".github/workflows/ci.yml").write_text(ORIGINAL_CI)
 
 
 def main() -> None:
