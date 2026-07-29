@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "batch": "parser-shaping-03",
+  "review_status": "reviewed-official-executable-and-source-evidence",
+  "workflow_evidence": {
+    "run_id": 30461120811,
+    "artifact_id": 8727721661,
+    "artifact_name": "aermod-v26135-official-behavior-probes-batch3-7433a58adb1c2cd7d8304d2af76bf30919345fb6",
+    "artifact_digest": "sha256:c301bfc8ec367569da40923e214431a34bd7266999ba028d3a7cba9e0293e3f0",
+    "artifact_size_in_bytes": 284393626,
+    "head_sha": "7433a58adb1c2cd7d8304d2af76bf30919345fb6"
+  },
+  "official_assets": {
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_archive_sha256": "5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed"
+  },
+  "raw_evidence": {
+    "batch_summary_sha256": "56f4e38e14a3893ba04b007445eaef5db74fc6ae8bbe32536a3c295f375012cd",
+    "source_pattern_evidence_sha256": "14f365133f67c734df91f09ef1b9bf0639588bf462adc877aecfce49cf230533",
+    "case_evidence_file": "reference/probes/v26135/batch3/case-evidence.csv",
+    "case_evidence_sha256": "6fa0b78ae688a29622da3a47db0f211672932ee96fb3b88c95b3f237c4fb37b1",
+    "source_files": {
+      "aermod_source_v26135/aermod.f": "44c5c598fee18a44dbe8c16fc4b27e0ca373b21a7b6f0d873706f1c5b07a99bf",
+      "aermod_source_v26135/coset.f": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a",
+      "aermod_source_v26135/modules.f": "1b345773345d522119abec5eb912080db0c4407b3913c0254c9e213f39301802",
+      "aermod_source_v26135/ouset.f": "373d4689869e88cee62963889517ef0a895473087c56ebe28c5b2d339b38f4a1",
+      "aermod_source_v26135/soset.f": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5"
+    },
+    "source_searches": [
+      {
+        "id": "dfault-conflict-e196",
+        "matches": [
+          {"file": "aermod_source_v26135/coset.f", "lines": [750, 760, 770, 780]},
+          {"file": "aermod_source_v26135/soset.f", "lines": [778]}
+        ]
+      },
+      {
+        "id": "alpha-required-e198",
+        "matches": [
+          {"file": "aermod_source_v26135/aermod.f", "lines": [6606, 6656]},
+          {"file": "aermod_source_v26135/coset.f", "lines": [753, 763, 773, 783, 961, 1815, 1817, 1834, 1850, 1858, 1893, 1999, 2018]},
+          {"file": "aermod_source_v26135/soset.f", "lines": [185, 410, 437, 560, 574, 592, 614, 637, 650, 720, 2763]}
+        ]
+      },
+      {
+        "id": "alpha-required-e133",
+        "matches": [{"file": "aermod_source_v26135/coset.f", "lines": [390, 1982]}]
+      },
+      {
+        "id": "aircraft-dfault-e204",
+        "matches": [{"file": "aermod_source_v26135/coset.f", "lines": [912, 914, 966, 1747, 1807, 1827, 1839, 1863, 1883, 1896, 1902, 1908, 1914, 1920, 1934, 1951, 1964, 2003]}]
+      },
+      {
+        "id": "aircraft-arcftopt-missing-e821",
+        "matches": [{"file": "aermod_source_v26135/soset.f", "lines": [700]}]
+      },
+      {
+        "id": "aircraft-hourly-missing-e823",
+        "matches": [{"file": "aermod_source_v26135/soset.f", "lines": [696]}]
+      },
+      {
+        "id": "arcftopt-dispatch",
+        "matches": [
+          {"file": "aermod_source_v26135/aermod.f", "lines": [5412, 5863]},
+          {"file": "aermod_source_v26135/coset.f", "lines": [11, 511, 956, 961, 966]},
+          {"file": "aermod_source_v26135/modules.f", "lines": [1657, 1662, 1736]},
+          {"file": "aermod_source_v26135/soset.f", "lines": [699, 700, 1470]}
+        ]
+      },
+      {
+        "id": "maxdcont-handler",
+        "matches": [{"file": "aermod_source_v26135/ouset.f", "lines": [3888]}]
+      }
+    ]
+  },
+  "totals": {
+    "items": 35,
+    "accepted": 16,
+    "rejected": 19,
+    "indeterminate": 0,
+    "expectations_met": 35
+  },
+  "resolved_behavior": {
+    "alpha_dfault_matrix": {
+      "alpha_controls": "GDSEASON, GASDEPDF, GDLANUSE, GASDEPVD, LOW_WIND, AWMADWNW and ORD_DWNW all completed.",
+      "source_rules": "GDSEASON/GASDEPDF/GDLANUSE/GASDEPVD use E196 with DFAULT and E198 without ALPHA; LOW_WIND uses E133 without ALPHA; DFAULT+ALPHA tests produced target E133/E122/E123 for LOW_WIND/AWMADWNW/ORD_DWNW."
+    },
+    "arcftopt": {
+      "accepted": "Complete aircraft control, no-payload ARCFTOPT, repeated same/different ARCFTOPT, and extra-field ARCFTOPT all completed.",
+      "source_rule": "AFTID(1) is assigned only when IFC=3; repeated one-payload cards are accepted and the later assignment wins; no/extra payload is preserved but not assigned."
+    },
+    "aircraft_dependencies": "No ALPHA gives E198; DFAULT+ALPHA gives E198/E204; missing ARCFTSRC gives E822; ARCFTSRC without ARCFTOPT gives E821; ARCFTSRC without preceding HOUREMIS gives E823.",
+    "maxdcont": "Secondary-rank and THRESH signatures completed both with and without a trailing file unit."
+  },
+  "boundaries": [
+    "The broad no-ALPHA allsrcs decks inherit RLINEXT E198, so target-specific no-ALPHA conclusions use the retained exact source branches.",
+    "The aircraft fixture uses POLLUTID OTHER to avoid unrelated annual criteria-pollutant completeness checks.",
+    "Short MAXDCONT filenames are fixture hygiene after exploratory E500 and are not a general length rule.",
+    "This harness is evidence infrastructure, not the application runner."
+  ]
+}
