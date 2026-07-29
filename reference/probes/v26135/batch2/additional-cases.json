@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "batch": "parser-shaping-02-additional-coverage",
+  "cases": [
+    {
+      "id": "co_o3values_sector_month_complete_control",
+      "question": "Do complete 12-value MONTH O3VALUES vectors for two O3SECTOR scopes complete successfully?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "accepted",
+      "support_copies": [{"source": "ozone.dat", "destination": "ozone2.dat"}],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 complete sector O3VALUES MONTH control"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3SECTOR 0.0 180.0\n   O3VALUES SECT1 MONTH 12*40.0\n   O3VALUES SECT2 MONTH 12*40.0"},
+        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT2 ozone2.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_o3values_sector_month_complete_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_o3values_sector_month_incomplete",
+      "question": "Which final official diagnostic identifies an 11-of-12 MONTH O3VALUES vector in SECT1 when SECT2 is complete?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "observe",
+      "support_copies": [{"source": "ozone.dat", "destination": "ozone2.dat"}],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 incomplete sector O3VALUES MONTH"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3SECTOR 0.0 180.0\n   O3VALUES SECT1 MONTH 11*40.0\n   O3VALUES SECT2 MONTH 12*40.0"},
+        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT2 ozone2.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_o3values_sector_month_incomplete_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_nox_vals_sector_month_complete_control",
+      "question": "Do complete 12-value MONTH NOX_VALS vectors for two NOXSECTR scopes complete successfully?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 complete sector NOX_VALS MONTH control"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOXSECTR 0.0 180.0\n   NOX_VALS SECT1 MONTH 12*10.0\n   NOX_VALS SECT2 MONTH 12*10.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_vals_sector_month_complete_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_nox_vals_sector_month_incomplete",
+      "question": "Which final official diagnostic identifies an 11-of-12 MONTH NOX_VALS vector in SECT1 when SECT2 is complete?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 2 incomplete sector NOX_VALS MONTH"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOXSECTR 0.0 180.0\n   NOX_VALS SECT1 MONTH 11*10.0\n   NOX_VALS SECT2 MONTH 12*10.0"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_vals_sector_month_incomplete_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_second_all_min_control",
+      "question": "Are all documented minima accepted for the second vegetative barrier in a two-barrier record?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_second_all_min_control"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 6.0 1.0 2.0 2.5 -10.0 4.0 0.55"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_second_all_min_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_second_all_max_control",
+      "question": "Are all documented maxima accepted for the second vegetative barrier in a two-barrier record?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_second_all_max_control"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 10.0 6.0 1.0 10.0 13.0 -10.0 10.92 3.75"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_second_all_max_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_same_side_equal_distance",
+      "question": "What happens when two same-side VBARRIERs have equal absolute DCL values?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit batch 2 so_vbarrier_same_side_equal_distance"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0 5.0 5.0 6.0 1.0 7.0 6.0 5.0 7.0 1.5"},
+        {"contains": "ERRORFIL", "replacement": "   DEBUGOPT  VBARRIER ../Outputs/so_vbarrier_same_side_equal_distance_VBARRIER.DBG\n   ERRORFIL  ../Outputs/so_vbarrier_same_side_equal_distance_ERRORS.OUT"}
+      ]
+    }
+  ]
+}
