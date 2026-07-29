@@ -8,7 +8,7 @@ record deterministic mutations.
 ## Evidence rules
 
 1. Every case runs in an isolated workspace.
-2. A control case must reproduce successful execution before targeted outcomes are interpreted.
+2. Positive controls must reproduce successful execution before paired negative outcomes are interpreted.
 3. Targeted cases use `expected_outcome: observe`; acceptance or rejection is recorded, not assumed.
 4. The executable, source archive, materialized input deck, stdout, stderr, output files, diagnostics,
    and SHA-256 values are retained in the workflow artifact.
@@ -24,5 +24,9 @@ record deterministic mutations.
 - the retained Test3 RLINEXT/RBARRIER control;
 - SWPOINT with and without `MODELOPT ALPHA`;
 - one- and two-barrier `VBARRIER` forms;
-- repeated same-sector `OZONEFIL`;
-- repeated same-sector `NOX_FILE`.
+- distinct-sector and same-sector `OZONEFIL` pairs;
+- distinct-sector and same-sector `NOX_FILE` pairs.
+
+Reviewed evidence is in `batch1/result.json`. The final official run completed 9 cases: 6 accepted,
+3 rejected, and 0 indeterminate. Detailed interpretation is in
+`docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH1.md`.
