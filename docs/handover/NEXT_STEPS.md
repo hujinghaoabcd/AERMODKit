@@ -2,13 +2,27 @@
 
 ## Immediate stage: targeted official-executable behavior probes
 
-1. Use the retained official v26135 fixture snapshot and EPA Windows executable workflow to execute the 17 pending probe questions in controlled batches.
-2. Start with the high-priority parser-shaping cases: `SO-SWPOINT-01`, `SO-VBARRIER-01`, duplicate `OZONEFIL`, duplicate `NOX_FILE`, incomplete temporal vectors, and event-output `FILEFORM` behavior.
-3. For every probe, retain the exact input deck, executable/archive SHA256, stdout/stderr, main output, error file, extracted diagnostic codes, return code, and an interpretation boundary.
-4. Update the originating probe catalog entry to an explicit final state; do not infer general behavior from a single case beyond the tested form.
-5. Regenerate `v26135-whole-spec-acceptance.json` after each accepted probe batch.
-6. Finish the clean-room third-party capability audit without copying implementations or treating third-party APIs as authoritative.
-7. Freeze representative official and synthetic fixtures for unknown, future, development, include, continuation, nested-grid, line-ending, and malformed syntax.
+1. Continue using the retained official v26135 fixture snapshot and EPA Windows executable workflow for the 14 pending questions.
+2. The next parser-shaping batch should prioritize:
+   - incomplete `O3VALUES` and `NOX_VALS` temporal vectors;
+   - event-output `FILEFORM` behavior under `DFAULT`;
+   - `SO-VBARRIER-RANGE-01` boundary inclusivity and same-side `W375` behavior;
+   - the remaining ALPHA/DFAULT dependency matrix where source evidence alone is insufficient.
+3. For every probe, retain the exact materialized deck hash, executable/archive SHA-256, stdout/stderr, main output, error file, diagnostic codes, return code, positive control where needed, and an interpretation boundary.
+4. Update the originating probe catalog entry to an explicit final state; do not infer general behavior beyond the tested form.
+5. Regenerate `v26135-whole-spec-acceptance.json` after each reviewed probe batch.
+6. Keep paired positive controls for scoped repeatability, fallback behavior, and option-dependent forms.
+7. Finish the clean-room third-party capability audit without copying implementations or treating third-party APIs as authoritative.
+8. Freeze representative official and synthetic fixtures for unknown, future, development, include, continuation, nested-grid, line-ending, and malformed syntax.
+
+## Completed in official batch 1
+
+- `SO-SWPOINT-01`;
+- valid one- and two-barrier forms from `SO-VBARRIER-01`;
+- same-sector versus distinct-sector `OZONEFIL` behavior;
+- same-sector versus distinct-sector `NOX_FILE` behavior.
+
+The refined gate contains 19 questions: 4 executed, 1 source-resolved, and 14 pending.
 
 ## Parser-entry gate
 
