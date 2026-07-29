@@ -13,6 +13,10 @@ All notable project changes will be recorded here.
 
 ### Added
 
+- deterministic v26135 whole-spec acceptance models for dispatcher and retained behavior-probe gates;
+- machine-readable and Markdown acceptance reports covering seven dispatch modes and 138 primary records;
+- normalized inventory of all 18 retained official-executable behavior probes without changing their original evidence catalogs;
+- CLI regeneration tool and repository integration tests for acceptance evidence;
 - initial package metadata and CI;
 - structured diagnostic model;
 - AERMOD release identifier and version metadata registry;
@@ -36,6 +40,8 @@ All notable project changes will be recorded here.
 
 ### Changed
 
+- v26135 completeness is now expressed as separate record-set and behavior-probe gates;
+- parser-entry readiness remains false while 17 official-executable probes are pending;
 - v26135 metadata completeness reports complete source-verified record-level specifications for all primary pathways and event-output mode;
 - pathway fragment loading composes positive older/equal batches into newer aggregate batches;
 - EPA archive, fixture and executable evidence workflows are manual-only after initial successful evidence runs;
@@ -53,6 +59,7 @@ All notable project changes will be recorded here.
 
 ### Documentation
 
+- recorded the explicit parser-entry criteria after whole-spec record-set acceptance;
 - recorded AERMAP 24142 versus AERMOD 26135 component versioning;
 - recorded official archive hashes, source structure, build flags and GNU build results;
 - recorded 53/53 official-deck execution and parity evidence;
