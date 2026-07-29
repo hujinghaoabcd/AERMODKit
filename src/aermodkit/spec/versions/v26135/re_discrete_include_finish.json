@@ -42,7 +42,13 @@
       "dependencies": {},
       "constraints": [
         {
-          "rule": "Accepted field count depends on active ELEV/FLAT and FLAGPOLE options; extra inactive fields generate warnings and are not silently discarded."
+          "rule": "Accepted field positions depend on active ELEV/FLAT and FLAGPOLE options."
+        },
+        {
+          "rule": "Terrain or flagpole values supplied while their option is inactive are accepted with W229 and ignored semantically, but must remain in the loss-aware syntax representation."
+        },
+        {
+          "rule": "When an active conditional option lacks its required positional values, the shared handler emits W228."
         }
       ],
       "diagnostics": [
@@ -53,8 +59,13 @@
         },
         {
           "severity": "warning",
-          "code": "228/229",
-          "condition": "conditional terrain/flag fields missing or extra"
+          "code": "228",
+          "condition": "a field required by an active ELEV or FLAGPOLE option is missing"
+        },
+        {
+          "severity": "warning",
+          "code": "229",
+          "condition": "terrain or flagpole fields are supplied while the corresponding option is inactive; values are ignored semantically"
         }
       ],
       "source": {
@@ -84,7 +95,24 @@
           "inputs/lovett_rec.dat:13"
         ]
       },
-      "evidence_status": "v26135-source-manual-and-fixture-verified"
+      "evidence_status": "v26135-source-manual-fixture-and-official-executable-verified",
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "re_disccart_flat_no_flag_control",
+          "re_disccart_flat_no_flag_terrain_extra",
+          "re_disccart_flat_no_flag_terrain_and_flag_extra",
+          "re_disccart_flat_flag_control",
+          "re_disccart_flat_flag_terrain_extra",
+          "re_disccart_elev_no_flag_control",
+          "re_disccart_elev_no_flag_flag_extra",
+          "re_disccart_elev_flag_control"
+        ],
+        "boundary": "W229 means semantically ignored, not syntactically discardable."
+      }
     },
     {
       "keyword": "DISCPOLR",
@@ -126,7 +154,13 @@
       "dependencies": {},
       "constraints": [
         {
-          "rule": "The source ID defines the polar origin; accepted optional fields depend on terrain and flagpole options."
+          "rule": "The source ID defines the polar origin; accepted optional positions depend on terrain and flagpole options."
+        },
+        {
+          "rule": "Terrain or flagpole values supplied while their option is inactive are accepted with W229 and ignored semantically, but must remain in the loss-aware syntax representation."
+        },
+        {
+          "rule": "When an active conditional option lacks its required positional values, the shared handler emits W228."
         }
       ],
       "diagnostics": [
@@ -137,8 +171,13 @@
         },
         {
           "severity": "warning",
-          "code": "228/229",
-          "condition": "conditional fields missing or extra"
+          "code": "228",
+          "condition": "a field required by an active ELEV or FLAGPOLE option is missing"
+        },
+        {
+          "severity": "warning",
+          "code": "229",
+          "condition": "terrain or flagpole fields are supplied while the corresponding option is inactive; values are ignored semantically"
         }
       ],
       "source": {
@@ -165,7 +204,22 @@
           "inputs/allsrcs.inp:148"
         ]
       },
-      "evidence_status": "v26135-source-manual-and-fixture-verified"
+      "evidence_status": "v26135-source-manual-fixture-and-official-executable-verified",
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "re_discpolr_flat_no_flag_control",
+          "re_discpolr_flat_no_flag_extra",
+          "re_discpolr_flat_flag_control",
+          "re_discpolr_flat_flag_terrain_extra",
+          "re_discpolr_elev_no_flag_control",
+          "re_discpolr_elev_no_flag_extra"
+        ],
+        "boundary": "W229 means semantically ignored, not syntactically discardable."
+      }
     },
     {
       "keyword": "EVALCART",

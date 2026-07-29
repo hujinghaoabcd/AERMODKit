@@ -347,9 +347,28 @@
         },
         {
           "rule": "Static vector length must exactly match time_flag; HOURLY uses an external file."
+        },
+        {
+          "rule": "One non-HOURLY vector is retained per scope/time-flag slot; repeating an already filled slot is rejected with E231."
+        },
+        {
+          "rule": "Only one HOURLY background file is accepted per global/sector scope; a second file is rejected with E168 and E501."
+        },
+        {
+          "rule": "HOURLY and non-HOURLY records may coexist in either order. Hourly observations are primary and non-HOURLY values substitute missing hourly observations."
         }
       ],
       "diagnostics": [
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid time flag or sector"
+        },
+        {
+          "severity": "error",
+          "code": "231",
+          "condition": "a global or sector static background vector attempts to refill an already populated slot"
+        },
         {
           "severity": "error",
           "code": "260",
@@ -357,8 +376,8 @@
         },
         {
           "severity": "error",
-          "code": "203",
-          "condition": "invalid time flag or sector"
+          "code": "168/501",
+          "condition": "a second HOURLY background file is supplied for the same scope"
         }
       ],
       "source": {
@@ -388,7 +407,32 @@
           "inputs/bg_no2_grsm_ugm3.inp:30"
         ]
       },
-      "evidence_status": "v26135-source-manual-and-fixture-verified"
+      "evidence_status": "v26135-source-manual-fixture-and-official-executable-verified",
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "so_backgrnd_global_annual_control",
+          "so_backgrnd_global_duplicate_same",
+          "so_backgrnd_global_duplicate_different",
+          "so_backgrnd_sector_annual_control",
+          "so_backgrnd_sector_duplicate_same",
+          "so_backgrnd_sector_duplicate_different",
+          "so_backgrnd_hourly_only_control",
+          "so_backgrnd_static_only_control",
+          "so_backgrnd_static_then_hourly",
+          "so_backgrnd_hourly_then_static",
+          "so_backgrnd_hourly_duplicate_different_files"
+        ],
+        "order_comparison": {
+          "normalized_equal": true,
+          "static_then_hourly_sha256": "2cea37d8b70122866e0b20c29b92aa937c2f550a2f909e6709e296f175c40468",
+          "hourly_then_static_sha256": "2cea37d8b70122866e0b20c29b92aa937c2f550a2f909e6709e296f175c40468"
+        },
+        "boundary": "Order equality removes only case titles, paths, dates, and times; it does not normalize concentration results."
+      }
     },
     {
       "keyword": "BACKUNIT",

@@ -1,0 +1,203 @@
+import csv
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = ROOT / "reference/probes/v26135/batch4/manifest.json"
+SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch4/source-searches.json"
+RESULT = ROOT / "reference/probes/v26135/batch4/result.json"
+CASE_EVIDENCE = ROOT / "reference/probes/v26135/batch4/case-evidence.csv"
+FRAGMENTS = [
+    ROOT / "reference/probes/v26135/batch4/platform-cases.json",
+    ROOT / "reference/probes/v26135/batch4/background-cases.json",
+    ROOT / "reference/probes/v26135/batch4/grid-cases.json",
+    ROOT / "reference/probes/v26135/batch4/discrete-cases.json",
+    ROOT / "reference/probes/v26135/batch4/discpolr-cases.json",
+]
+
+PLATFORM_CASES = {
+    "so_platform_valid_control",
+    "so_platform_one_extra_numeric",
+    "so_platform_two_extra_numeric",
+    "so_platform_one_extra_text",
+    "so_platform_duplicate_same_source",
+    "so_platform_nonpoint_area",
+    "so_platform_prime_conflict",
+}
+BACKGROUND_CASES = {
+    "so_backgrnd_global_annual_control",
+    "so_backgrnd_global_duplicate_same",
+    "so_backgrnd_global_duplicate_different",
+    "so_backgrnd_sector_annual_control",
+    "so_backgrnd_sector_duplicate_same",
+    "so_backgrnd_sector_duplicate_different",
+    "so_backgrnd_hourly_only_control",
+    "so_backgrnd_static_only_control",
+    "so_backgrnd_static_then_hourly",
+    "so_backgrnd_hourly_then_static",
+    "so_backgrnd_hourly_duplicate_different_files",
+}
+GRID_CASES = {
+    "re_gridcart_keyword_and_id_omitted_control",
+    "re_gridcart_keyword_omitted_id_present",
+    "re_gridcart_full_explicit_control",
+    "re_gridcart_wrong_id_in_active_block",
+    "re_gridpolr_keyword_and_id_omitted_control",
+    "re_gridpolr_keyword_omitted_id_present",
+    "re_gridpolr_full_explicit_control",
+    "re_gridpolr_wrong_id_in_active_block",
+}
+DISCCART_CASES = {
+    "re_disccart_flat_no_flag_control",
+    "re_disccart_flat_no_flag_terrain_extra",
+    "re_disccart_flat_no_flag_terrain_and_flag_extra",
+    "re_disccart_flat_flag_control",
+    "re_disccart_flat_flag_terrain_extra",
+    "re_disccart_elev_no_flag_control",
+    "re_disccart_elev_no_flag_flag_extra",
+    "re_disccart_elev_flag_control",
+}
+DISCPOLR_CASES = {
+    "re_discpolr_flat_no_flag_control",
+    "re_discpolr_flat_no_flag_extra",
+    "re_discpolr_flat_flag_control",
+    "re_discpolr_flat_flag_terrain_extra",
+    "re_discpolr_elev_no_flag_control",
+    "re_discpolr_elev_no_flag_extra",
+}
+EXPECTED_CASES = (
+    PLATFORM_CASES | BACKGROUND_CASES | GRID_CASES | DISCCART_CASES | DISCPOLR_CASES
+)
+
+
+def _manifest() -> dict[str, object]:
+    payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    cases = list(payload.get("cases", []))
+    for fragment in FRAGMENTS:
+        cases.extend(json.loads(fragment.read_text(encoding="utf-8"))["cases"])
+    payload["cases"] = cases
+    return payload
+
+
+def test_batch4_manifest_has_expected_unique_cases() -> None:
+    cases = _manifest()["cases"]
+    assert isinstance(cases, list)
+    identifiers = [str(case["id"]) for case in cases]
+    assert set(identifiers) == EXPECTED_CASES
+    assert len(identifiers) == len(set(identifiers)) == 40
+
+
+def test_batch4_controls_and_observation_targets_are_explicit() -> None:
+    cases = _manifest()["cases"]
+    assert isinstance(cases, list)
+    accepted = {
+        str(case["id"])
+        for case in cases
+        if case["expected_outcome"] == "accepted"
+    }
+    assert accepted == {
+        "so_platform_valid_control",
+        "so_platform_one_extra_numeric",
+        "so_platform_two_extra_numeric",
+        "so_backgrnd_global_annual_control",
+        "so_backgrnd_sector_annual_control",
+        "so_backgrnd_hourly_only_control",
+        "so_backgrnd_static_only_control",
+        "re_gridcart_keyword_and_id_omitted_control",
+        "re_gridcart_keyword_omitted_id_present",
+        "re_gridcart_full_explicit_control",
+        "re_gridpolr_keyword_and_id_omitted_control",
+        "re_gridpolr_keyword_omitted_id_present",
+        "re_gridpolr_full_explicit_control",
+        "re_disccart_flat_no_flag_control",
+        "re_disccart_flat_flag_control",
+        "re_disccart_elev_no_flag_control",
+        "re_disccart_elev_flag_control",
+        "re_discpolr_flat_no_flag_control",
+        "re_discpolr_flat_flag_control",
+        "re_discpolr_elev_no_flag_control",
+    }
+    assert all(case["expected_outcome"] in {"accepted", "observe"} for case in cases)
+    assert all(str(case["question"]).endswith("?") for case in cases)
+
+
+def test_background_hourly_duplicate_uses_isolated_support_copy() -> None:
+    cases = {str(case["id"]): case for case in _manifest()["cases"]}
+    target = cases["so_backgrnd_hourly_duplicate_different_files"]
+    assert target["support_copies"] == [
+        {"source": "BG1.dat", "destination": "BG2.dat"}
+    ]
+
+
+def test_grid_variants_cover_implicit_partial_and_explicit_forms() -> None:
+    cases = {str(case["id"]): case for case in _manifest()["cases"]}
+    cart_lines = {
+        str(item["replacement"])
+        for identifier in (
+            "re_gridcart_keyword_and_id_omitted_control",
+            "re_gridcart_keyword_omitted_id_present",
+            "re_gridcart_full_explicit_control",
+        )
+        for item in cases[identifier]["replace_line_once"]
+        if "XYINC" in str(item["replacement"])
+    }
+    assert any(line.lstrip().startswith("XYINC") for line in cart_lines)
+    assert any(line.lstrip().startswith("CAR1 XYINC") for line in cart_lines)
+    assert any(line.lstrip().startswith("GRIDCART CAR1 XYINC") for line in cart_lines)
+
+
+def test_batch4_source_searches_cover_handlers_state_and_diagnostics() -> None:
+    payload = json.loads(SOURCE_SEARCHES.read_text(encoding="utf-8"))
+    identifiers = {str(item["id"]) for item in payload["searches"]}
+    assert identifiers == {
+        "platform-handler",
+        "platform-nonpoint-e631",
+        "platform-duplicate-e632",
+        "platform-prime-conflict-e633",
+        "background-handler",
+        "background-fill-handler",
+        "background-sector-handler",
+        "background-value-count-e231",
+        "background-hourly-duplicate-e168",
+        "background-state-file-flag",
+        "background-state-value-flag",
+        "gridcart-handler",
+        "gridpolr-handler",
+        "disccart-handler",
+        "discpolr-handler",
+        "discrete-conditional-w228",
+        "discrete-conditional-w229",
+    }
+
+
+def test_batch4_reviewed_result_and_case_hashes_are_current() -> None:
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["workflow_evidence"]["run_id"] == 30479954822
+    assert result["workflow_evidence"]["artifact_id"] == 8735323902
+    assert result["totals"] == {
+        "items": 40,
+        "accepted": 29,
+        "rejected": 11,
+        "indeterminate": 0,
+        "expectations_met": 40,
+    }
+    assert hashlib.sha256(CASE_EVIDENCE.read_bytes()).hexdigest() == result[
+        "raw_evidence"
+    ]["case_evidence_sha256"]
+
+    with CASE_EVIDENCE.open(encoding="utf-8", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    assert {row["case_id"] for row in rows} == EXPECTED_CASES
+    assert sum(row["outcome"] == "accepted" for row in rows) == 29
+    assert sum(row["outcome"] == "rejected" for row in rows) == 11
+    assert all(row["outcome"] != "indeterminate" for row in rows)
+
+
+def test_official_executable_hash_matches_retained_evidence() -> None:
+    assets = _manifest()["official_assets"]
+    assert isinstance(assets, dict)
+    assert assets["executable_sha256"] == (
+        "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da"
+    )
+    assert assets["fixture_artifact_id"] == 8701857473

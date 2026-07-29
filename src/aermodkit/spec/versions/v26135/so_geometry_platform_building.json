@@ -429,6 +429,15 @@
       "constraints": [
         {
           "rule": "One PLATFORM record per source; non-point source types are rejected."
+        },
+        {
+          "rule": "The record must be processed before source-group cards; the source-definition ordering rule remains active."
+        },
+        {
+          "rule": "The official v26135 handler accepts additional numeric payload fields, converts them, and assigns only the first three PLATFORM values. Extra numeric fields are preservation-only and must not become semantic parameters."
+        },
+        {
+          "rule": "PLATFORM and PRIME building parameters cannot be applied to the same source."
         }
       ],
       "diagnostics": [
@@ -439,6 +448,11 @@
         },
         {
           "severity": "error",
+          "code": "208",
+          "condition": "a required or trailing PLATFORM payload field is nonnumeric"
+        },
+        {
+          "severity": "error",
           "code": "631",
           "condition": "non-point source"
         },
@@ -446,6 +460,11 @@
           "severity": "error",
           "code": "632",
           "condition": "duplicate source PLATFORM"
+        },
+        {
+          "severity": "error",
+          "code": "633",
+          "condition": "PLATFORM and PRIME building inputs target the same source"
         }
       ],
       "source": {
@@ -470,7 +489,23 @@
         "files": 0,
         "examples": []
       },
-      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+      "evidence_status": "v26135-source-manual-and-official-executable-verified",
+      "official_behavior_evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902,
+        "cases": [
+          "so_platform_valid_control",
+          "so_platform_one_extra_numeric",
+          "so_platform_two_extra_numeric",
+          "so_platform_one_extra_text",
+          "so_platform_duplicate_same_source",
+          "so_platform_nonpoint_area",
+          "so_platform_prime_conflict"
+        ],
+        "boundary": "Executable evidence covers up to two trailing numeric fields. They are accepted but semantically ignored; the syntax layer must preserve them verbatim."
+      }
     }
   ]
 }

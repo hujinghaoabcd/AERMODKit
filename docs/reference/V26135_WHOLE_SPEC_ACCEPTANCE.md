@@ -2,9 +2,7 @@
 
 ## Scope
 
-This report accepts the source-dispatched primary record specification. It does not claim
-that the production lexer/CST/writer, semantic model, runner, output parser,
-or GIS layers exist. Behavior probes remain a separate prerequisite gate.
+This report accepts the source-dispatched primary record specification. It does not claim that the production lexer/CST/writer, semantic model, runner, output parser, or GIS layers exist. Behavior probes remain a separate prerequisite gate.
 
 ## Gate summary
 
@@ -29,23 +27,34 @@ or GIS layers exist. Behavior probes remain a separate prerequisite gate.
 ## Retained behavior probes
 
 - total: 19
-- executed with retained official-executable evidence: 7
+- executed with retained official-executable evidence: 14
 - source-resolved: 1
-- official-executable pending: 11
+- official-executable pending: 4
 
-Official-executable batch 1 resolved:
+### Batch 1
 
 - `SO-SWPOINT-01`;
-- `SO-VBARRIER-01` for valid one- and two-barrier field forms;
+- valid one/two-barrier forms from `SO-VBARRIER-01`;
 - `ozonefil_same_sector_duplicate`;
 - `nox_file_same_sector_duplicate`.
 
-Official-executable and source batch 2 resolved:
+### Batch 2
 
-- `temporal_vector_incomplete` for global and sector-scoped O3VALUES/NOX_VALS completeness;
-- `SO-VBARRIER-RANGE-01` for inclusive ranges, E371-E374, W375 selection and equal-distance W620 behavior;
-- `OU-EVENT-FILEFORM` for EXP/FIX behavior across DFAULT and criteria-pollutant states.
+- `temporal_vector_incomplete`;
+- `SO-VBARRIER-RANGE-01`;
+- `OU-EVENT-FILEFORM`.
 
-Record-set acceptance therefore passes, but the project remains before the production
-loss-aware syntax implementation gate until the remaining parser-shaping executable
-probes are resolved or explicitly deferred through a preservation-safe ADR.
+### Batch 3
+
+- `alpha_dependency_matrix`;
+- `arcftopt_repeat_extra_fields`;
+- `OU-MAXDCONT-FORMS`.
+
+### Batch 4
+
+- `SO-PLATFORM-01`;
+- `SO-BACKGRND-01`;
+- `RE-GRID-ID-01`;
+- `RE-DISC-EXTRA-01`.
+
+Record-set acceptance passes, but the project remains before the production loss-aware syntax gate until the four ME/EV/OU executable probes are resolved and the clean-room audit/fixture freeze are complete.

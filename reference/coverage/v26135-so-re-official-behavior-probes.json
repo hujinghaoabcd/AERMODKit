@@ -69,22 +69,128 @@
     {
       "id": "SO-PLATFORM-01",
       "question": "Confirm trailing PLATFORM fields are accepted/ignored or rejected; source only checks minimum count.",
-      "priority": "medium"
+      "priority": "medium",
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "The exact three-numeric PLATFORM payload completed for an ALPHA point source without PRIME building inputs. One and two trailing numeric fields also completed; PLATFM converts all supplied numeric fields but assigns only the first three semantic values, so trailing numeric fields are preservation-only. A trailing text field was rejected with E208. Duplicate assignment for one source produced E632, non-point use E631, and PLATFORM combined with PRIME building parameters for the same source E633.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "cases": [
+          "so_platform_valid_control",
+          "so_platform_one_extra_numeric",
+          "so_platform_two_extra_numeric",
+          "so_platform_one_extra_text",
+          "so_platform_duplicate_same_source",
+          "so_platform_nonpoint_area",
+          "so_platform_prime_conflict"
+        ],
+        "source_patterns": [
+          "platform-handler",
+          "platform-nonpoint-e631",
+          "platform-duplicate-e632",
+          "platform-prime-conflict-e633"
+        ],
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902
+      },
+      "boundary": "Executable evidence covers up to two trailing numeric fields. They are accepted but must not be promoted to semantic PLATFORM parameters; the loss-aware syntax layer must preserve them verbatim."
     },
     {
       "id": "SO-BACKGRND-01",
       "question": "Confirm duplicate global/sector profile precedence and hourly/static conflict behavior.",
-      "priority": "medium"
+      "priority": "medium",
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "Repeated global or sector-scoped ANNUAL BACKGRND vectors were rejected with E231, whether values matched or differed. A second HOURLY BACKGRND for the same scope was rejected with E168 and E501. HOURLY and non-HOURLY BACKGRND records coexist in either order; normalized outputs were identical across the two input orders. Official source makes HOURLY data primary and uses non-HOURLY values as substitutions for missing hourly observations.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "cases": [
+          "so_backgrnd_global_annual_control",
+          "so_backgrnd_global_duplicate_same",
+          "so_backgrnd_global_duplicate_different",
+          "so_backgrnd_sector_annual_control",
+          "so_backgrnd_sector_duplicate_same",
+          "so_backgrnd_sector_duplicate_different",
+          "so_backgrnd_hourly_only_control",
+          "so_backgrnd_static_only_control",
+          "so_backgrnd_static_then_hourly",
+          "so_backgrnd_hourly_then_static",
+          "so_backgrnd_hourly_duplicate_different_files"
+        ],
+        "source_patterns": [
+          "background-handler",
+          "background-fill-handler",
+          "background-sector-handler",
+          "background-value-count-e231",
+          "background-hourly-duplicate-e168",
+          "background-state-file-flag",
+          "background-state-value-flag"
+        ],
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902
+      },
+      "boundary": "Order equivalence was established after normalizing only case-specific titles, paths, dates, and times. Sector cases use two explicit BGSECTOR sectors; broader sector fallback remains governed by retained source state."
     },
     {
       "id": "RE-GRID-ID-01",
       "question": "Confirm omitted NetID continuation forms preserve the active grid block exactly.",
-      "priority": "medium"
+      "priority": "medium",
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "Active GRIDCART and GRIDPOLR blocks accepted all three continuation spellings: pathway keyword and NetID both omitted, pathway keyword omitted with NetID repeated, and fully explicit pathway keyword plus NetID. A different NetID inside an active block produced E170 and downstream incomplete-block diagnostics. Source logic recognizes a field-3 secondary keyword as inheriting PNETID, while field 3 equal to PNETID shifts the secondary keyword to field 4.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "cases": [
+          "re_gridcart_keyword_and_id_omitted_control",
+          "re_gridcart_keyword_omitted_id_present",
+          "re_gridcart_full_explicit_control",
+          "re_gridcart_wrong_id_in_active_block",
+          "re_gridpolr_keyword_and_id_omitted_control",
+          "re_gridpolr_keyword_omitted_id_present",
+          "re_gridpolr_full_explicit_control",
+          "re_gridpolr_wrong_id_in_active_block"
+        ],
+        "source_patterns": ["gridcart-handler", "gridpolr-handler"],
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902
+      },
+      "boundary": "The CST must preserve which lexical continuation form was used even though the semantic active NetID is the same. Wrong-NetID cases intentionally retain follow-on completeness errors after E170."
     },
     {
       "id": "RE-DISC-EXTRA-01",
       "question": "Confirm warning-versus-ignore behavior for terrain/flag fields supplied under inactive options.",
-      "priority": "medium"
+      "priority": "medium",
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "DISCCART and DISCPOLR accepted terrain and/or flagpole values supplied while the corresponding ELEV or FLAGPOLE option was inactive, emitted W229, and ignored those inactive values. Controls for FLAT/no-FLAGPOLE, FLAT/FLAGPOLE, ELEV/no-FLAGPOLE, and the full DISCCART ELEV/FLAGPOLE signature completed. Shared source branches use W228 when an active conditional field is missing.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch4/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch4/case-evidence.csv",
+        "cases": [
+          "re_disccart_flat_no_flag_control",
+          "re_disccart_flat_no_flag_terrain_extra",
+          "re_disccart_flat_no_flag_terrain_and_flag_extra",
+          "re_disccart_flat_flag_control",
+          "re_disccart_flat_flag_terrain_extra",
+          "re_disccart_elev_no_flag_control",
+          "re_disccart_elev_no_flag_flag_extra",
+          "re_disccart_elev_flag_control",
+          "re_discpolr_flat_no_flag_control",
+          "re_discpolr_flat_no_flag_extra",
+          "re_discpolr_flat_flag_control",
+          "re_discpolr_flat_flag_terrain_extra",
+          "re_discpolr_elev_no_flag_control",
+          "re_discpolr_elev_no_flag_extra"
+        ],
+        "source_patterns": [
+          "disccart-handler",
+          "discpolr-handler",
+          "discrete-conditional-w228",
+          "discrete-conditional-w229"
+        ],
+        "workflow_run_id": 30479954822,
+        "artifact_id": 8735323902
+      },
+      "boundary": "W229 means semantically ignored, not syntactically discardable. The CST and preservation writer must retain every inactive-option field exactly."
     }
   ]
 }

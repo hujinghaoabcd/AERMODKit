@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-04",
+  "purpose": "Official-executable probes for PLATFORM trailing fields, BACKGRND precedence/conflicts, grid continuation IDs, and discrete receptor inactive-option fields.",
+  "official_assets": {
+    "executable_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip",
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip",
+    "fixture_artifact_id": 8701857473
+  },
+  "classification_policy": {
+    "accepted": "return code 0, official success marker present, and no E### diagnostic",
+    "rejected": "at least one E### diagnostic or official unsuccessful marker",
+    "indeterminate": "neither accepted nor rejected criteria are satisfied",
+    "observe": "targeted cases collect behavior without asserting acceptance or rejection"
+  },
+  "source_snippets": {
+    "soset.f": [[180, 201], [502, 542], [3652, 3743], [7433, 8029]],
+    "reset.f": [[64, 83], [258, 470], [836, 1077], [1818, 2186]]
+  },
+  "preparations": [],
+  "cases": []
+}
