@@ -1,7 +1,7 @@
 # AERMODKit official-reference manifest
 # Evidence snapshot created 2026-07-29. URLs are canonical EPA SCRAM locations.
-# Large official binaries are not committed. Source was materialized through an auditable GitHub Actions snapshot.
-manifest_version: 3
+# Large official binaries are not committed. Assets are materialized only in auditable evidence jobs.
+manifest_version: 4
 model_family: AERMOD
 baseline:
   component: AERMOD
@@ -52,8 +52,21 @@ assets:
     name: AERMOD 64-bit Executable
     component_version: "26135"
     url: https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip
-    materialized: false
-    sha256: null
+    materialized: true
+    materialization_method: GitHub Actions official executable parity probe
+    materialized_at: "2026-07-29T00:35:02Z"
+    archive_sha256: 0ccf49702109637e665c8567891e365b4585a62a560faae35ce0194048683a24
+    executable_filename: aermod.exe
+    executable_size_bytes: 3940864
+    executable_sha256: 599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da
+    executable_format: PE32+ Windows console executable
+    executable_architecture: x86-64
+    intel_fortran_runtime_evidence: true
+    exact_compiler_frontend_version: null
+    github_actions_run_id: 30411529300
+    github_artifact_id: 8708575372
+    github_artifact_digest: 7ef4ce9d2a9b26f43b399c4dc62740d57544f38734b96c7fef4a449c66865ba1
+    parity_report: regression/OFFICIAL_EXECUTABLE_PARITY.md
   - id: user-guide
     type: manual
     name: AERMOD User's Guide
@@ -172,21 +185,38 @@ regression_validation:
     input_decks: 53
     meteorology_and_support_files: 18
     expected_output_files: 189
-  reproduced_build:
+  official_executable_tier:
+    evidence_status: confirmed-exact-for-probed-cases
+    cases:
+      - capped
+      - capped_nostd
+    canonical_diff_lines: 0
+    metric_mismatch_count: 0
+    report: regression/OFFICIAL_EXECUTABLE_PARITY.md
+    data: regression/official-executable-parity.json
+  reproduced_build_tier:
     compiler: GNU Fortran 14.2.0
     compile_flags: -fbounds-check -Wuninitialized -O2 -static
     link_flags: -static -O2
     executable_sha256: e8313b430047472ccf9a6cbd49b573c8e638aafaca25805e42c0f9c7a14341a5
-  result:
     successful_cases: 53
     failed_cases: 0
     canonical_exact_cases: 27
     representation_or_tie_equivalent_cases: 10
     minor_floating_point_drift_cases: 9
     moderate_floating_point_drift_cases: 6
-    compiler_sensitive_investigation_cases: 1
+    compiler_specific_localized_difference_cases: 1
     flagged_case: capped
+    flagged_source_group: STACK1C
+    flagged_table: 2ND HIGHEST 1-HR
+    maximum_extracted_relative_difference: 0.0526130411798
     report: regression/REGRESSION_VALIDATION.md
+  parity_policy:
+    - EPA-distributed executable and expected outputs define exact official release-fixture parity.
+    - Reproduced source builds are a separate compiler/platform evidence tier.
+    - Exact cross-compiler text or numeric parity is not assumed.
+    - Tolerances must be explicit by compiler, platform, case, output family, and intended use.
+    - EPA numerical source is not modified merely to force agreement.
 
 fortran_compile_units_from_official_manifest:
   - modules.f
@@ -231,8 +261,7 @@ evidence_priority:
 runtime_notes:
   - Current EPA PDF text was inspected through the web document parser.
   - PDF page screenshots failed with cache-miss errors in the current tool environment.
-  - The local working container could not resolve gaftp.epa.gov; GitHub-hosted runners successfully downloaded the official source archive.
-  - The source ZIP hash was computed by GitHub Actions and independently verified after artifact download.
+  - The local working container could not resolve gaftp.epa.gov; GitHub-hosted runners downloaded the official assets.
   - The retained local aermod_userguide.pdf is the October 2023 guide and must not be treated as the 2026 v26135 guide.
-  - Source, sample-run, and test-case archives were materialized and hashed by independent GitHub Actions jobs.
-  - Large official archives are indexed and referenced, not committed directly to Git.
+  - Source, executable, sample-run, and test-case archives were materialized and hashed by auditable GitHub Actions jobs.
+  - Large official archives and executable binaries are indexed and referenced, not committed directly to Git.

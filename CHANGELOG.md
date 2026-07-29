@@ -19,7 +19,10 @@ All notable project changes will be recorded here.
 - source-verified pathway dispatch and primary-record branch mapping;
 - current 53-deck official fixture and feature registry;
 - reproducible official-case validation tool with isolated workspaces and PM10 MULTYEAR chaining;
-- machine-readable regression results and output-file coverage reports.
+- machine-readable regression results and output-file coverage reports;
+- cross-platform official-executable parity probe and focused Windows evidence workflow;
+- SHA256 and binary-format evidence for the EPA v26135 executable archive and `aermod.exe`;
+- explicit official-executable versus reproduced-source-build parity tiers.
 
 ### Fixed
 
@@ -27,14 +30,16 @@ All notable project changes will be recorded here.
 - corrected strict-mypy narrowing in `ModelVersion.parse()`;
 - restored a fully green GitHub Actions matrix after the repository became public and actionable CI logs became available;
 - prevented official expected outputs from being overwritten during local numerical validation;
-- changed EPA archive and fixture snapshot workflows to manual-only triggers to prevent repeated large downloads on every PR update;
-- corrected PM10 1987–1990 validation by preserving the required MULTYEAR state-file chain.
+- changed EPA archive, fixture, and executable evidence workflows to manual-only triggers after their initial runs;
+- corrected PM10 1987–1990 validation by preserving the required MULTYEAR state-file chain;
+- corrected the interpretation of the `capped` 5.2613% maximum relative difference: it is localized to selected `STACK1C` second-highest table cells, not the overall model maximum.
 
 ### Documentation
 
 - recorded that AERMAP remains 24142 while the current AERMOD release is 26135;
 - recorded official archive hashes, source structure, build flags, and reproducible GNU build results;
 - recorded a 53/53 successful official-deck execution baseline;
-- classified main-output parity into canonical, representation/tie, minor drift, moderate drift, and compiler-sensitive categories;
-- documented the unresolved `capped` compiler-sensitive numerical finding;
-- advanced handover instructions from asset materialization to parity investigation and exact keyword-schema completion.
+- classified main-output parity into canonical, representation/tie, minor drift, moderate drift, and compiler-specific categories;
+- verified that the EPA executable reproduces `capped` and `capped_nostd` expected outputs exactly;
+- documented Intel Fortran runtime evidence in the official Windows executable without overstating the exact compiler version;
+- advanced handover instructions from parity investigation to exact CO-pathway keyword-schema completion.
