@@ -2,7 +2,8 @@
 
 - Date: 2026-07-29
 - Development branch: `agent/official-behavior-probes-batch1`
-- Pull request: #7, draft during evidence review
+- Pull request: #7, merged
+- Merge commit: `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`
 - Base: whole-spec-accepted `main`
 - Phase: evidence collection before production loss-aware syntax
 
@@ -84,12 +85,13 @@ The combined VBARRIER question was split so that range boundaries and same-side 
 remain pending as `SO-VBARRIER-RANGE-01`. The normalized probe inventory is now 19 total, 4 executed,
 1 source-resolved, and 14 pending.
 
-## Validation
+## Validation and publication
 
-The final harness and manifest head `1cd8e13dc2af2d0cc9fb88255ad7e96c190fade6` passed:
-
-- the official Windows behavior workflow run `30447131971`;
-- the full Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 CI run `30447131982`.
+- reviewed evidence workflow `30447131971` completed successfully;
+- evidence harness/manifest CI `30447131982` passed all nine jobs;
+- final PR #7 head `3331327ac4ab3cb40db6b81ffad9955907316dd7` passed all nine jobs in CI `30448106914`;
+- the same final head passed official behavior workflow `30448106897`;
+- PR #7 was merged to `main` as `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`.
 
 ## Boundary
 
