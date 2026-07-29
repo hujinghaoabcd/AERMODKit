@@ -45,7 +45,28 @@
       "id": "temporal_vector_incomplete",
       "records": ["O3VALUES", "NOX_VALS"],
       "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
-      "status": "planned-manual-official-executable-probe"
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "Complete global and sector-scoped MONTH vectors were accepted. An 11-of-12 O3VALUES vector was rejected with CO E261, and an 11-of-12 NOX_VALS vector was rejected with CO E603. Sector diagnostics identify O3SECTn or NOXSCTn. The official source uses the same accumulated-count versus flag-derived-required-maximum branches for supported temporal flags.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch2/result.json",
+        "cases": [
+          "co_o3values_month_complete_control",
+          "co_o3values_month_incomplete",
+          "co_nox_vals_month_complete_control",
+          "co_nox_vals_month_incomplete",
+          "co_o3values_sector_month_complete_control",
+          "co_o3values_sector_month_incomplete",
+          "co_nox_vals_sector_month_complete_control",
+          "co_nox_vals_sector_month_incomplete"
+        ],
+        "source_patterns": [
+          "o3values-incomplete-e261",
+          "nox-vals-incomplete-e603"
+        ],
+        "workflow_run_id": 30452705724,
+        "artifact_id": 8724254777
+      },
+      "boundary": "The official executable cases use MONTH as the representative time flag; cross-flag behavior is supported by the retained source branches and the existing flag-specific cardinality table rather than by enumerating every flag through the executable."
     },
     {
       "id": "alpha_dependency_matrix",
