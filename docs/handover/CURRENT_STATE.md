@@ -1,7 +1,9 @@
 # Current State
 
 - Updated: 2026-07-29
-- Active development branch: `agent/whole-spec-acceptance`
+- Active branch: `main`
+- Whole-spec acceptance PR: #5, merged
+- Whole-spec acceptance merge commit: `cbd721b80c5642d5fcc60ec2f77fe70095e9a79b`
 - Recovery PR: #3, merged
 - Recovery-state PR: #4, merged
 - Original foundation PR: #1, automatically marked merged because its full history is now reachable from `main`
@@ -72,4 +74,5 @@ semantic project model, runner, output parser, and GIS layers remain pending.
 - 53/53 current official decks executed in the established evidence workflow;
 - all seven dispatcher exact-set reports pass;
 - deterministic whole-spec acceptance code, CLI generation, reports, and tests are present;
-- recovery and recovery-state CI both passed all nine jobs, including Ruff, strict mypy, and pytest.
+- whole-spec acceptance CI run `30443993754` passed all nine jobs, including Ruff, strict mypy, pytest, and coverage;
+- recovery and recovery-state CI both passed all nine jobs.
