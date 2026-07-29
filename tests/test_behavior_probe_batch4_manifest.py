@@ -1,9 +1,13 @@
+import csv
+import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "reference/probes/v26135/batch4/manifest.json"
 SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch4/source-searches.json"
+RESULT = ROOT / "reference/probes/v26135/batch4/result.json"
+CASE_EVIDENCE = ROOT / "reference/probes/v26135/batch4/case-evidence.csv"
 FRAGMENTS = [
     ROOT / "reference/probes/v26135/batch4/platform-cases.json",
     ROOT / "reference/probes/v26135/batch4/background-cases.json",
@@ -62,6 +66,9 @@ DISCPOLR_CASES = {
     "re_discpolr_elev_no_flag_control",
     "re_discpolr_elev_no_flag_extra",
 }
+EXPECTED_CASES = (
+    PLATFORM_CASES | BACKGROUND_CASES | GRID_CASES | DISCCART_CASES | DISCPOLR_CASES
+)
 
 
 def _manifest() -> dict[str, object]:
@@ -77,14 +84,7 @@ def test_batch4_manifest_has_expected_unique_cases() -> None:
     cases = _manifest()["cases"]
     assert isinstance(cases, list)
     identifiers = [str(case["id"]) for case in cases]
-    expected = (
-        PLATFORM_CASES
-        | BACKGROUND_CASES
-        | GRID_CASES
-        | DISCCART_CASES
-        | DISCPOLR_CASES
-    )
-    assert set(identifiers) == expected
+    assert set(identifiers) == EXPECTED_CASES
     assert len(identifiers) == len(set(identifiers)) == 40
 
 
@@ -169,6 +169,29 @@ def test_batch4_source_searches_cover_handlers_state_and_diagnostics() -> None:
         "discrete-conditional-w228",
         "discrete-conditional-w229",
     }
+
+
+def test_batch4_reviewed_result_and_case_hashes_are_current() -> None:
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["workflow_evidence"]["run_id"] == 30479954822
+    assert result["workflow_evidence"]["artifact_id"] == 8735323902
+    assert result["totals"] == {
+        "items": 40,
+        "accepted": 29,
+        "rejected": 11,
+        "indeterminate": 0,
+        "expectations_met": 40,
+    }
+    assert hashlib.sha256(CASE_EVIDENCE.read_bytes()).hexdigest() == result[
+        "raw_evidence"
+    ]["case_evidence_sha256"]
+
+    with CASE_EVIDENCE.open(encoding="utf-8", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    assert {row["case_id"] for row in rows} == EXPECTED_CASES
+    assert sum(row["outcome"] == "accepted" for row in rows) == 29
+    assert sum(row["outcome"] == "rejected" for row in rows) == 11
+    assert all(row["outcome"] != "indeterminate" for row in rows)
 
 
 def test_official_executable_hash_matches_retained_evidence() -> None:
