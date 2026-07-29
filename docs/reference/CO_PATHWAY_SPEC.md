@@ -2,93 +2,45 @@
 
 ## Status
 
-The bundled AERMOD v26135 CO specification is **partial**. Batch 1 covers the 14 framing and foundational control records listed below. Remaining CO records stay at inventory status and must not be presented as fully specified or implemented.
-
-The machine-readable index and record fragments are bundled below `src/aermodkit/spec/versions/v26135/` and loaded with:
+The bundled AERMOD v26135 CO specification remains **partial**. Batch 1 covers 14 framing/control records. Batch 2 adds 10 decay, urban/receptor, static ozone and NO2-ratio records, for **24 records total**. All other CO records remain inventory-only.
 
 ```python
 from aermodkit.spec import load_pathway_specification
 
 co = load_pathway_specification("CO", "26135")
-model_options = co.get_record("MODELOPT")
+ozone_file = co.get_record("OZONEFIL")
 ```
 
-## Evidence hierarchy
+## Batch 2 records
 
-1. EPA v26135 source code and observed official executable behavior;
-2. current EPA v26135 manuals and release material;
-3. current `aermet26135_aermod26135` official fixtures;
-4. AERMODKit validation tests.
+| Keyword | Purpose | Current fixtures | Handler |
+|---|---|---:|---|
+| `HALFLIFE` | exponential-decay half-life | 0 | `EDECAY` |
+| `DCAYCOEF` | exponential-decay coefficient | 0 | `EDECAY` |
+| `FLAGPOLE` | default receptor height | 5 | `FLAGDF` |
+| `URBANOPT` | single/multiple urban areas | 7 | `URBOPT` |
+| `O3SECTOR` | ozone wind sectors | 0 | `O3SECTOR` |
+| `OZONEVAL` | constant/fallback ozone | 16 | `O3VAL` |
+| `OZONEFIL` | hourly ozone file | 8 | `O3FILE` |
+| `NO2EQUIL` | ambient equilibrium ratio | 7 | `NO2EQ` |
+| `NO2STACK` | global in-stack ratio | 16 | `NO2STK` |
+| `ARMRATIO` | ARM2 min/max ratios | 2 | `ARM2_Ratios` |
 
-The specification stores source dispatch and handler ranges, diagnostics, fixture examples, and evidence status for each record.
+## Source-behavior boundaries
 
-## Batch 1 records
+- `HALFLIFE` and `DCAYCOEF` are mutually exclusive and the first form wins. `EDECAY` does not explicitly reject zero or negative values; this is recorded rather than replaced by invented source validation.
+- `FLAGPOLE` defaults to 0.0 m when the optional value is absent.
+- `URBANOPT` has distinct single- and multiple-area forms. A non-1.0 roughness is forced to 1.0 under DFAULT and is non-default otherwise.
+- `O3SECTOR` accepts two to six ascending circular sector starts. Widths below 30 degrees are errors; widths below 60 degrees generate warnings.
+- `OZONEVAL` and `OZONEFIL` default to UG/M3. Sector forms depend on `O3SECTOR`. The source does not explicitly reject same-sector duplicate records, so focused executable probes remain required.
+- The User's Guide labels `OZONEFIL` non-repeatable, while the source dispatcher/handler supports sector-indexed calls. Both pieces of evidence are retained rather than silently choosing one interpretation.
+- `NO2STACK` has no current default of 0.1; setup uses a negative sentinel until a CO or source-level ratio is supplied.
+- `ARMRATIO` applies 0.50/0.90 defaults when omitted. Its handler checks for too few fields but does not explicitly reject trailing extra fields, which must be preserved.
 
-| Keyword | Required | Repeatability | Handler | Current fixtures |
-|---|---:|---|---|---:|
-| `STARTING` | yes | once | `COCARD` | 53 |
-| `FINISHED` | yes | once | `COCARD` | 53 |
-| `TITLEONE` | yes | once | `TITLES` | 53 |
-| `TITLETWO` | no | once | `TITLES` | 38 |
-| `MODELOPT` | yes | once | `MODOPT` | 53 |
-| `AVERTIME` | yes | once | `AVETIM` | 53 |
-| `POLLUTID` | yes | once | `POLLID` | 53 |
-| `RUNORNOT` | yes | once | `RUNNOT` | 53 |
-| `ERRORFIL` | no | once | `ERRFIL` | 52 |
-| `EVENTFIL` | no | once | `EVNTFL` | 0 active |
-| `SAVEFILE` | no | once | `SAVEFL` | 0 active |
-| `INITFILE` | no | once | `INITFL` | 0 active |
-| `MULTYEAR` | no | once | `MYEAR` | 5 |
-| `DEBUGOPT` | no | record-repeatable | `DEBOPT` | 2 |
+## Fragment composition
 
-## Important behavioral findings
+Aggregate CO batch 2 intentionally composes older batch 1 fragments with new batch 2 fragments. The loader accepts a fragment only when its batch is positive and no newer than the aggregate batch. This lets completed evidence remain immutable while later batches extend the same pathway.
 
-### Pathway continuation
+## Still excluded
 
-Only the opening and closing records need the explicit `CO` pathway token in the current official decks. Records inside the block commonly omit the prefix:
-
-```text
-CO STARTING
-   TITLEONE  Example
-   MODELOPT  CONC FLAT
-   AVERTIME  1 PERIOD
-   POLLUTID  SO2
-   RUNORNOT  RUN
-CO FINISHED
-```
-
-A future lexer must track the active pathway rather than require a pathway prefix on every line.
-
-### Preservation before semantics
-
-The source handlers do not validate every possible extra token. For example, `STARTING` and `FINISHED` do not inspect payload fields. AERMODKit may diagnose extra fields at the semantic layer, but the syntax layer must retain them verbatim. Comments, blank lines, original case, spacing, unknown records, and future/development fields follow the same rule.
-
-### `MODELOPT`
-
-The current source recognizes 40 option tokens. `DEFAULT` aliases `DFAULT`. The source initializes current numerical defaults before processing options, defaults to `CONC` with warning `W205` when no output type is selected, and enforces option conflicts such as dry/wet depletion opposites and incompatible NO₂ techniques. Regulatory status is option-specific: source recognition alone is not a regulatory endorsement.
-
-### `AVERTIME`
-
-The source accepts integer-hour divisors of 24, plus `MONTH`, `PERIOD`, and `ANNUAL`. `PERIOD` and `ANNUAL` are mutually exclusive. Officially expected integer values are `1, 2, 3, 4, 6, 8, 12, 24`; duplicates are errors.
-
-### `POLLUTID`
-
-The pollutant identifier is stored in an eight-character field. The optional `H1H`, `H2H`, or `INC` modifier is restricted to `NO2`, `SO2`, and PM2.5 identifier variants and disables pollutant-specific special averaging behavior with warning `W276`.
-
-### Restart and multiyear records
-
-`SAVEFILE` and `INITFILE` conflict with `MULTYEAR`. A one-filename `MULTYEAR` record writes state; a two-filename record reads the previous state and writes the current state. The official PM10 1986–1990 fixtures prove that these records form an ordered state chain. Legacy `H6H` remains accepted but emits `W352`.
-
-### `DEBUGOPT`
-
-`DEBUGOPT` is repeatable in v26135. Each card contributes tokens to a combined stream processed after all `DEBUGOPT` cards have been read. Individual debug options remain nonrepeatable. Filenames preserve original case. `LINE` is deliberately present in the recognition array only to diagnose invalid use; `AREA` is the supported debug selector.
-
-### Known source-comment discrepancy
-
-`EVNTFL` comments say an invalid `SOCONT|DETAIL` parameter uses the default, but the current source emits `W203` without explicitly assigning `DETAIL` after the invalid value has already been stored. The specification records the implemented behavior and preserves this discrepancy for future executable tests rather than normalizing it away.
-
-## Validation boundary
-
-Loading the CO batch 1 specification proves only that these 14 records passed structural validation and are backed by current source evidence. It does not imply complete CO coverage, a production parser, semantic execution support, support for every `MODELOPT` combination, or regulatory approval of non-default options.
-
-The next specification batch should extend CO records rather than start production parser classes prematurely.
+`O3VALUES`, `OZONUNIT`, all NOX background records, deposition, low-wind/direction-window controls, aircraft controls and remaining option-dependent records are not yet bundled. No production lexer/parser/AST/writer is claimed.

@@ -3,7 +3,7 @@
   "model": "AERMOD",
   "model_version": "26135",
   "pathway": "CO",
-  "batch": 1,
+  "batch": 2,
   "status": "partial-source-verified-specification",
   "authority_order": [
     "EPA v26135 source code and official executable behavior",
@@ -25,9 +25,19 @@
       "SAVEFILE",
       "INITFILE",
       "MULTYEAR",
-      "DEBUGOPT"
+      "DEBUGOPT",
+      "HALFLIFE",
+      "DCAYCOEF",
+      "FLAGPOLE",
+      "URBANOPT",
+      "O3SECTOR",
+      "OZONEVAL",
+      "OZONEFIL",
+      "NO2EQUIL",
+      "NO2STACK",
+      "ARMRATIO"
     ],
-    "excluded_note": "Remaining CO keywords are still inventory-only and must not be treated as fully specified."
+    "excluded_note": "O3VALUES/OZONUNIT, NOX background controls, deposition, low-wind, aircraft and other remaining CO keywords are still inventory-only."
   },
   "preservation_policy": {
     "original_text": true,
@@ -42,6 +52,9 @@
     "co_batch1_framing_titles.json",
     "co_batch1_model_run.json",
     "co_batch1_files_restart.json",
-    "co_batch1_debug.json"
+    "co_batch1_debug.json",
+    "co_batch2_decay_urban.json",
+    "co_batch2_ozone_static.json",
+    "co_batch2_no2_ratios.json"
   ]
 }

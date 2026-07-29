@@ -1,0 +1,11 @@
+pathway,keyword,fragment,schema_batch,repeatability,handler,dispatcher_lines,handler_lines,manual_section,fixture_occurrences,fixture_files,evidence_status
+CO,HALFLIFE,co_batch2_decay_urban.json,2,once; mutually exclusive with DCAYCOEF; first decay form wins,EDECAY,122-166,2641-2714,3.2.10,0,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,DCAYCOEF,co_batch2_decay_urban.json,2,once; mutually exclusive with HALFLIFE; first decay form wins,EDECAY,122-166,2641-2714,3.2.10,0,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,FLAGPOLE,co_batch2_decay_urban.json,2,once,FLAGDF,167-172,2764-2823,3.2.11,5,5,v26135-source-manual-and-current-fixture-verified
+CO,URBANOPT,co_batch2_decay_urban.json,2,repeatable for multiple urban areas; single-area form occurs once,URBOPT,292-301,5193-5428,3.2.8,7,4,v26135-source-manual-and-current-fixture-verified-regulatory-status-partial
+CO,O3SECTOR,co_batch2_ozone_static.json,2,once,O3SECTOR,392-406,7032-7139,3.2.5.1,0,0,v26135-source-and-current-manual-verified-no-active-fixture
+CO,OZONEVAL,co_batch2_ozone_static.json,2,repeatable across sector assignments; same-sector duplicate behavior needs executable probe,O3VAL,302-312,5429-5570,3.2.5.1,16,16,v26135-source-manual-and-current-fixture-verified-needs-duplicate-probe
+CO,OZONEFIL,co_batch2_ozone_static.json,2,repeatable across sector assignments; same-sector duplicate/open-unit behavior is source-managed and needs focused probes,O3FILE,323-332,5709-5944,3.2.5.1,8,8,v26135-source-manual-and-current-fixture-verified-manual-source-repeatability-discrepancy
+CO,NO2EQUIL,co_batch2_no2_ratios.json,2,once,NO2EQ,363-378,6172-6228,3.2.5.3,7,7,v26135-source-manual-and-current-fixture-verified
+CO,NO2STACK,co_batch2_no2_ratios.json,2,once,NO2STK,348-362,6229-6290,3.2.5.4 / Appendix A,16,16,v26135-source-manual-and-current-fixture-verified
+CO,ARMRATIO,co_batch2_no2_ratios.json,2,once,ARM2_Ratios,407-421,6291-6443,3.2.5.5 / Appendix A,2,2,v26135-source-manual-and-current-fixture-verified-source-extra-field-quirk

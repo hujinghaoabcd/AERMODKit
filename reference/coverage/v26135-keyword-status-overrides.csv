@@ -1,15 +1,25 @@
-pathway,keyword,base_inventory_evidence_status,override_evidence_status,source_mapping_status,schema_status,schema_reference,notes
-CO,STARTING,implicit-framing,source-and-current-fixture-verified,exact:coset.f:COCARD:63-71,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Required pathway opener; extra payload preserved by future syntax layer.
-CO,FINISHED,implicit-framing,source-and-current-fixture-verified,exact:coset.f:COCARD:528-557,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Required pathway closer and required-record check point.
-CO,TITLEONE,confirmed-current,source-and-current-fixture-verified,exact:coset.f:TITLES:1448-1492,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Required first title with case-preserved tail text.
-CO,TITLETWO,confirmed-current,source-and-current-fixture-verified,exact:coset.f:TITLES:1448-1492,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Optional second title.
-CO,MODELOPT,confirmed-current,source-token-complete-option-status-partial,exact:coset.f:MODOPT:1495-2392,batched-source-verified-partial-status,src/aermodkit/spec/versions/v26135/co_pathway.json,All 40 source-recognized tokens captured; per-option regulatory status remains incomplete.
-CO,AVERTIME,confirmed-current,source-and-current-fixture-verified,exact:coset.f:AVETIM:2394-2521,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Averaging values defaults conflicts and diagnostics captured.
-CO,POLLUTID,confirmed-current,source-and-current-fixture-verified,exact:coset.f:POLLID:2523-2639,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Eight-character storage and H1H/H2H/INC restrictions captured.
-CO,RUNORNOT,confirmed-current,source-and-current-fixture-verified,exact:coset.f:RUNNOT:2715-2762,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,RUN and NOT forms captured.
-CO,ERRORFIL,inventory-omission,source-and-current-fixture-verified,exact:coset.f:ERRFIL:3090-3159,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Default ERRORS.LST and open diagnostics captured.
-CO,EVENTFIL,confirmed-current,source-verified-no-active-current-fixture,exact:coset.f:EVNTFL:2824-2914,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json,Comment/implementation discrepancy retained for executable probing.
-CO,SAVEFILE,confirmed-current,source-verified-no-active-current-fixture,exact:coset.f:SAVEFL:2916-3026,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json,Forms defaults and MULTYEAR conflict captured.
-CO,INITFILE,confirmed-current,source-verified-no-active-current-fixture,exact:coset.f:INITFL:3028-3088,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json,Default SAVE.FIL and MULTYEAR conflict captured.
-CO,MULTYEAR,confirmed-current,source-and-current-fixture-verified,exact:coset.f:MYEAR:4739-4897,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Official PM10 ordered state chain validates behavior.
-CO,DEBUGOPT,confirmed-current,v26135-source-and-current-fixture-verified,exact:coset.f:DEBOPT:3161-4152,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json,Record repeatability and 23 recognized option tokens captured.
+pathway,keyword,schema_status,schema_reference
+CO,STARTING,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,FINISHED,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,TITLEONE,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,TITLETWO,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,MODELOPT,batched-source-verified-partial-status,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,AVERTIME,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,POLLUTID,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,RUNORNOT,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,ERRORFIL,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,EVENTFIL,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,SAVEFILE,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,INITFILE,batched-source-verified-needs-probe,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,MULTYEAR,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,DEBUGOPT,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,HALFLIFE,batched-source-verified-no-active-current-fixture,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,DCAYCOEF,batched-source-verified-no-active-current-fixture,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,FLAGPOLE,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,URBANOPT,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,O3SECTOR,batched-source-verified-no-active-current-fixture,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,OZONEVAL,batched-source-verified-needs-focused-behavior-probe,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,OZONEFIL,batched-source-verified-needs-focused-behavior-probe,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,NO2EQUIL,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,NO2STACK,batched-source-verified,src/aermodkit/spec/versions/v26135/co_pathway.json
+CO,ARMRATIO,batched-source-verified-needs-focused-behavior-probe,src/aermodkit/spec/versions/v26135/co_pathway.json

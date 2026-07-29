@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 2,
+  "records": [
+    {
+      "keyword": "NO2EQUIL",
+      "record_role": "ambient-equilibrium-no2-nox-ratio",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] NO2EQUIL <equilibrium_ratio>"],
+      "fields": [{"name": "equilibrium_ratio", "position": 3, "type": "real", "required": true, "minimum": 0.1, "maximum": 1.0, "default": 0.9, "dimensionless": true}],
+      "dependencies": {"requires_any_model_option": ["PVMRM", "OLM", "TTRM", "TTRM2"], "not_applicable_to": ["GRSM", "ARM2 without another compatible technique"]},
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "363-370"},
+        {"severity": "error", "code": "142", "condition": "no PVMRM/OLM/TTRM/TTRM2 model option", "source_lines": "371-377"},
+        {"severity": "error", "code": "200", "condition": "missing ratio", "source_lines": "6191-6194"},
+        {"severity": "error", "code": "202", "condition": "too many fields", "source_lines": "6195-6198"},
+        {"severity": "error", "code": "208", "condition": "ratio is not numeric", "source_lines": "6201-6209"},
+        {"severity": "error", "code": "380", "condition": "ratio outside 0.10..1.0", "source_lines": "6210-6218"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "363-378", "handler": "NO2EQ", "handler_lines": "6172-6228", "default_file": "setup.f", "default_lines": "1720"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.3", "syntax_page": 100, "notes": ["Default 0.90; user value range 0.10 to 1.0 for PVMRM, OLM and TTRM/TTRM2."]},
+      "fixtures": {"occurrences": 7, "files": 7, "examples": ["bg_no2_olm_ppb.inp:17", "no2_1yrAK_olm.inp:6", "no2_1yrAK_pvmrm.inp:6"]},
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "NO2STACK",
+      "record_role": "global-in-stack-no2-nox-ratio",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] NO2STACK <in_stack_ratio>"],
+      "fields": [{"name": "in_stack_ratio", "position": 3, "type": "real", "required": true, "minimum": 0.0, "maximum": 1.0, "default": null, "dimensionless": true}],
+      "dependencies": {"requires_any_model_option": ["PVMRM", "OLM", "TTRM", "TTRM2", "GRSM"]},
+      "constraints": [
+        {"rule": "There is no current 0.1 default. setup.f initializes -9 as a sentinel; a CO NO2STACK or source-level SO NO2RATIO is needed for applicable sources."},
+        {"rule": "Source-level NO2RATIO may override the global value."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "348-355"},
+        {"severity": "error", "code": "600", "condition": "no compatible NO2 conversion model option", "source_lines": "356-361"},
+        {"severity": "error", "code": "200", "condition": "missing ratio", "source_lines": "6248-6251"},
+        {"severity": "error", "code": "202", "condition": "too many fields", "source_lines": "6252-6255"},
+        {"severity": "error", "code": "208", "condition": "ratio is not numeric", "source_lines": "6258-6266"},
+        {"severity": "error", "code": "380", "condition": "ratio outside 0..1", "source_lines": "6267-6275"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "348-362", "handler": "NO2STK", "handler_lines": "6229-6290", "default_file": "setup.f", "default_lines": "1721-1722"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.4 / Appendix A", "notes": ["No assumed default 0.1; valid range 0 to 1; CO or source-specific ratio required for applicable techniques."]},
+      "fixtures": {"occurrences": 16, "files": 16, "examples": ["bg_no2_grsm_ppb.inp:16", "no2_1yrAK_grsm.inp:9", "no2_1yrAK_pvmrm.inp:9"]},
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "ARMRATIO",
+      "record_role": "arm2-minimum-maximum-ratios",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] ARMRATIO <minimum_ratio> <maximum_ratio> [<uninspected_extra_fields> ...]"],
+      "fields": [
+        {"name": "minimum_ratio", "position": 3, "type": "real", "required": true, "default": 0.5, "default_mode_range": [0.5, 0.9], "nondefault_mode_range": "(0,1]"},
+        {"name": "maximum_ratio", "position": 4, "type": "real", "required": true, "default": 0.9, "default_mode_range": [0.5, 0.9], "nondefault_mode_range": "(0,1]"}
+      ],
+      "dependencies": {"requires_model_option": "ARM2"},
+      "constraints": [
+        {"rule": "maximum_ratio must be greater than or equal to minimum_ratio."},
+        {"rule": "Under DFAULT, either value outside 0.50..0.90 is E380."},
+        {"rule": "Under non-DFAULT, values in (0,1] but outside 0.50..0.90 produce W737."},
+        {"rule": "If omitted entirely, FINISHED applies defaults 0.50 and 0.90."},
+        {"rule": "ARM2_Ratios checks only that at least two values exist and does not explicitly reject trailing extra fields. Preserve them; future semantic policy may diagnose without discarding."}
+      ],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "407-414"},
+        {"severity": "error", "code": "145", "condition": "ARM2 model option is absent", "source_lines": "415-420"},
+        {"severity": "error", "code": "201", "condition": "fewer than two ratio values", "source_lines": "6312-6316"},
+        {"severity": "error", "code": "208", "condition": "minimum or maximum is not numeric", "source_lines": "6321-6330; 6375-6384"},
+        {"severity": "error", "code": "380", "condition": "value outside active range or maximum below minimum", "source_lines": "6334-6366; 6388-6428"},
+        {"severity": "warning", "code": "737", "condition": "non-DFAULT ratio outside the default 0.50..0.90 band", "source_lines": "6338-6350; 6392-6404"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "407-421", "handler": "ARM2_Ratios", "handler_lines": "6291-6443", "default_application_lines": "650-654"},
+      "manual_evidence": {"document": "AERMOD User's Guide, EPA-454/B-26-001, v26135", "authority": "U.S. EPA SCRAM", "section": "3.2.5.5 / Appendix A", "notes": ["Optional, non-repeatable; default minimum 0.50 and maximum 0.90; non-default expanded range (0,1]."]},
+      "fixtures": {"occurrences": 2, "files": 2, "examples": ["no2_1yrAK_arm2.inp:6", "no2_1yrAK_arm2min.inp:6"]},
+      "preservation_notes": ["Trailing fields are not inspected by the current source handler and must remain in the syntax tree."],
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified-source-extra-field-quirk"
+    }
+  ]
+}

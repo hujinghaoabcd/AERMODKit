@@ -169,8 +169,10 @@ def load_pathway_specification(
             raise ValueError(f"{record_filename} has the wrong model version")
         if fragment_pathway != normalized_pathway:
             raise ValueError(f"{record_filename} has the wrong pathway")
-        if fragment_batch != batch:
-            raise ValueError(f"{record_filename} has the wrong batch")
+        if fragment_batch < 1 or fragment_batch > batch:
+            raise ValueError(
+                f"{record_filename} batch {fragment_batch} is not valid for aggregate batch {batch}"
+            )
         fragment_records = fragment.get("records")
         if not isinstance(fragment_records, list) or not fragment_records:
             raise ValueError(f"{record_filename}.records must be a non-empty array")

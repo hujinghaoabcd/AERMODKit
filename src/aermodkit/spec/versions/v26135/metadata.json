@@ -4,10 +4,11 @@
   "release_date": "2026-07-09",
   "authority": "U.S. EPA SCRAM",
   "status": "current baseline for AERMODKit bootstrap",
-  "schema_completeness": "partial source-verified specification; CO pathway batch 1 implemented, remaining records inventory-only",
+  "schema_completeness": "partial source-verified specification; CO pathway batches 1-2 implement 24 records, remaining records inventory-only",
   "notes": [
     "Official manuals, source code, release notes, errata, executable behavior, and test cases remain authoritative.",
     "Presence in this registry does not imply full feature coverage or regulatory approval.",
-    "Only records explicitly included in a bundled pathway specification may be described as source-verified."
+    "Only records explicitly included in a bundled pathway specification may be described as source-verified.",
+    "CO batch 2 covers decay, flagpole, urban, static ozone and NO2 ratio controls; temporally varying ozone/NOx records remain pending."
   ]
 }
