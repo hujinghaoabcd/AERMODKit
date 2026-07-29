@@ -57,7 +57,21 @@
       "id": "OU-MAXDCONT-FORMS",
       "target": "MAXDCONT",
       "question": "THRESH and secondary-rank signatures including trailing unit",
-      "status": "source-resolved-needs-official-exe-fixture"
+      "status": "executed-official-executable-v26135",
+      "result": "The primary-rank plus secondary-rank form and the THRESH form both completed with and without an explicit trailing file unit. All four cases generated the requested MAXDCONT output file. THRESH cases emitted W273 and W415 in the selected annual NO2 context without rejecting the record form.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch3/result.json",
+        "case_evidence_file": "reference/probes/v26135/batch3/case-evidence.csv",
+        "cases": [
+          "ou_maxdcont_secondary_rank_control",
+          "ou_maxdcont_secondary_rank_unit",
+          "ou_maxdcont_thresh_control",
+          "ou_maxdcont_thresh_unit"
+        ],
+        "workflow_run_id": 30461120811,
+        "artifact_id": 8727721661
+      },
+      "boundary": "Short output filenames were used after exploratory E500 file-open failures. This confirms the record signatures and optional unit, not a general filename-length limit."
     }
   ],
   "boundary": "Cataloging a probe does not claim it has been executed."
