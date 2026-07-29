@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-01",
+  "review_status": "reviewed-official-executable-evidence",
+  "workflow_evidence": {
+    "run_id": 30447131971,
+    "artifact_id": 8721942233,
+    "artifact_name": "aermod-v26135-official-behavior-probes-batch1-1cd8e13dc2af2d0cc9fb88255ad7e96c190fade6",
+    "artifact_digest": "sha256:4cfa463e9d2eb8f56e5d31d4df750c53ea4cadaa2d22b0bdf28a209a34f171d1",
+    "artifact_size_in_bytes": 80109023,
+    "head_sha": "1cd8e13dc2af2d0cc9fb88255ad7e96c190fade6",
+    "created_at": "2026-07-29T11:21:23Z",
+    "expires_at": "2026-08-28T11:21:08Z"
+  },
+  "official_assets": {
+    "executable_size": 3940864,
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_archive_size": 674503,
+    "source_archive_sha256": "5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed"
+  },
+  "source_evidence": [
+    {
+      "file": "soset.f",
+      "sha256": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5",
+      "ranges": [[120, 130], [601, 619], [2036, 2525], [8529, 8731]],
+      "snippet_sha256": "8655a630e1b6fdcc18538f3fddb36902e71522f23046a06cda6977986ab8333c"
+    },
+    {
+      "file": "coset.f",
+      "sha256": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a",
+      "ranges": [[323, 332], [499, 507], [5709, 6169]],
+      "snippet_sha256": "072d024e8791489583dd7c8aa3c2836309159122a9aff2e0ca9d14bee3ac6565"
+    }
+  ],
+  "totals": {
+    "cases": 9,
+    "accepted": 6,
+    "rejected": 3,
+    "indeterminate": 0,
+    "expectations_met": 9
+  },
+  "cases": [
+    {
+      "id": "control_test3_rline_barrier",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
+      "deck_sha256": "f68d704eedfae98ae06fc47f763b6bbef4b741ca473d324fee0583d572c43cd6",
+      "output_sha256": "42b1da6d763a203dd0ef424dabba16687539bddba93ea9489f0e0fc01672048d"
+    },
+    {
+      "id": "so_swpoint_alpha",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1, "W650": 56},
+      "deck_sha256": "179b96a1e89796994cc8e8e379c3ef828e7f024dcab4f8f3cd971c1fa3d87700",
+      "output_sha256": "6052f469ca17c383add4bbfc6722c75206323d874a9fbbb8eb01232fdd35b957"
+    },
+    {
+      "id": "so_swpoint_no_alpha",
+      "observed_outcome": "rejected",
+      "returncode": 0,
+      "fatal_diagnostic": {
+        "code": "E198",
+        "module": "SRCSIZ",
+        "message": "Non-DFAULT ALPHA Option Required for use of SWPOINT"
+      },
+      "deck_sha256": "5fe4f32c3cadf24b817258a1480d31ab82245982602a0ca48166a998f3b989bd",
+      "output_sha256": "86ea9c42f6a6acc50170a2bf18cba1e3e4c9fb60f71bc8f00f5ca333356cb367"
+    },
+    {
+      "id": "so_vbarrier_one",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
+      "deck_sha256": "fedec0c28c53dd787a2f62faf5619a40496f8b2c83142a7cc153b45a1946a06c",
+      "output_sha256": "03be72887fcd475212f36a13c3345730b96e6a3e48dd52c5d3a74b8201c094a1"
+    },
+    {
+      "id": "so_vbarrier_two",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"W205": 1, "W216": 1, "W403": 1},
+      "deck_sha256": "9ccccde760673d132d197d1b5dae9c347cb0b3a6961513267eb7330b63b80d13",
+      "output_sha256": "cb8bd4d7791aef007179695faff77e8f6c7fa8669e98e5ce559d6e19c1de8108"
+    },
+    {
+      "id": "co_ozonefil_distinct_sectors_control",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"I440": 1342, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
+      "deck_sha256": "1828568b426e790620a94fdf2be74d6e1efa69ac5a5066021b519b001b5c7ee5",
+      "output_sha256": "9c4249904e02eb6816bed9a940c9762f5f4d5bafdc19338eae880abf8f047a23"
+    },
+    {
+      "id": "co_ozonefil_same_sector_duplicate",
+      "observed_outcome": "rejected",
+      "returncode": 0,
+      "fatal_diagnostic": {
+        "code": "E501",
+        "module": "O3FILE",
+        "message": "Dup Filename! Fatal Error Opening the Data File of OZONEFIL"
+      },
+      "deck_sha256": "0f85707026d310192bfb203d004c227d52fc9e21a816540c152f125102ab0732",
+      "output_sha256": "8e299556ef4c3412f39218661d9ee7cbddbe7e53ef06998b62c9e80d423d4960"
+    },
+    {
+      "id": "co_nox_file_distinct_sectors_control",
+      "observed_outcome": "accepted",
+      "returncode": 0,
+      "diagnostic_counts": {"I440": 1342, "I460": 469, "W187": 1, "W298": 1, "W361": 1},
+      "deck_sha256": "4a0082f4a59dca00524fd04139084219c9da1ac807666a9f229848fccde634bd",
+      "output_sha256": "b5cbfc58c275729f42826c90b54d33846bbe8e680e925346a52a783d833f087c"
+    },
+    {
+      "id": "co_nox_file_same_sector_duplicate",
+      "observed_outcome": "rejected",
+      "returncode": 0,
+      "fatal_diagnostic": {
+        "code": "E501",
+        "module": "NOXFILE",
+        "message": "Dup Filename! Fatal Error Opening the Data File of NOX_FILE"
+      },
+      "deck_sha256": "680c6d2f11cc737b603d670c7ef2754981948799f78b4ef0dde23a82e22714a4",
+      "output_sha256": "f255516cb95ca8b607904ce542e65e8284d5ae156ed6774674375dfd954fea13"
+    }
+  ],
+  "interpretation_boundaries": [
+    "Results apply only to the exact deck and official executable hashes recorded here.",
+    "Return code zero is not sufficient for acceptance; official completion markers and fatal diagnostics control classification.",
+    "Distinct-sector controls isolate supported sector-indexed repetition from same-sector duplicate behavior.",
+    "Full workspaces remain in the workflow artifact; the repository retains deterministic mutations and cryptographic hashes.",
+    "This evidence harness is not the future AERMODKit application runner."
+  ]
+}

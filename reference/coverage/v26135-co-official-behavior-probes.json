@@ -5,36 +5,45 @@
   "probes": [
     {
       "id": "ozonefil_same_sector_duplicate",
-      "records": [
-        "O3SECTOR",
-        "OZONEFIL"
-      ],
+      "records": ["O3SECTOR", "OZONEFIL"],
       "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for one sector?",
-      "status": "planned-manual-official-executable-probe"
+      "status": "executed-official-executable-v26135",
+      "result": "Two distinct-sector OZONEFIL records completed successfully. Two different files assigned to the same sector were rejected with CO E501 from O3FILE.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch1/result.json",
+        "cases": [
+          "co_ozonefil_distinct_sectors_control",
+          "co_ozonefil_same_sector_duplicate"
+        ],
+        "workflow_run_id": 30447131971,
+        "artifact_id": 8721942233
+      }
     },
     {
       "id": "nox_file_same_sector_duplicate",
-      "records": [
-        "NOXSECTR",
-        "NOX_FILE"
-      ],
+      "records": ["NOXSECTR", "NOX_FILE"],
       "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for one sector?",
-      "status": "planned-manual-official-executable-probe"
+      "status": "executed-official-executable-v26135",
+      "result": "Two distinct-sector NOX_FILE records completed successfully. Two different files assigned to the same sector were rejected with CO E501 from NOXFILE.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch1/result.json",
+        "cases": [
+          "co_nox_file_distinct_sectors_control",
+          "co_nox_file_same_sector_duplicate"
+        ],
+        "workflow_run_id": 30447131971,
+        "artifact_id": 8721942233
+      }
     },
     {
       "id": "arcftopt_repeat_extra_fields",
-      "records": [
-        "ARCFTOPT"
-      ],
+      "records": ["ARCFTOPT"],
       "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?",
       "status": "planned-manual-official-executable-probe"
     },
     {
       "id": "temporal_vector_incomplete",
-      "records": [
-        "O3VALUES",
-        "NOX_VALS"
-      ],
+      "records": ["O3VALUES", "NOX_VALS"],
       "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
       "status": "planned-manual-official-executable-probe"
     },

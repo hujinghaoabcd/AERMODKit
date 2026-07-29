@@ -97,32 +97,26 @@
     }
   ],
   "behavior_probes": {
-    "total": 18,
-    "executed": 0,
+    "total": 19,
+    "executed": 4,
     "source_resolved": 1,
-    "official_executable_pending": 17,
+    "official_executable_pending": 14,
     "entries": [
       {
         "scope": "CO",
         "id": "ozonefil_same_sector_duplicate",
-        "status": "planned-manual-official-executable-probe",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-v26135",
+        "classification": "executed",
         "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for one sector?",
-        "records": [
-          "O3SECTOR",
-          "OZONEFIL"
-        ]
+        "records": ["O3SECTOR", "OZONEFIL"]
       },
       {
         "scope": "CO",
         "id": "nox_file_same_sector_duplicate",
-        "status": "planned-manual-official-executable-probe",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-v26135",
+        "classification": "executed",
         "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for one sector?",
-        "records": [
-          "NOXSECTR",
-          "NOX_FILE"
-        ]
+        "records": ["NOXSECTR", "NOX_FILE"]
       },
       {
         "scope": "CO",
@@ -130,9 +124,7 @@
         "status": "planned-manual-official-executable-probe",
         "classification": "official-executable-pending",
         "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?",
-        "records": [
-          "ARCFTOPT"
-        ]
+        "records": ["ARCFTOPT"]
       },
       {
         "scope": "CO",
@@ -140,10 +132,7 @@
         "status": "planned-manual-official-executable-probe",
         "classification": "official-executable-pending",
         "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
-        "records": [
-          "O3VALUES",
-          "NOX_VALS"
-        ]
+        "records": ["O3VALUES", "NOX_VALS"]
       },
       {
         "scope": "CO",
@@ -165,17 +154,25 @@
       {
         "scope": "SO/RE",
         "id": "SO-SWPOINT-01",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
+        "status": "executed-official-executable-v26135",
+        "classification": "executed",
         "question": "Confirm official executable accepts SWPOINT only with ALPHA and records the expected six-parameter signature.",
         "priority": "high"
       },
       {
         "scope": "SO/RE",
         "id": "SO-VBARRIER-01",
-        "status": "cataloged-not-executed",
+        "status": "executed-official-executable-v26135",
+        "classification": "executed",
+        "question": "Confirm the one- and two-barrier VBARRIER field forms with valid in-range parameters.",
+        "priority": "high"
+      },
+      {
+        "scope": "SO/RE",
+        "id": "SO-VBARRIER-RANGE-01",
+        "status": "planned-manual-official-executable-probe",
         "classification": "official-executable-pending",
-        "question": "Confirm one- and two-barrier VBARRIER field counts and warning behavior at range boundaries.",
+        "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.",
         "priority": "high"
       },
       {

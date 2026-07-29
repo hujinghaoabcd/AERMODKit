@@ -5,12 +5,34 @@
     {
       "id": "SO-SWPOINT-01",
       "question": "Confirm official executable accepts SWPOINT only with ALPHA and records the expected six-parameter signature.",
-      "priority": "high"
+      "priority": "high",
+      "status": "executed-official-executable-v26135",
+      "result": "The six-parameter SWPOINT form completed successfully with ALPHA; the same form without ALPHA was rejected with SO E198 from SRCSIZ.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch1/result.json",
+        "cases": ["so_swpoint_alpha", "so_swpoint_no_alpha"],
+        "workflow_run_id": 30447131971,
+        "artifact_id": 8721942233
+      }
     },
     {
       "id": "SO-VBARRIER-01",
-      "question": "Confirm one- and two-barrier VBARRIER field counts and warning behavior at range boundaries.",
-      "priority": "high"
+      "question": "Confirm the one- and two-barrier VBARRIER field forms with valid in-range parameters.",
+      "priority": "high",
+      "status": "executed-official-executable-v26135",
+      "result": "Both one-barrier and two-barrier forms completed successfully for an ALPHA/FLAT RLINEXT source when HT, WT, LAI, and LM were inside source-enforced ranges.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch1/result.json",
+        "cases": ["so_vbarrier_one", "so_vbarrier_two"],
+        "workflow_run_id": 30447131971,
+        "artifact_id": 8721942233
+      }
+    },
+    {
+      "id": "SO-VBARRIER-RANGE-01",
+      "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.",
+      "priority": "high",
+      "status": "planned-manual-official-executable-probe"
     },
     {
       "id": "SO-PLATFORM-01",
