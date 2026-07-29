@@ -1,8 +1,9 @@
 # Current State
 
 - Updated: 2026-07-29
-- Active development branch: `agent/official-behavior-probes-batch1`
-- Active pull request: #7, draft pending final branch CI and evidence review closure
+- Active branch: `main`
+- Official behavior-probe batch 1 PR: #7, merged
+- Batch 1 merge commit: `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`
 - Whole-spec acceptance PR: #5, merged
 - Whole-spec acceptance merge commit: `cbd721b80c5642d5fcc60ec2f77fe70095e9a79b`
 - Recovery PR: #3, merged
@@ -36,8 +37,10 @@ Machine-readable evidence is in `reference/coverage/v26135-whole-spec-acceptance
 The first reviewed official-executable batch used AERMOD v26135 executable SHA-256
 `599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`.
 
-- workflow run: `30447131971`;
-- artifact ID: `8721942233`;
+- reviewed evidence workflow: `30447131971`;
+- evidence artifact ID: `8721942233`;
+- final branch CI: `30448106914`, 9/9 passed;
+- final branch official workflow: `30448106897`, passed;
 - cases: 9;
 - accepted: 6;
 - rejected: 3;
@@ -55,7 +58,7 @@ Reviewed evidence is in `reference/probes/v26135/batch1/result.json` and
 
 ## Retained behavior-probe gate
 
-The refined catalogs now normalize to 19 questions:
+The refined catalogs normalize to 19 questions:
 
 - executed with retained official-executable evidence: 4;
 - source-resolved: 1;
@@ -77,6 +80,6 @@ semantic project model, runner, output parser, and GIS layers remain pending.
 - 53/53 current official decks executed in the established evidence workflow;
 - all seven dispatcher exact-set reports pass;
 - whole-spec acceptance CI run `30443993754` passed all nine jobs;
-- behavior-probe harness/manifest head `1cd8e13dc2af2d0cc9fb88255ad7e96c190fade6` passed official workflow `30447131971`;
-- the same head passed all nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 jobs in CI `30447131982`;
-- final documentation/catalog commits still require the branch's final CI before PR #7 can be marked ready.
+- official behavior-probe batch 1 evidence workflow `30447131971` passed;
+- final PR #7 head passed all nine CI jobs in `30448106914` and the official workflow `30448106897`;
+- PR #7 merged to `main` as `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`.
