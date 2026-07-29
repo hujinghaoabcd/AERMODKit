@@ -40,27 +40,45 @@ def _patches(payload: dict[str, Any], *, context: str) -> list[dict[str, Any]]:
     return result
 
 
+def _mutation_indexes(
+    mutations: list[object], *, contains: str, context: str
+) -> list[int]:
+    matches = [
+        index
+        for index, item in enumerate(mutations)
+        if isinstance(item, dict) and item.get("contains") == contains
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            f"{context} expected one mutation containing {contains!r}, found {len(matches)}"
+        )
+    return matches
+
+
 def _apply_patch(case: dict[str, Any], patch: dict[str, Any], *, context: str) -> None:
+    mutations = case.get("replace_line_once")
+    if not isinstance(mutations, list):
+        raise ValueError(f"case {case.get('id')!r} has no replace_line_once array")
+
     raw_deletions = patch.get("delete_replace_line_contains", [])
     if not isinstance(raw_deletions, list) or not all(
         isinstance(item, str) and item for item in raw_deletions
     ):
         raise ValueError(f"{context}.delete_replace_line_contains must be a string array")
-
-    mutations = case.get("replace_line_once")
-    if not isinstance(mutations, list):
-        raise ValueError(f"case {case.get('id')!r} has no replace_line_once array")
     for contains in raw_deletions:
-        matches = [
-            index
-            for index, item in enumerate(mutations)
-            if isinstance(item, dict) and item.get("contains") == contains
-        ]
-        if len(matches) != 1:
-            raise ValueError(
-                f"{context} expected one mutation containing {contains!r}, found {len(matches)}"
-            )
-        del mutations[matches[0]]
+        del mutations[_mutation_indexes(mutations, contains=contains, context=context)[0]]
+
+    raw_replacements = patch.get("set_replace_line_replacement", {})
+    replacements = _object(
+        raw_replacements,
+        context=f"{context}.set_replace_line_replacement",
+    )
+    for contains, replacement in replacements.items():
+        if not isinstance(replacement, str):
+            raise ValueError(f"{context} replacement for {contains!r} must be a string")
+        index = _mutation_indexes(mutations, contains=contains, context=context)[0]
+        mutation = _object(mutations[index], context=f"{context}.mutation")
+        mutation["replacement"] = replacement
 
 
 def merge_manifests(base_path: Path, fragment_paths: list[Path]) -> dict[str, Any]:
