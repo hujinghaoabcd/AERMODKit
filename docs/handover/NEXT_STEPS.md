@@ -1,18 +1,31 @@
 # Next Steps
 
-## Immediate stage: targeted official-executable behavior probes
+## Immediate stage: remaining official-executable behavior probes
 
-1. Continue using the retained official v26135 fixture snapshot and EPA Windows executable workflow for the 11 pending questions.
-2. The next parser-shaping batch should prioritize:
-   - the remaining ALPHA/DFAULT dependency matrix for `GDSEASON`, `GASDEPDF`, `GDLANUSE`, `GASDEPVD`, `LOW_WIND`, `AWMADWNW`, `ORD_DWNW` and `ARCFTOPT`;
-   - repeated `ARCFTOPT` and extra-field behavior;
-   - `OU-MAXDCONT-FORMS` with executable fixtures for THRESH, secondary-rank signatures and trailing units.
-3. A following medium-priority batch should cover `SO-PLATFORM-01`, `SO-BACKGRND-01`, `RE-GRID-ID-01`, `RE-DISC-EXTRA-01`, `ME-FORMAT-LEGACY`, `ME-SCIM-6FIELD`, `EV-PAIRING` and `OU-FILE-CONFLICT`.
-4. For every probe, retain exact deck hashes, executable/archive SHA-256, stdout/stderr, main/error outputs, diagnostic codes, positive controls, official source contexts and an interpretation boundary.
-5. Update each originating probe catalog entry explicitly; do not infer general behavior beyond the executable cases and retained source branch.
-6. Regenerate `v26135-whole-spec-acceptance.json` after each reviewed batch.
-7. Finish the clean-room third-party capability audit without copying implementations or treating third-party APIs as authoritative.
-8. Freeze representative official and synthetic fixtures for unknown, future, development, include, continuation, nested-grid, line-ending and malformed syntax.
+Eight retained questions remain pending.
+
+### Batch 4 — SO and RE behavior
+
+Prioritize:
+
+- `SO-PLATFORM-01`: trailing-field acceptance, ignore, or rejection;
+- `SO-BACKGRND-01`: duplicate global/sector profiles, precedence, and hourly/static conflicts;
+- `RE-GRID-ID-01`: omitted NetID continuation and active-grid inheritance;
+- `RE-DISC-EXTRA-01`: terrain/flag fields supplied under inactive options.
+
+Every probe must retain positive controls, exact deck hashes, executable/source archive hashes,
+stdout/stderr, main/error outputs, diagnostics, source contexts, and an interpretation boundary.
+
+### Batch 5 — ME, EV, and OU behavior
+
+Then resolve:
+
+- `ME-FORMAT-LEGACY`;
+- `ME-SCIM-6FIELD`;
+- `EV-PAIRING`;
+- `OU-FILE-CONFLICT`.
+
+`ME-TURB-DUP` is already source-resolved and remains part of the final gate accounting.
 
 ## Completed official behavior evidence
 
@@ -29,31 +42,46 @@
 - `SO-VBARRIER-RANGE-01`;
 - `OU-EVENT-FILEFORM`.
 
-The refined gate contains 19 questions: 7 executed, 1 source-resolved and 11 pending.
+### Batch 3
 
-## Parser-entry gate
+- `alpha_dependency_matrix`;
+- `arcftopt_repeat_extra_fields`;
+- `OU-MAXDCONT-FORMS`.
 
-Loss-aware syntax implementation may begin only when:
+The normalized inventory is now 19 total, 10 executed, 1 source-resolved, and 8 pending.
 
-- the record-set gate remains 7/7 and 138/138;
-- all high-priority parser-shaping executable probes have final retained evidence;
-- unresolved medium-priority probes have explicit preservation-safe handling and documented deferral;
-- fixture hashes and expected diagnostics are frozen;
-- no semantic model or canonical formatter is allowed to define the concrete syntax representation.
+## Parser-entry preparation after Batch 5
 
-## After the probe gate: loss-aware syntax
+1. Complete the clean-room third-party capability audit without copying implementations or treating third-party APIs as authoritative.
+2. Freeze representative official and synthetic fixtures for comments, blank lines, mixed case, tabs, quoting, LF/CRLF, unknown/future/development records, include boundaries, continuations, nested grids, malformed records, incomplete blocks, and event-output submode.
+3. Add a preservation-safe ADR for any intentionally deferred behavior.
+4. Freeze fixture hashes and expected diagnostics.
+5. Regenerate whole-spec acceptance and require:
 
-1. Implement tokens with exact source spans and original text.
-2. Implement a loss-aware lexer that preserves comments, blank lines, original case, whitespace, tabs, quoting and original line endings.
-3. Implement an immutable concrete syntax tree for pathway boundaries, known records, unknown records, unknown fields, include boundaries, continuations and nested grid blocks.
-4. Add a format-preserving writer whose default output reproduces original bytes when no edits are made.
-5. Add byte-exact and normalized round-trip tests across the frozen fixture set.
-6. Keep any canonical formatter separate from the format-preserving writer.
+```text
+record_set_gate_passed = true
+behavior_probe_gate_passed = true
+fixtures_frozen = true
+clean_room_audit_complete = true
+syntax_implementation_ready = true
+```
 
-## Only after syntax round-trip invariants are stable
+## Loss-aware syntax stage
 
-- implement typed semantic project models and cross-pathway validation;
-- review the archived PR #2 prototype only for independently useful requirements or tests;
-- add runner/executable management and isolated workspaces;
-- add output parsing and provenance-aware result objects;
-- add GIS integrations only after the syntax, semantic and execution layers are stable.
+Only after the parser-entry gate opens:
+
+1. implement tokens with exact byte/character spans and original text;
+2. implement a lexer preserving comments, blank lines, whitespace, tabs, quoting, original case, numeric spelling, and line endings;
+3. implement an immutable CST for pathway boundaries, known/unknown/malformed records, unknown fields, include boundaries, continuations, nested grids, and event-output blocks;
+4. implement a format-preserving writer whose no-edit output is byte-identical;
+5. keep canonical formatting separate from preservation writing;
+6. require byte-exact and normalized round-trip tests across the frozen fixture set.
+
+## Later stages
+
+Only after syntax invariants are stable:
+
+- typed semantic project models and cross-pathway validation;
+- isolated executable runner and provenance;
+- output parsers and result objects;
+- GIS integrations and public API.
