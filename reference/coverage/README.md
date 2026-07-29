@@ -2,37 +2,55 @@
 
 ## Purpose
 
-This directory is an evidence-tracked inventory, not an implementation claim. It exists to prevent AERMODKit from inheriting the omissions, simplifications, or version assumptions of commercial or third-party wrappers.
+This directory is an evidence-tracked inventory, not a blanket implementation claim. It prevents AERMODKit from inheriting omissions, simplifications or stale version assumptions from commercial and third-party wrappers.
 
 ## Files
 
-- `../epa/v26135/manifest.yaml` — official asset and component-version manifest;
-- `v26135-keywords.csv` — current top-level and selected secondary runstream records;
-- `v26135-source-types.csv` — official source-type vocabulary plus separately marked special/option-applied cases;
-- `v26135-outputs.csv` — output control and parser-priority seed;
-- `v26135-source-code-map.csv` — evidence-ranked source mapping seed.
+- `../epa/v26135/manifest.yaml` — official asset, component-version and parity-evidence manifest;
+- `v26135-keywords.csv` — broad top-level and selected secondary runstream inventory seed;
+- `v26135-keyword-status-overrides.csv` — explicit evidence/status promotions for records completed after the original seed;
+- `v26135-co-batch1-evidence.csv` — source ranges, handlers, repeatability and fixture counts for CO batch 1;
+- `v26135-source-types.csv` — official source-type vocabulary plus separately marked special cases;
+- `v26135-outputs.csv` — output-control and parser-priority seed;
+- `v26135-source-code-map.csv` — source mapping evidence;
+- `../epa/v26135/regression/` — official fixture, executable and reproduced-build parity evidence.
 
-## Evidence statuses
+## Evidence states
 
-- `confirmed-current`: observed in the current EPA v26135 release pages or quick reference;
-- `confirmed-release-note`: explicitly described in the v26135 transmittal memorandum or Model Change Bulletin 19;
-- `provisional-file-level`: inferred only at a Fortran file/module level and must be verified against the source archive;
-- `needs-source-verification`: potentially special or ambiguous behavior that must not yet become a public domain class.
+The original inventory uses broad seed states such as:
 
-## Important limitations
+- `confirmed-current`;
+- `confirmed-release-note`;
+- `provisional-file-level`;
+- `needs-source-verification`.
 
-1. The v26135 source ZIP and official sample/test ZIPs were not materialized in the current runtime, so no SHA256 values or line-level Fortran mappings are available.
-2. The current inventory is a broad official quick-reference seed. Every argument signature, repeatability rule, default, range, dependency, regulatory status, and error behavior still requires detailed User Guide and source-code verification.
-3. The locally retained `aermod_userguide.pdf` is the October 2023 guide. It is useful as historical material only and is not the current v26135 specification.
-4. AERMAP remains version 24142 even though AERMOD/AERMET and several support programs are 26135.
-5. Unknown or unsupported records must be preserved by the future syntax layer rather than discarded.
+Later specification batches may promote individual records using companion evidence files. The current CO batch 1 promotions use states such as:
 
-## Completion rule
+- `source-and-current-fixture-verified`;
+- `source-verified-no-active-current-fixture`;
+- `source-token-complete-option-status-partial`;
+- `batched-source-verified`.
 
-A row may be promoted to implementation-ready only after it has:
+A promoted row is not equivalent to production parser support. It means the bundled record specification has passed source/evidence review at the stated level.
 
-- a current official manual reference;
-- a source-code handler or observed executable-behavior reference;
-- argument and repeatability rules;
-- at least one official sample/test fixture or a documented reason none exists;
-- a planned or implemented regression test.
+## Current materialization state
+
+The official source, executable, sample-run and test-case assets have been materialized in auditable GitHub Actions evidence jobs and hashed. Large archives and binaries are referenced and indexed rather than committed directly to Git. The current 53-deck fixture set and selected official-executable parity probes are retained as bounded artifacts and machine-readable reports.
+
+The locally retained `aermod_userguide.pdf` remains the October 2023 guide and is historical only; it is not treated as the current v26135 authority.
+
+AERMAP remains version 24142 even though AERMOD/AERMET and several support programs are 26135.
+
+## Promotion rule
+
+A record may be promoted from the broad inventory only after it has:
+
+- current authoritative evidence;
+- an exact source handler or observed executable-behavior reference;
+- argument, repeatability, default and validation rules;
+- regulatory/development status explicitly stated or explicitly left pending;
+- an official sample/test fixture or a documented reason none is active;
+- a bundled schema record and validation test plan;
+- loss-aware preservation behavior.
+
+The companion status-override file is authoritative for completed batches until the main inventory is regenerated by a deterministic build script. Untouched rows in the original inventory must not be described as rewritten or implementation-ready.

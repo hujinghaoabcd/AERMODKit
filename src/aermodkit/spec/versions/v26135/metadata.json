@@ -4,9 +4,10 @@
   "release_date": "2026-07-09",
   "authority": "U.S. EPA SCRAM",
   "status": "current baseline for AERMODKit bootstrap",
-  "schema_completeness": "metadata-only; keyword and source-code mapping not yet implemented",
+  "schema_completeness": "partial source-verified specification; CO pathway batch 1 implemented, remaining records inventory-only",
   "notes": [
-    "Official manuals, source code, release notes, errata, and test cases remain authoritative.",
-    "Presence in this registry does not imply full feature coverage or regulatory approval."
+    "Official manuals, source code, release notes, errata, executable behavior, and test cases remain authoritative.",
+    "Presence in this registry does not imply full feature coverage or regulatory approval.",
+    "Only records explicitly included in a bundled pathway specification may be described as source-verified."
   ]
 }

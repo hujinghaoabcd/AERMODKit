@@ -1,0 +1,15 @@
+keyword,required,repeatability,syntax,handler,dispatcher_lines,handler_lines,fixture_occurrences,fixture_files,evidence_status
+STARTING,True,once,CO STARTING,COCARD,63-71,1-71,53,53,source-and-current-fixture-verified
+FINISHED,True,once,CO FINISHED,COCARD,528-557,1-557,53,53,source-and-current-fixture-verified
+TITLEONE,True,once,[CO] TITLEONE <free text>,TITLES,72-81,1448-1492,53,53,source-and-current-fixture-verified
+TITLETWO,False,once,[CO] TITLETWO <free text>,TITLES,82-91,1448-1492,38,38,source-and-current-fixture-verified
+MODELOPT,True,once,[CO] MODELOPT <option> [<option> ...],MODOPT,92-101,1495-2392,53,53,source-token-complete; option-level regulatory status partially audited
+AVERTIME,True,once,[CO] AVERTIME <period> [<period> ...] [PERIOD|ANNUAL],AVETIM,102-111,2394-2521,53,53,source-and-current-fixture-verified
+POLLUTID,True,once,[CO] POLLUTID <pollutant-id> [H1H|H2H|INC],POLLID,112-121,2523-2639,53,53,source-and-current-fixture-verified
+RUNORNOT,True,once,[CO] RUNORNOT RUN|NOT,RUNNOT,173-182,2715-2762,53,53,source-and-current-fixture-verified
+ERRORFIL,False,once,[CO] ERRORFIL [<filename>],ERRFIL,227-236,3090-3159,52,52,source-and-current-fixture-verified
+EVENTFIL,False,once,[CO] EVENTFIL [<filename> [SOCONT|DETAIL]],EVNTFL,183-196,2824-2914,0,0,source-verified; no active current 53-deck fixture
+SAVEFILE,False,once,[CO] SAVEFILE [<save-file> [<day-increment> [<secondary-save-file>]]],SAVEFL,197-206,2916-3026,0,0,source-verified; no active current 53-deck fixture
+INITFILE,False,once,[CO] INITFILE [<filename>],INITFL,207-216,3028-3088,0,0,source-verified; no active current 53-deck fixture
+MULTYEAR,False,once,[CO] MULTYEAR <save-file> [<input-file>] | [CO] MULTYEAR H6H <save-file> [<input-file>],MYEAR,217-226,4739-4897,5,5,source-and-current-fixture-verified
+DEBUGOPT,False,record-repeatable; each individual debug option is nonrepeatable,[CO] DEBUGOPT <debug-option> [<filename>] [<debug-option> [<filename>] ...],DEBOPT,277-291,3161-4152,2,2,v26135-source-and-current-fixture-verified

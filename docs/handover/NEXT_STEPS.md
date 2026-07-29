@@ -1,97 +1,113 @@
 # Next Steps
 
-## Immediate next task: exact CO-pathway keyword specification
+## Immediate next task: complete the remaining CO-pathway specification
 
-The official executable comparison has resolved the main uncertainty around `capped`: the EPA executable exactly reproduces the official fixture, while the GNU build has a localized compiler-specific difference. The next primary development task is therefore to turn the CO pathway inventory into a complete, machine-usable specification.
+CO batch 1 is now source-verified, bundled, loadable, and covered by structural tests. The next primary task is to extend the same evidence standard to the remaining CO records rather than begin production parser classes prematurely.
 
-### CO specification batch 1
+### CO specification batch 2: chemistry, decay, urban and receptor controls
 
-Start with the foundational control records:
+Prioritize:
 
-1. `STARTING` / `FINISHED`;
-2. `TITLEONE` / `TITLETWO`;
-3. `MODELOPT` including regulatory, development, ALPHA, and BETA option interactions;
-4. `AVERTIME`;
-5. `POLLUTID`;
-6. `RUNORNOT`;
-7. `ERRORFIL`;
-8. `EVENTFIL`;
-9. `DEBUGOPT`, including v26135 repeatability;
-10. `SAVEFILE` / `INITFILE` and MULTYEAR dependencies.
+1. `HALFLIFE` and `DCAYCOEF`, including mutual exclusivity and units;
+2. `FLAGPOLE` and `URBANOPT`;
+3. ozone records: `O3SECTOR`, `OZONEFIL`, `OZONEVAL`, `O3VALUES`, `OZONUNIT`;
+4. ambient NOx records: `NOXSECTR`, `NOX_FILE`, `NOXVALUE`, `NOX_VALS`, `NOX_UNIT`;
+5. NO2 technique controls: `NO2EQUIL`, `NO2STACK`, `ARMRATIO`;
+6. exact technique dependencies for OLM, PVMRM, ARM2, GRSM, TTRM and TTRM2.
 
-For each record capture:
+### CO specification batch 3: deposition and option-dependent processing
 
-- exact field syntax and position;
-- argument type, unit, required/optional status, default and range;
-- repeatability and ordering rules;
-- dependencies, conflicts, regulatory/development status;
+Then cover:
+
+1. `GASDEPDF`, `GASDEPVD`, `GDLANUSE`, and `GDSEASON`;
+2. `LOW_WIND`, `AWMADWNW`, and `ORD_DWNW`;
+3. `ARCFTOPT`;
+4. every remaining CO record in the source dispatch map;
+5. per-option regulatory/development status for all 40 `MODELOPT` tokens.
+
+For every record continue to capture:
+
+- exact syntax, positional fields, types, units, defaults and ranges;
+- repeatability and ordering;
+- dependencies and conflicts;
+- regulatory/development status without inferring approval from source recognition;
 - fatal, warning and informational diagnostics;
-- exact Fortran branch, called routines and source-line range;
-- official sample/test fixtures exercising valid and invalid forms;
-- preservation behavior for comments, unknown fields and future options.
+- exact Fortran dispatcher, handler and source ranges;
+- official valid fixtures and documented absence where none exists;
+- loss-aware preservation behavior.
 
-### Required outputs
+## Behavior fixtures missing from the current official suite
 
-- a versioned CO schema source file;
-- an evidence table linking each field to guide/source/test references;
-- schema validation tests generated from official fixtures;
-- a documented schema build/bundle policy;
-- updates to keyword inventory evidence status.
+Create focused executable probes for records not active in the 53 current decks:
+
+- `EVENTFIL` defaults and invalid `SOCONT|DETAIL` behavior;
+- `SAVEFILE` forms and day increment handling;
+- `INITFILE` default filename and conflicts;
+- repeated `DEBUGOPT` cards versus repeated individual options;
+- extra payload on `STARTING` and `FINISHED`;
+- unknown/future option tokens and preservation expectations.
+
+These probes must keep official behavior evidence separate from AERMODKit semantic-policy choices.
+
+## Inventory consolidation
+
+- use `v26135-keyword-status-overrides.csv` and the batch evidence CSV as the authoritative promotion layer for completed records;
+- consolidate those promotions into a regenerated main keyword inventory once a deterministic inventory-generation script exists;
+- do not manually claim that untouched inventory rows were rewritten;
+- add schema consistency checks so every promoted keyword resolves to a bundled record.
 
 ## Secondary numerical compatibility track
 
-The `capped` result no longer blocks keyword specification, but numerical compatibility remains an explicit parallel task:
+The `capped` investigation no longer blocks specification work, but remains a parallel compatibility task:
 
 1. reproduce with Intel oneAPI `ifx` and EPA's `/O2 /Qipo /Qprec-div` flags;
 2. compare complete GNU builds across supported compiler versions;
-3. trace the first differing `STACK1C` hour through cappd-source and downwash routines;
-4. define official-executable, Intel-source-build and GNU-source-build parity tiers;
+3. trace the first differing `STACK1C` hour through capped-source/downwash routines;
+4. define supported official-executable, Intel-source-build and GNU-source-build tiers;
 5. define tolerances by output family and intended use;
-6. keep the focused parity workflow manual-only.
+6. retain focused numerical workflows as manual-only evidence jobs.
 
-## Parser implementation after acceptance
+## Parser implementation after specification acceptance
 
-Begin the loss-aware runstream layer in this order:
+Begin the loss-aware runstream layer only after the specification and preservation fixtures are sufficient:
 
 1. token and source-location model;
-2. pathway/block splitter;
-3. blank-line, comment, include, and unknown-record preservation;
-4. immutable syntax-tree nodes retaining original spelling and spacing;
+2. pathway/block state machine;
+3. blank-line, comment, include and unknown-record preservation;
+4. immutable syntax nodes retaining spelling and spacing;
 5. format-preserving writer;
-6. golden byte/semantic round-trip tests using official decks;
+6. byte and semantic round-trip tests using official decks;
 7. semantic project mapping only after syntax preservation is reliable.
 
 ## Acceptance criteria before parser work
 
-- [x] official source, executable, sample, and test archives materialized or hashed;
-- [x] exact official build order and flags recorded;
-- [x] pathway dispatch and all currently inventoried primary records mapped to source branches;
-- [x] current 53-deck official fixture set indexed;
-- [x] reproduced GNU executable completes all 53 official decks;
-- [x] expected and generated outputs kept separate during validation;
+- [x] official source, executable, sample and test archives materialized or hashed;
+- [x] official build order and flags recorded;
+- [x] pathway dispatch and inventoried primary records mapped to source branches;
+- [x] current 53-deck fixture set indexed and executed successfully by the GNU build;
 - [x] official `capped` fixture consistency verified with EPA's executable;
 - [x] compiler-tier parity policy established;
-- [ ] every CO keyword has an exact argument and validation schema;
-- [ ] every remaining pathway keyword has an exact schema;
-- [ ] representative EV-pathway and unknown/development-option preservation fixtures selected;
-- [ ] clean-room third-party coverage audit completed;
-- [ ] parser preservation policy covered by tests.
+- [x] CO batch 1 includes 14 bundled source-verified records and structural tests;
+- [ ] every remaining CO keyword has an exact schema;
+- [ ] every SO, RE, ME, EV and OU keyword has an exact schema;
+- [ ] invalid, unknown and development-option preservation fixtures are selected;
+- [ ] clean-room third-party coverage audit is complete;
+- [ ] parser preservation policy is covered by tests.
 
-## CI and regression maintenance
+## CI and evidence maintenance
 
-- keep Ruff, strict mypy, and pytest green on every PR;
-- retain EPA asset, fixture, and executable workflows as manual-only jobs;
-- run heavy official regression as a manual, scheduled, or release-gate workflow;
-- store expected tolerances by compiler, platform, case, and output family;
-- replace expiring cross-workflow artifact IDs with a durable fixture acquisition policy before relying on the official-executable probe long term;
-- monitor Node runtime deprecation warnings for GitHub Actions dependencies;
-- do not reduce checks merely to hide platform-specific failures.
+- keep Ruff, strict mypy and pytest green on every PR;
+- keep EPA asset, fixture and executable workflows manual-only;
+- run heavy regression as a manual, scheduled or release-gate workflow;
+- replace expiring artifact IDs with a durable fixture-acquisition policy before long-term reliance;
+- monitor GitHub Actions runtime deprecations;
+- never reduce checks merely to hide platform-specific failures.
 
-## Known decisions still pending
+## Decisions still pending
 
 - final licence;
-- exact project persistence format;
+- project persistence format;
 - CLI framework;
 - generated-schema distribution policy;
-- policy for distributing/downloading EPA executables and official test assets;
-- supported compiler/platform parity tiers and regulatory-use wording.
+- policy for distributing/downloading EPA executables and test assets;
+- supported compiler/platform tiers and regulatory-use wording.

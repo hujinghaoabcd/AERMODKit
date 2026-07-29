@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "record_role": "pathway-open",
+      "required": true,
+      "repeatability": "once",
+      "syntax": ["CO STARTING"],
+      "fields": [],
+      "ordering": {"opens_pathway": "CO", "official_fixture_position": "first CO record"},
+      "official_behavior": {"extra_payload": "not checked by COCARD; preserve rather than discard"},
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "68-70"},
+        {"severity": "error", "code": "130", "condition": "missing when FINISHED is processed", "source_lines": "539-542"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "63-71", "handler": "COCARD", "handler_lines": "1-71"},
+      "fixtures": {"occurrences": 53, "files": 53, "examples": ["Test1_Base_cart_3cond_SNC.inp:1"]},
+      "evidence_status": "source-and-current-fixture-verified"
+    },
+    {
+      "keyword": "FINISHED",
+      "record_role": "pathway-close",
+      "required": true,
+      "repeatability": "once",
+      "syntax": ["CO FINISHED"],
+      "fields": [],
+      "ordering": {"closes_pathway": "CO", "performs_required_record_checks": true},
+      "official_behavior": {"extra_payload": "not checked by COCARD; preserve rather than discard"},
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "532-536"},
+        {"severity": "error", "code": "130", "condition": "required CO records missing at close", "source_lines": "539-557"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "528-557", "handler": "COCARD", "handler_lines": "1-557"},
+      "fixtures": {"occurrences": 53, "files": 53, "examples": ["Test1_Base_cart_3cond_SNC.inp:10"]},
+      "evidence_status": "source-and-current-fixture-verified"
+    },
+    {
+      "keyword": "TITLEONE",
+      "record_role": "title",
+      "required": true,
+      "repeatability": "once",
+      "syntax": ["[CO] TITLEONE <free text>"],
+      "fields": [{"name": "text", "position": "remainder-after-keyword", "type": "case-preserved text", "required": false, "source_storage_max_chars": 200, "notes": ["Blank text is accepted with warning W200.", "Primary report headers commonly display the first 68 characters."]}],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "74-80"},
+        {"severity": "warning", "code": "200", "condition": "title text is blank", "source_lines": "1473-1479"},
+        {"severity": "error", "code": "130", "condition": "TITLEONE missing at FINISHED", "source_lines": "543-545"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "72-81", "handler": "TITLES", "handler_lines": "1448-1492"},
+      "fixtures": {"occurrences": 53, "files": 53, "examples": ["capped.inp:8"]},
+      "evidence_status": "source-and-current-fixture-verified"
+    },
+    {
+      "keyword": "TITLETWO",
+      "record_role": "title",
+      "required": false,
+      "repeatability": "once",
+      "syntax": ["[CO] TITLETWO <free text>"],
+      "fields": [{"name": "text", "position": "remainder-after-keyword", "type": "case-preserved text", "required": false, "source_storage_max_chars": 200, "notes": ["Blank text is accepted with warning W200."]}],
+      "diagnostics": [
+        {"severity": "error", "code": "135", "condition": "keyword appears more than once", "source_lines": "84-90"},
+        {"severity": "warning", "code": "200", "condition": "title text is blank", "source_lines": "1481-1487"}
+      ],
+      "source": {"authority": "U.S. EPA AERMOD v26135 source", "file": "coset.f", "dispatcher_lines": "82-91", "handler": "TITLES", "handler_lines": "1448-1492"},
+      "fixtures": {"occurrences": 38, "files": 38, "examples": ["capped.inp:9"]},
+      "evidence_status": "source-and-current-fixture-verified"
+    }
+  ]
+}
