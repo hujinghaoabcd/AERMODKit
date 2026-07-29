@@ -30,8 +30,10 @@ The workflow verified:
 7. pytest with coverage;
 8. successful commit of the verified files.
 
-GitHub Actions run `30421642505` completed successfully. All nine combinations of Ubuntu, Windows, and macOS with Python 3.11, 3.12, and 3.13 passed, and the final apply job successfully pushed commit `dc6676291173015e6b7a6b76bcaea2c059da1381`.
+GitHub Actions run `30421642505` completed successfully. All nine combinations of Ubuntu, Windows, and macOS with Python 3.11, 3.12, and 3.13 passed, and the final apply job pushed commit `dc6676291173015e6b7a6b76bcaea2c059da1381`.
 
-## Cleanup
+## Cleanup and clean-tree validation
 
-The one-time reconstruction payload, reconstruction script, and temporary apply workflow are removed after verification. The ordinary CI matrix is restored in the final cleanup commit.
+Temporary payload chunks, the reconstruction script, and the one-time apply workflow were removed. The ordinary CI workflow was restored in commit `053426cc64ab4c6cdaff0de26323e8fa0466d7c2`.
+
+Clean-tree GitHub Actions run `30421914707` then passed Ruff, strict mypy, and pytest with coverage on all nine operating-system/Python combinations. This is the final validation baseline for the complete CO specification stage.

@@ -32,7 +32,7 @@ extra records:                0
 
 The verified reconstruction workflow checked the compressed payload SHA256, every target-file SHA256, package installation, Ruff, strict mypy, and pytest with coverage. GitHub Actions run `30421642505` completed successfully across Ubuntu, Windows, and macOS with Python 3.11, 3.12, and 3.13; all nine matrix jobs and the final apply job passed.
 
-The ordinary CI workflow has been restored after the one-time verified reconstruction. Temporary payload chunks and the one-time apply workflow are removed from the final tree.
+After removing all temporary reconstruction content and restoring the ordinary workflow, clean-tree CI run `30421914707` also passed all nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 combinations. The final branch no longer contains payload chunks, the reconstruction script, or the one-time apply workflow.
 
 ## Evidence boundary
 
