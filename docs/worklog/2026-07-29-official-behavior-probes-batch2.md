@@ -2,7 +2,8 @@
 
 - Date: 2026-07-29
 - Development branch: `agent/official-behavior-probes-batch2`
-- Pull request: #9, draft during evidence review
+- Pull request: #9, merged
+- Merge commit: `279b61160412a8073632d31156f897cd6edcee4a`
 - Base: behavior-batch-1-complete `main`
 - Phase: official behavior evidence before production loss-aware syntax
 
@@ -40,7 +41,7 @@ coverage additions:
 The manifest was extended through a separate case fragment rather than by duplicating the original
 manifest. The final reviewed batch contains one preparation and 27 cases.
 
-## Final reviewed evidence
+## Reviewed evidence
 
 - workflow run: `30452705724`;
 - reviewed head: `aaf683d4d0fa089a6d4159b9ea17b66e959cf1e3`;
@@ -50,9 +51,6 @@ manifest. The final reviewed batch contains one preparation and 27 cases.
 - preparation: 1 accepted;
 - cases: 15 accepted, 12 rejected, 0 indeterminate;
 - all 28 expectations met.
-
-The same head passed the full nine-job CI run `30452701635` and the retained batch-1 workflow
-`30452701321`.
 
 ## Findings
 
@@ -89,6 +87,18 @@ The three completed catalog entries are:
 
 The whole-spec behavior inventory is now 19 total, 7 executed, 1 source-resolved and 11 pending.
 The syntax implementation gate remains closed.
+
+## Validation and publication
+
+The final PR head `cad179c0aeadfd4a3c52040ae351f99eaa46622d` passed:
+
+- full Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 CI `30454599189`;
+- retained batch-1 official regression `30454599319`;
+- batch-2 official workflow `30454598843`.
+
+The final-head artifact is `8725024839`, digest
+`sha256:12e28236b5669156cf3acd2fb81db8ce9b88c2ad179346e0f0fa2d0c531d6cee`.
+PR #9 was merged to `main` as `279b61160412a8073632d31156f897cd6edcee4a`.
 
 ## Boundary
 
