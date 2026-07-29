@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 3,
+  "records": [
+    {
+      "keyword": "GDSEASON",
+      "record_role": "monthly-gas-deposition-season-categories",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] GDSEASON <month_1_category> ... <month_12_category>"
+      ],
+      "fields": [
+        {
+          "name": "monthly_season_categories",
+          "position": "3..14",
+          "type": "integer list with n*value repeat syntax",
+          "required": true,
+          "exact_items": 12,
+          "minimum": 1,
+          "maximum": 5,
+          "categories": {
+            "1": "midsummer with lush vegetation",
+            "2": "autumn with unharvested cropland",
+            "3": "late autumn after frost/no snow",
+            "4": "winter with continuous snow cover",
+            "5": "transitional spring"
+          }
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "used_with": "gas dry deposition unless GASDEPVD is used"
+      },
+      "constraints": [
+        {
+          "rule": "Exactly 12 expanded month values are required by the manual/runtime model, although GDSEAS itself mainly enforces value range and upper bounds."
+        },
+        {
+          "rule": "Conflicts with GASDEPVD (E195)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "237-246"
+        },
+        {
+          "severity": "error",
+          "code": "196",
+          "condition": "used with DFAULT",
+          "source_lines": "748-757"
+        },
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "used without ALPHA",
+          "source_lines": "751-753"
+        },
+        {
+          "severity": "error",
+          "code": "195",
+          "condition": "used with GASDEPVD",
+          "source_lines": "797-800"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "nonnumeric category",
+          "source_lines": "4981-5051"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "category outside 1..5",
+          "source_lines": "4981-5051"
+        },
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "too many expanded values",
+          "source_lines": "4981-5051"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "237-246",
+        "handler": "GDSEAS",
+        "handler_lines": "4981-5051",
+        "final_checks": "743-808"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.2.13",
+        "syntax_page": 85,
+        "notes": [
+          "Optional, non-repeatable; twelve monthly categories 1..5; ALPHA required."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "testgas2.inp:12",
+          "testgas.inp:11"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "GASDEPDF",
+      "record_role": "gas-deposition-default-parameter-overrides",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] GASDEPDF <reactivity_factor> <season2_fraction> <season5_fraction> [<reference_pollutant>]"
+      ],
+      "fields": [
+        {
+          "name": "reactivity_factor",
+          "position": 3,
+          "type": "real",
+          "required": true,
+          "default": 0.0
+        },
+        {
+          "name": "season2_fraction",
+          "position": 4,
+          "type": "real",
+          "required": true,
+          "default": 0.5
+        },
+        {
+          "name": "season5_fraction",
+          "position": 5,
+          "type": "real",
+          "required": true,
+          "default": 0.25
+        },
+        {
+          "name": "reference_pollutant",
+          "position": 6,
+          "type": "optional string",
+          "required": false
+        }
+      ],
+      "defaults": {
+        "season1_fraction": 1.0,
+        "season3_fraction": 1.0,
+        "season4_fraction": 1.0
+      },
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT"
+      },
+      "constraints": [
+        {
+          "rule": "Requires exactly three or four payload fields."
+        },
+        {
+          "rule": "Current GDDEF checks numeric conversion but does not explicitly enforce additional numeric ranges; no invented range validation."
+        },
+        {
+          "rule": "Conflicts with GASDEPVD (E195)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "247-256"
+        },
+        {
+          "severity": "error",
+          "code": "196",
+          "condition": "used with DFAULT",
+          "source_lines": "758-767"
+        },
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "used without ALPHA",
+          "source_lines": "761-763"
+        },
+        {
+          "severity": "error",
+          "code": "195",
+          "condition": "used with GASDEPVD",
+          "source_lines": "801-804"
+        },
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "wrong number of fields",
+          "source_lines": "4899-4980"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "numeric conversion failure",
+          "source_lines": "4899-4980"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "247-256",
+        "handler": "GDDEF",
+        "handler_lines": "4899-4980",
+        "final_checks": "743-808"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.2.15",
+        "syntax_page": 86,
+        "notes": [
+          "Optional, non-repeatable; React, F_Seas2, F_Seas5 and optional Refpoll; ALPHA required."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "GDLANUSE",
+      "record_role": "directional-gas-deposition-land-use",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] GDLANUSE <sector_1_category> ... <sector_36_category>"
+      ],
+      "fields": [
+        {
+          "name": "directional_land_use_categories",
+          "position": "3..38",
+          "type": "integer list with n*value repeat syntax",
+          "required": true,
+          "exact_items": 36,
+          "minimum": 1,
+          "maximum": 9,
+          "sector_width_degrees": 10,
+          "categories": {
+            "1": "urban no vegetation",
+            "2": "agricultural",
+            "3": "rangeland",
+            "4": "forest",
+            "5": "suburban grassy",
+            "6": "suburban forested",
+            "7": "water",
+            "8": "barren/desert",
+            "9": "non-forested wetland"
+          }
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "mandatory_for": "gas deposition unless GASDEPVD is used"
+      },
+      "constraints": [
+        {
+          "rule": "Exactly 36 expanded sector values are required by the manual/runtime model; source handler enforces range and upper bound."
+        },
+        {
+          "rule": "Sector 1 is winds blowing toward 10 degrees \u00b15; sectors proceed clockwise to sector 36 at 360 degrees."
+        },
+        {
+          "rule": "Conflicts with GASDEPVD (E195)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "257-266"
+        },
+        {
+          "severity": "error",
+          "code": "196",
+          "condition": "used with DFAULT",
+          "source_lines": "768-777"
+        },
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "used without ALPHA",
+          "source_lines": "771-773"
+        },
+        {
+          "severity": "error",
+          "code": "195",
+          "condition": "used with GASDEPVD",
+          "source_lines": "805-808"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "nonnumeric category",
+          "source_lines": "5121-5192"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "category outside 1..9",
+          "source_lines": "5121-5192"
+        },
+        {
+          "severity": "error",
+          "code": "234",
+          "condition": "too many expanded values",
+          "source_lines": "5121-5192"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "257-266",
+        "handler": "GDLAND",
+        "handler_lines": "5121-5192",
+        "final_checks": "743-808"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.2.14",
+        "syntax_page": 86,
+        "notes": [
+          "Optional but mandatory for gas deposition unless GASDEPVD; 36 sectors, categories 1..9; ALPHA required."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "testgas2.inp:14",
+          "testgas.inp:13"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "GASDEPVD",
+      "record_role": "user-specified-gas-dry-deposition-velocity",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] GASDEPVD <deposition_velocity_m_s>"
+      ],
+      "fields": [
+        {
+          "name": "deposition_velocity",
+          "position": 3,
+          "type": "real",
+          "required": true,
+          "units": "m/s",
+          "exclusive_minimum": 0.0,
+          "warning_above": 0.05
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT"
+      },
+      "constraints": [
+        {
+          "rule": "Zero and negative values are errors; values above 0.05 m/s produce W320."
+        },
+        {
+          "rule": "Conflicts with GDSEASON, GASDEPDF, and GDLANUSE (E195)."
+        },
+        {
+          "rule": "Conflicts with wet deposition/depletion outputs or processing (E243)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "267-276"
+        },
+        {
+          "severity": "error",
+          "code": "196",
+          "condition": "used with DFAULT",
+          "source_lines": "778-787"
+        },
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "used without ALPHA",
+          "source_lines": "781-783"
+        },
+        {
+          "severity": "error",
+          "code": "195",
+          "condition": "used with other CO gas-deposition inputs",
+          "source_lines": "795-808"
+        },
+        {
+          "severity": "error",
+          "code": "243",
+          "condition": "used with wet deposition/depletion",
+          "source_lines": "789-793"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing value",
+          "source_lines": "5052-5120"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "5052-5120"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "nonnumeric value",
+          "source_lines": "5052-5120"
+        },
+        {
+          "severity": "error",
+          "code": "209",
+          "condition": "negative value",
+          "source_lines": "5052-5120"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "zero value",
+          "source_lines": "5052-5120"
+        },
+        {
+          "severity": "warning",
+          "code": "320",
+          "condition": "value above 0.05 m/s",
+          "source_lines": "5052-5120"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "267-276",
+        "handler": "GVSUBD",
+        "handler_lines": "5052-5120",
+        "final_checks": "743-808"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.2.16",
+        "syntax_page": 86,
+        "notes": [
+          "Optional, non-repeatable user-specified gas dry deposition velocity in m/s; ALPHA required."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    }
+  ]
+}

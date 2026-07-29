@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "pathway": "OU",
+  "batch": 1,
+  "status": "complete-source-verified-ou-pathway-specification",
+  "authority_order": [
+    "EPA v26135 executable source code",
+    "EPA v26135 manual/release material",
+    "EPA current fixtures"
+  ],
+  "scope": {
+    "included_keywords": [
+      "STARTING",
+      "RECTABLE",
+      "MAXTABLE",
+      "DAYTABLE",
+      "MAXIFILE",
+      "POSTFILE",
+      "PLOTFILE",
+      "TOXXFILE",
+      "SEASONHR",
+      "RANKFILE",
+      "EVALFILE",
+      "SUMMFILE",
+      "FILEFORM",
+      "MAXDAILY",
+      "MXDYBYYR",
+      "MAXDCONT",
+      "NOHEADER",
+      "FINISHED"
+    ],
+    "excluded_note": "Event-mode OU dispatch is separately represented in event_output_mode.json."
+  },
+  "preservation_policy": {
+    "original_text": true,
+    "comments": true,
+    "blank_lines": true,
+    "case": true,
+    "unknown_fields": true,
+    "unknown_records": true,
+    "include_boundaries": true,
+    "rule": "Semantic validation may diagnose content but the syntax layer must retain it verbatim."
+  },
+  "record_files": [
+    "ou_main_tables_files.json",
+    "ou_special_files_formats.json",
+    "ou_daily_design_headers_finish.json"
+  ],
+  "completion": {
+    "source_dispatch_primary_records": 18,
+    "bundled_records": 18,
+    "missing_records": [],
+    "extra_records": []
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "coverage_tags": {
+    "area-source": 10,
+    "background": 17,
+    "barrier": 2,
+    "building-downwash": 18,
+    "buoyant-line": 5,
+    "deposition": 6,
+    "depression": 2,
+    "included-records": 4,
+    "multi-year": 18,
+    "no2-chemistry": 20,
+    "point-source": 41,
+    "road-source": 5,
+    "scim": 1,
+    "urban": 4,
+    "volume-source": 9
+  },
+  "fixtures": 53,
+  "matched_main_outputs": 53,
+  "observed_pathway_keywords": 80,
+  "source_types": {
+    "AREA": 9,
+    "AREACIRC": 2,
+    "AREAPOLY": 2,
+    "BUOYLINE": 14,
+    "LINE": 1,
+    "OPENPIT": 5,
+    "POINT": 70,
+    "POINTCAP": 3,
+    "POINTHOR": 3,
+    "RLINE": 1,
+    "RLINEXT": 7,
+    "VOLUME": 9
+  },
+  "unmatched_main_outputs": []
+}

@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 3,
+  "records": [
+    {
+      "keyword": "LOW_WIND",
+      "record_role": "alpha-low-wind-parameter-overrides",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] LOW_WIND <SVmin> [<WSmin> [<FRANmax> [<SWmin> [<BigT_hours> [<FRANmin> [PBAL|PBALANCE]]]]]]"
+      ],
+      "fields": [
+        {
+          "name": "SVmin",
+          "position": 3,
+          "type": "real",
+          "required": true,
+          "units": "m/s",
+          "minimum": 0.01,
+          "maximum": 1.0,
+          "default": 0.2
+        },
+        {
+          "name": "WSmin",
+          "position": 4,
+          "type": "real",
+          "required": false,
+          "units": "m/s",
+          "minimum": 0.01,
+          "maximum": 1.0,
+          "default": 0.2828
+        },
+        {
+          "name": "FRANmax",
+          "position": 5,
+          "type": "real",
+          "required": false,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 1.0
+        },
+        {
+          "name": "SWmin",
+          "position": 6,
+          "type": "real",
+          "required": false,
+          "units": "m/s",
+          "minimum": 0.0,
+          "maximum": 3.0,
+          "default": 0.02
+        },
+        {
+          "name": "BigT_hours",
+          "position": 7,
+          "type": "real",
+          "required": false,
+          "units": "hours",
+          "minimum": 0.5,
+          "maximum": 48.0,
+          "default": 24.0
+        },
+        {
+          "name": "FRANmin",
+          "position": 8,
+          "type": "real",
+          "required": false,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 0.0
+        },
+        {
+          "name": "balance_method",
+          "position": 9,
+          "type": "optional enum",
+          "required": false,
+          "allowed_values": [
+            "PBAL",
+            "PBALANCE"
+          ],
+          "default": "energy balance"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "status": "ALPHA research/evaluation option"
+      },
+      "constraints": [
+        {
+          "rule": "Fields are positional; overriding a later value requires supplying all preceding values."
+        },
+        {
+          "rule": "FRANmin must be <= FRANmax (E426)."
+        },
+        {
+          "rule": "Source accepts upper bounds using 1.001 tolerance for SVmin/WSmin while current manual states 1.0; schema records manual limit and source tolerance separately."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "379-391"
+        },
+        {
+          "severity": "error",
+          "code": "133",
+          "condition": "ALPHA absent",
+          "source_lines": "385-390"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "numeric value outside active range",
+          "source_lines": "7248-7470"
+        },
+        {
+          "severity": "error",
+          "code": "426",
+          "condition": "FRANmin greater than FRANmax",
+          "source_lines": "7248-7470"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid PBAL token",
+          "source_lines": "7248-7470"
+        },
+        {
+          "severity": "warning",
+          "code": "111/112/113/117/127/128/129",
+          "condition": "user overrides low-wind defaults",
+          "source_lines": "7248-7470"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "379-391",
+        "handler": "LOW_WND",
+        "handler_lines": "7248-7470"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.3",
+        "syntax_page": 89,
+        "notes": [
+          "Optional, non-repeatable ALPHA option; positional values, defaults, and ranges."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "AWMADWNW",
+      "record_role": "alpha-awma-prime-downwash-options",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] AWMADWNW <AWMAUEFF|AWMAENTRAIN|AWMAUTURB|AWMAUTURBHX|STREAMLINE|STREAMLINED> [<option> ...]"
+      ],
+      "fields": [
+        {
+          "name": "options",
+          "position": "3..N",
+          "type": "enum list",
+          "required": true,
+          "min_items": 1,
+          "max_items": 5,
+          "allowed_values": [
+            "AWMAUEFF",
+            "AWMAENTRAIN",
+            "AWMAUTURB",
+            "AWMAUTURBHX",
+            "STREAMLINE",
+            "STREAMLINED"
+          ]
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "status": "ALPHA research/evaluation option"
+      },
+      "constraints": [
+        {
+          "rule": "Individual options cannot repeat (E121)."
+        },
+        {
+          "rule": "STREAMLINE/STREAMLINED requires AWMAUTURB or AWMAUTURBHX."
+        },
+        {
+          "rule": "AWMAUTURB and AWMAUTURBHX together are not equivalent; source warning/precedence is retained, with AWMAUTURBHX taking precedence in the current implementation."
+        },
+        {
+          "rule": "AWMAUEFF conflicts with ORDUEFF."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "422-434"
+        },
+        {
+          "severity": "error",
+          "code": "133",
+          "condition": "ALPHA absent",
+          "source_lines": "428-433"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "no option",
+          "source_lines": "7471-7993"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "7471-7993"
+        },
+        {
+          "severity": "error",
+          "code": "121",
+          "condition": "duplicate option",
+          "source_lines": "7471-7993"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid option",
+          "source_lines": "7471-7993"
+        },
+        {
+          "severity": "error",
+          "code": "149",
+          "condition": "AWMAUEFF conflicts with ORDUEFF",
+          "source_lines": "final option checks"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "422-434",
+        "handler": "AWMA_DOWNWASH",
+        "handler_lines": "7471-7993"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.4.2",
+        "syntax_page": 94,
+        "notes": [
+          "Optional, non-repeatable ALPHA option; at least one AWMA suboption; AWMAUEFF conflicts ORDUEFF."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "ORD_DWNW",
+      "record_role": "alpha-ord-prime-downwash-options",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] ORD_DWNW <ORDUEFF|ORDTURB|ORDCAV> [<option> ...]"
+      ],
+      "fields": [
+        {
+          "name": "options",
+          "position": "3..N",
+          "type": "enum list",
+          "required": true,
+          "min_items": 1,
+          "max_items": 3,
+          "allowed_values": [
+            "ORDUEFF",
+            "ORDTURB",
+            "ORDCAV"
+          ]
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "status": "ALPHA research/evaluation option"
+      },
+      "constraints": [
+        {
+          "rule": "Individual options cannot repeat (E121)."
+        },
+        {
+          "rule": "ORDUEFF conflicts with AWMAUEFF."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "435-448"
+        },
+        {
+          "severity": "error",
+          "code": "133",
+          "condition": "ALPHA absent",
+          "source_lines": "441-447"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "no option",
+          "source_lines": "7994-8145"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "7994-8145"
+        },
+        {
+          "severity": "error",
+          "code": "121",
+          "condition": "duplicate option",
+          "source_lines": "7994-8145"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid option",
+          "source_lines": "7994-8145"
+        },
+        {
+          "severity": "error",
+          "code": "149",
+          "condition": "ORDUEFF conflicts with AWMAUEFF",
+          "source_lines": "final option checks"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "435-448",
+        "handler": "ORD_DOWNWASH",
+        "handler_lines": "7994-8145"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.4.1",
+        "syntax_page": 93,
+        "notes": [
+          "Optional, non-repeatable ALPHA option; one to three ORD suboptions."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "ARCFTOPT",
+      "record_role": "alpha-aircraft-plume-rise-activation",
+      "required": false,
+      "repeatability": "manual non-repeatable; dispatcher increments status but does not reject repeats",
+      "syntax": [
+        "[CO] ARCFTOPT [<airport_id>]"
+      ],
+      "fields": [
+        {
+          "name": "airport_id",
+          "position": 3,
+          "type": "optional alphanumeric string",
+          "required": false
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA",
+        "conflicts_with_modeopt": "DFAULT",
+        "requires_so_keyword": "ARCFTSRC",
+        "requires_hourly_emissions": "seven aircraft parameters for selected sources",
+        "applicable_source_types": [
+          "AREA",
+          "AREAPOLY",
+          "AREACIRC",
+          "LINE",
+          "VOLUME"
+        ]
+      },
+      "aircraft_hourly_parameters": [
+        "MFUEL g/s",
+        "THRUST N",
+        "VAA m/s",
+        "AFR",
+        "BYPR",
+        "RPWR kW",
+        "SRCANGLE degrees"
+      ],
+      "constraints": [
+        {
+          "rule": "Must follow MODELOPT (E140)."
+        },
+        {
+          "rule": "At FINISHED, aircraft sources require ALPHA and non-DFAULT; missing ARCFTSRC or required hourly data is fatal in later pathway/runtime validation."
+        },
+        {
+          "rule": "Current dispatcher only assigns airport_id when exactly one payload field is present and otherwise silently leaves the prior/default value; syntax layer must preserve extra fields."
+        },
+        {
+          "rule": "Guide says non-repeatable but dispatcher does not issue E135; discrepancy requires official executable probe."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "140",
+          "condition": "appears before MODELOPT",
+          "source_lines": "511-519"
+        },
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "aircraft source use without ALPHA",
+          "source_lines": "947-962"
+        },
+        {
+          "severity": "error",
+          "code": "204",
+          "condition": "aircraft source use with DFAULT",
+          "source_lines": "964-966"
+        },
+        {
+          "severity": "fatal",
+          "code": "pathway/runtime",
+          "condition": "ARCFTSRC or required hourly aircraft parameters absent",
+          "source_lines": "SO/runtime checks"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "511-526",
+        "handler": "inline COCARD branch",
+        "handler_lines": "511-526",
+        "final_checks": "947-968",
+        "related_source_file": "soset.f / runtime aircraft modules"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.12",
+        "syntax_page": 118,
+        "notes": [
+          "Optional, non-repeatable ALPHA option; optional AirportID; requires ARCFTSRC and seven hourly aircraft parameters."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "preservation_notes": [
+        "Preserve repeated cards and extra payload because current dispatcher does not reject them explicitly."
+      ],
+      "evidence_status": "v26135-source-and-current-manual-verified-dispatcher-repeatability-discrepancy-no-active-fixture"
+    }
+  ]
+}

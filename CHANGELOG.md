@@ -1,23 +1,59 @@
 # Changelog
 
-## 0.1.0a2 - 2026-07-29
+All notable project changes will be recorded here.
+
+## Unreleased
+
+### Recovery
+
+- restored the 60-commit, source-verified official-specification line as the authoritative working tree through a non-destructive two-parent merge;
+- preserved the merged PR #2 parallel prototype at `archive/pr2-parallel-prototype-20260729` for later clean-room salvage review;
+- restored the accepted stage order: whole-spec acceptance, loss-aware CST, format-preserving writer, semantic model, runner/results, then GIS;
+- added ADR 0005 and a durable mainline-recovery worklog.
 
 ### Added
 
-- Complete v26135 keyword registries for all six pathways.
-- GRIDCART and GRIDPOLR continuation-family validation.
-- Keyword dependencies, ordering rules, and cross-pathway checks.
-- Read-only semantic project mapping backed by the lossless AST.
-- Multi-pathway official-syntax fixture and expanded tests.
+- initial package metadata and CI;
+- structured diagnostic model;
+- AERMOD release identifier and version metadata registry;
+- architecture, decision, worklog and handover documentation;
+- official v26135 asset/component manifest;
+- evidence-ranked keyword, source-type, output and source-code mapping inventories;
+- clean-room PyAERMOD v26135 gap-audit seed;
+- cryptographic hashes and archive indexes for official source, executable, sample-run and test-case assets;
+- declaration-level index for 566 Fortran program units;
+- source-verified pathway dispatch and primary-record branch mapping;
+- current 53-deck official fixture and feature registry;
+- reproducible official-case validation with isolated workspaces and PM10 MULTYEAR chaining;
+- machine-readable regression results and output-file coverage;
+- official-executable parity probe and focused Windows evidence workflow;
+- explicit official-executable versus reproduced-source-build parity tiers;
+- versioned pathway-specification loader with structural validation;
+- complete source-verified record-level specifications for all primary pathways and event-output mode;
+- exact source-type-dependent `LOCATION`/`SRCPARAM` signatures for 13 executable-recognized source types;
+- nested state-machine schemas for `GRIDCART` and `GRIDPOLR`;
+- exact-set reports, fixture occurrence evidence, behavior probes, validators, tests, ADRs, reference notes and handover records.
 
-## 0.1.0a1 - 2026-07-29
+### Changed
 
-### Added
+- v26135 metadata completeness reports complete source-verified record-level specifications for all primary pathways and event-output mode;
+- pathway fragment loading composes positive older/equal batches into newer aggregate batches;
+- EPA archive, fixture and executable evidence workflows are manual-only after initial successful evidence runs;
+- keyword promotions are recorded in companion status-override/evidence layers until deterministic inventory regeneration.
 
-- Version-aware schema primitives and registry loader.
-- Initial EPA AERMOD v26135 CO/SO keyword schema.
-- Complete v26135 MODELOPT token registry and compatibility validation.
-- All 13 v26135 source-type contracts, including SWPOINT.
-- Lossless runstream AST, parser, preserve writer, and canonical writer.
-- Source-aware LOCATION/SRCPARAM validation.
-- Unit tests for exact round trips, unknown-keyword retention, option rules, and source contracts.
+### Fixed
+
+- corrected Ruff `UP035` import location and strict-mypy narrowing;
+- restored a green cross-platform GitHub Actions matrix;
+- prevented official expected outputs from being overwritten during local numerical validation;
+- corrected PM10 1987–1990 MULTYEAR state-file chaining;
+- separated ordinary `OUCARD` from event-mode `EV_OUCARD`;
+- corrected SO inventory omissions for `PLATFORM` and `VBARRIER`;
+- recovered the official-specification mainline after the parallel PR #2 implementation was mistakenly merged.
+
+### Documentation
+
+- recorded AERMAP 24142 versus AERMOD 26135 component versioning;
+- recorded official archive hashes, source structure, build flags and GNU build results;
+- recorded 53/53 official-deck execution and parity evidence;
+- documented preservation targets, source/manual discrepancies, development syntax boundaries and complete pathway specifications.

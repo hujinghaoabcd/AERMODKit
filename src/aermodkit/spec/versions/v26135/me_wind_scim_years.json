@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "ME",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "WINDCATS",
+      "role": "wind-speed-categories",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] WINDCATS <u1> <u2> <u3> <u4> <u5>"
+      ],
+      "fields": [
+        {
+          "name": "limits",
+          "type": "exactly five increasing reals",
+          "range": [
+            1.0,
+            20.0
+          ]
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "value outside 1..20"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "not strictly increasing"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "167-177",
+        "handler": "WSCATS",
+        "handler_file": "meset.f",
+        "handler_lines": "1563-1624"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "SCIMBYHR",
+      "role": "scim-sampling-controls",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] SCIMBYHR <start_hour> <interval> [<surface_summary_file> <profile_summary_file>]",
+        "[ME] SCIMBYHR <start_hour> <interval> <legacy_wet_1> <legacy_wet_2> [<surface_summary_file> <profile_summary_file>]"
+      ],
+      "fields": [
+        {
+          "name": "start_hour",
+          "type": "integer",
+          "range": [
+            1,
+            24
+          ]
+        },
+        {
+          "name": "interval",
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "name": "summary_files",
+          "type": "optional case-preserved paths"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "SCIM"
+      },
+      "constraints": [],
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "code": "157",
+          "condition": "numeric legacy wet-scimming fields; wet scimming unsupported"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "178-188",
+        "handler": "SCIMIT",
+        "handler_file": "meset.f",
+        "handler_lines": "2115-2301"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 1,
+        "files": 1,
+        "examples": [
+          "scimtest.inp:59"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NUMYEARS",
+      "role": "meteorological-year-count",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] NUMYEARS <count>"
+      ],
+      "fields": [
+        {
+          "name": "count",
+          "type": "integer",
+          "minimum": 1
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "189-199",
+        "handler": "NUMYR",
+        "handler_file": "meset.f",
+        "handler_lines": "2302-2355"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": [
+        "Used for MAXDCONT array allocation; default without record remains five years."
+      ]
+    }
+  ]
+}

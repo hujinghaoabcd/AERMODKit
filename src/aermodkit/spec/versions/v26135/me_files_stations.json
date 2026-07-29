@@ -1,0 +1,338 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "ME",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "ME STARTING"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "49-56",
+        "handler": "MECARD",
+        "handler_file": "meset.f",
+        "handler_lines": "1-2577"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:41",
+          "multurb.inp:29",
+          "no2_1yrAK_arm2.inp:72",
+          "allsrcs.inp:156"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "SURFFILE",
+      "role": "surface-meteorology-file",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] SURFFILE <filename> [FREE]"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "path",
+          "preserve_case": true,
+          "max_length": "ILEN_FLD"
+        },
+        {
+          "name": "legacy_format",
+          "type": "optional enum",
+          "allowed_values": [
+            "FREE"
+          ],
+          "default": "FREE"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "code": "293",
+          "condition": "legacy format token other than FREE; format is ignored"
+        },
+        {
+          "severity": "error",
+          "code": "291",
+          "condition": "filename too long"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "57-67",
+        "handler": "SURFIL",
+        "handler_file": "meset.f",
+        "handler_lines": "308-378"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:42",
+          "multurb.inp:30",
+          "no2_1yrAK_arm2.inp:73",
+          "allsrcs.inp:157"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "PROFFILE",
+      "role": "profile-meteorology-file",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] PROFFILE <filename> [FREE]"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "path",
+          "preserve_case": true
+        },
+        {
+          "name": "legacy_format",
+          "type": "optional enum",
+          "allowed_values": [
+            "FREE"
+          ],
+          "default": "FREE"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "code": "293",
+          "condition": "legacy format token other than FREE"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "68-78",
+        "handler": "PROFIL",
+        "handler_file": "meset.f",
+        "handler_lines": "379-452"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:43",
+          "multurb.inp:31",
+          "no2_1yrAK_arm2.inp:74",
+          "allsrcs.inp:158"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "SURFDATA",
+      "role": "surface-station-metadata",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] SURFDATA <station_id> <year> [<station_name> [<x> <y>]]"
+      ],
+      "fields": [
+        {
+          "name": "station_id",
+          "type": "integer"
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "two_digit_expansion": "CENT_DATE"
+        },
+        {
+          "name": "station_name",
+          "type": "optional string",
+          "default": "UNKNOWN"
+        },
+        {
+          "name": "x",
+          "type": "optional real"
+        },
+        {
+          "name": "y",
+          "type": "optional real"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Coordinates are accepted only as a pair."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "79-89",
+        "handler": "SFDATA",
+        "handler_file": "meset.f",
+        "handler_lines": "453-554"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:44",
+          "multurb.inp:32",
+          "no2_1yrAK_arm2.inp:75",
+          "allsrcs.inp:159"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "UAIRDATA",
+      "role": "upper-air-station-metadata",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] UAIRDATA <station_id> <year> [<station_name> [<x> <y>]]"
+      ],
+      "fields": [
+        {
+          "name": "station_id",
+          "type": "integer"
+        },
+        {
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "name": "station_name",
+          "type": "optional string",
+          "default": "UNKNOWN"
+        },
+        {
+          "name": "x",
+          "type": "optional real"
+        },
+        {
+          "name": "y",
+          "type": "optional real"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "90-100",
+        "handler": "UADATA",
+        "handler_file": "meset.f",
+        "handler_lines": "555-656"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:45",
+          "multurb.inp:33",
+          "no2_1yrAK_arm2.inp:76",
+          "allsrcs.inp:160"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

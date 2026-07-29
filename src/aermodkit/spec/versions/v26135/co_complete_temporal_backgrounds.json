@@ -1,0 +1,884 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "CO",
+  "batch": 3,
+  "records": [
+    {
+      "keyword": "O3VALUES",
+      "record_role": "temporally-varying-background-ozone",
+      "required": false,
+      "repeatability": "repeatable; multiple cards accumulate one temporal vector per global or sector scope",
+      "syntax": [
+        "[CO] O3VALUES <time_flag> <value> [<value> ...]",
+        "[CO] O3VALUES <SECT1..SECT6> <time_flag> <value> [<value> ...]"
+      ],
+      "fields": [
+        {
+          "name": "sector_id",
+          "position": 3,
+          "type": "optional enum",
+          "required": false,
+          "allowed_values": [
+            "SECT1",
+            "SECT2",
+            "SECT3",
+            "SECT4",
+            "SECT5",
+            "SECT6"
+          ],
+          "requires": "O3SECTOR when present"
+        },
+        {
+          "name": "time_flag",
+          "position": "3 without sector; 4 with sector",
+          "type": "enum",
+          "required": true,
+          "allowed_values": [
+            "ANNUAL",
+            "SEASON",
+            "MONTH",
+            "HROFDY",
+            "WSPEED",
+            "SEASHR",
+            "HRDOW",
+            "HRDOW7",
+            "SHRDOW",
+            "SHRDOW7",
+            "MHRDOW",
+            "MHRDOW7"
+          ],
+          "required_value_counts": {
+            "ANNUAL": 1,
+            "SEASON": 4,
+            "MONTH": 12,
+            "HROFDY": 24,
+            "WSPEED": 6,
+            "SEASHR": 96,
+            "HRDOW": 72,
+            "HRDOW7": 168,
+            "SHRDOW": 288,
+            "SHRDOW7": 672,
+            "MHRDOW": 864,
+            "MHRDOW7": 2016
+          }
+        },
+        {
+          "name": "ozone_values",
+          "position": "remaining fields",
+          "type": "nonnegative real list with n*value repeat syntax",
+          "required": true,
+          "units": "PPB by default; controlled by OZONUNIT",
+          "cardinality": "exact total count determined by time_flag across accumulated cards"
+        }
+      ],
+      "temporal_order": {
+        "SEASON": "winter, spring, summer, fall",
+        "day_group_order": {
+          "HRDOW/SHRDOW/MHRDOW": "weekday, Saturday, Sunday",
+          "HRDOW7/SHRDOW7/MHRDOW7": "Monday through Sunday"
+        },
+        "nested_order": "hour of day, then season/month when applicable, then day group"
+      },
+      "constraints": [
+        {
+          "rule": "Requires OLM, PVMRM, TTRM/TTRM2, or GRSM; otherwise E600."
+        },
+        {
+          "rule": "Sector form requires a corresponding O3SECTOR sector."
+        },
+        {
+          "rule": "The time flag for one global/sector scope cannot change after values have begun; a change is E167."
+        },
+        {
+          "rule": "Negative values are E209; more than the required cardinality is E231; incomplete vectors remain an input-completeness error at final processing."
+        },
+        {
+          "rule": "O3VALUES and OZONEVAL conflict globally or within the same sector (E148); either may coexist with OZONEFIL as missing-hour substitution data."
+        },
+        {
+          "rule": "When neither substitution form supplies a missing OZONEFIL hour, chemistry is skipped and 100% NOx-to-NO2 conversion is assumed for that hour."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "600",
+          "condition": "no compatible NO2 conversion option",
+          "source_lines": "313-322"
+        },
+        {
+          "severity": "error",
+          "code": "167",
+          "condition": "time flag changes for a scope after values were supplied",
+          "source_lines": "6444-6610"
+        },
+        {
+          "severity": "error",
+          "code": "209",
+          "condition": "negative ozone value",
+          "source_lines": "6782-6857"
+        },
+        {
+          "severity": "error",
+          "code": "231",
+          "condition": "too many expanded values",
+          "source_lines": "6782-6857"
+        },
+        {
+          "severity": "error",
+          "code": "148",
+          "condition": "conflicts with OZONEVAL globally or in same sector",
+          "source_lines": "574-618"
+        },
+        {
+          "severity": "error",
+          "code": "193",
+          "condition": "OZONUNIT specified without O3VALUES",
+          "source_lines": "621-624"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "313-322",
+        "handler": "O3VALS / O3FILL",
+        "handler_lines": "6444-6610 / 6782-6857",
+        "final_checks": "559-624"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.1",
+        "syntax_page": 102,
+        "notes": [
+          "Optional and repeatable; exact time-flag cardinalities; default units PPB; may substitute missing OZONEFIL hours."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "preservation_notes": [
+        "Cards may be split arbitrarily; retain card boundaries, repeat-value spelling, and exact numeric lexemes."
+      ],
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "OZONUNIT",
+      "record_role": "units-for-o3values",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] OZONUNIT <PPB|PPM|UG/M3>"
+      ],
+      "fields": [
+        {
+          "name": "ozone_units",
+          "position": 3,
+          "type": "enum",
+          "required": true,
+          "allowed_values": [
+            "PPB",
+            "PPM",
+            "UG/M3"
+          ],
+          "default": "PPB for O3VALUES"
+        }
+      ],
+      "constraints": [
+        {
+          "rule": "Applies only to O3VALUES, not OZONEVAL or OZONEFIL, which carry their own optional units."
+        },
+        {
+          "rule": "OZONUNIT without O3VALUES is E193."
+        },
+        {
+          "rule": "Requires OLM, PVMRM, TTRM/TTRM2, or GRSM; otherwise E600."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "333-347"
+        },
+        {
+          "severity": "error",
+          "code": "600",
+          "condition": "no compatible NO2 conversion option",
+          "source_lines": "340-346"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing unit",
+          "source_lines": "6934-6982"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "6934-6982"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "unit not PPM, PPB, or UG/M3",
+          "source_lines": "6934-6982"
+        },
+        {
+          "severity": "error",
+          "code": "193",
+          "condition": "OZONUNIT specified without O3VALUES",
+          "source_lines": "621-624"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "333-347",
+        "handler": "OZON_UNIT",
+        "handler_lines": "6934-6982",
+        "final_checks": "621-624"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.1",
+        "syntax_page": 103,
+        "notes": [
+          "Optional, non-repeatable; O3VALUES defaults to PPB."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "NOXSECTR",
+      "record_role": "ambient-nox-wind-sectors",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] NOXSECTR <start_sector_1_deg> <start_sector_2_deg> [<start_sector_3_deg> ... <start_sector_6_deg>]"
+      ],
+      "fields": [
+        {
+          "name": "sector_start_directions",
+          "position": "3..N",
+          "type": "ascending real list",
+          "required": true,
+          "units": "degrees",
+          "minimum": 0.0,
+          "maximum": 360.0,
+          "min_items": 2,
+          "max_items": 6,
+          "minimum_sector_width_deg": 30.0,
+          "warning_below_width_deg": 60.0
+        }
+      ],
+      "dependencies": {
+        "requires_model_option": "GRSM"
+      },
+      "constraints": [
+        {
+          "rule": "Starts must be ascending and define 2 to 6 circular downwind sectors."
+        },
+        {
+          "rule": "Widths below 30 degrees are errors; widths from 30 to below 60 degrees warn."
+        },
+        {
+          "rule": "SECTx forms of NOXVALUE, NOX_VALS, and NOX_FILE must refer to a defined sector."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "449-463"
+        },
+        {
+          "severity": "error",
+          "code": "602",
+          "condition": "GRSM not active",
+          "source_lines": "455-462"
+        },
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "fewer than two starts",
+          "source_lines": "7140-7245"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "more than six starts",
+          "source_lines": "7140-7245"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "nonnumeric sector start",
+          "source_lines": "7140-7245"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "direction outside 0..360 or nonascending",
+          "source_lines": "7140-7245"
+        },
+        {
+          "severity": "error",
+          "code": "382",
+          "condition": "sector width below 30 degrees",
+          "source_lines": "7140-7245"
+        },
+        {
+          "severity": "warning",
+          "code": "381",
+          "condition": "sector width below 60 degrees",
+          "source_lines": "7140-7245"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "449-463",
+        "handler": "NOXSECTOR",
+        "handler_lines": "7140-7245"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.2",
+        "syntax_page": 106,
+        "notes": [
+          "Optional, non-repeatable; 2 to 6 sectors; minimum 30 degrees, warning below 60."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "NOXVALUE",
+      "record_role": "constant-ambient-nox-background",
+      "required": false,
+      "repeatability": "repeatable by sector; global/same-sector duplicates require executable-policy probe",
+      "syntax": [
+        "[CO] NOXVALUE <value> [<PPM|PPB|UG/M3>]",
+        "[CO] NOXVALUE <SECT1..SECT6> <value> [<PPM|PPB|UG/M3>]"
+      ],
+      "fields": [
+        {
+          "name": "sector_id",
+          "position": 3,
+          "type": "optional enum",
+          "required": false,
+          "allowed_values": [
+            "SECT1",
+            "SECT2",
+            "SECT3",
+            "SECT4",
+            "SECT5",
+            "SECT6"
+          ]
+        },
+        {
+          "name": "nox_value",
+          "position": "3 or 4",
+          "type": "nonnegative real",
+          "required": true,
+          "units": "as optional field; NOx represented as NO2"
+        },
+        {
+          "name": "units",
+          "position": "optional final field",
+          "type": "enum",
+          "required": false,
+          "allowed_values": [
+            "PPM",
+            "PPB",
+            "UG/M3"
+          ],
+          "default": "UG/M3"
+        }
+      ],
+      "dependencies": {
+        "requires_model_option": "GRSM",
+        "sector_form_requires": "NOXSECTR"
+      },
+      "constraints": [
+        {
+          "rule": "NOXVALUE and NOX_VALS conflict globally or for the same sector (E605)."
+        },
+        {
+          "rule": "May coexist with NOX_FILE and is used for missing-hour substitution."
+        },
+        {
+          "rule": "If no ambient NOx input exists, GRSM derives ambient NOx from background NO2 and ozone under PSS/conservation-of-oxidants assumptions and emits W612."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "602",
+          "condition": "GRSM not active",
+          "source_lines": "464-473"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing value",
+          "source_lines": "5571-5706"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "invalid field count",
+          "source_lines": "5571-5706"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "value not numeric",
+          "source_lines": "5571-5706"
+        },
+        {
+          "severity": "error",
+          "code": "209",
+          "condition": "value negative",
+          "source_lines": "5571-5706"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid units or sector",
+          "source_lines": "5571-5706"
+        },
+        {
+          "severity": "error",
+          "code": "605",
+          "condition": "conflicts with NOX_VALS in same scope",
+          "source_lines": "625-667"
+        },
+        {
+          "severity": "warning",
+          "code": "612",
+          "condition": "no NOXVALUE/NOX_VALS/NOX_FILE; calculate ambient NOx",
+          "source_lines": "669-676"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "464-473",
+        "handler": "NOXVAL",
+        "handler_lines": "5571-5706",
+        "final_checks": "625-676"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.2",
+        "syntax_page": 107,
+        "notes": [
+          "Optional, repeatable for sector use; default units UG/M3; can substitute missing NOX_FILE hours."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 1,
+        "files": 1,
+        "examples": [
+          "no2_1yrAK_grsm.inp:10"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-current-fixture-verified"
+    },
+    {
+      "keyword": "NOX_VALS",
+      "record_role": "temporally-varying-ambient-nox-background",
+      "required": false,
+      "repeatability": "repeatable; multiple cards accumulate one temporal vector per global or sector scope",
+      "syntax": [
+        "[CO] NOX_VALS <time_flag> <value> [<value> ...]",
+        "[CO] NOX_VALS <SECT1..SECT6> <time_flag> <value> [<value> ...]"
+      ],
+      "fields": [
+        {
+          "name": "sector_id",
+          "position": 3,
+          "type": "optional enum",
+          "required": false,
+          "allowed_values": [
+            "SECT1",
+            "SECT2",
+            "SECT3",
+            "SECT4",
+            "SECT5",
+            "SECT6"
+          ]
+        },
+        {
+          "name": "time_flag",
+          "position": "3 or 4",
+          "type": "enum",
+          "required": true,
+          "allowed_values": [
+            "ANNUAL",
+            "SEASON",
+            "MONTH",
+            "HROFDY",
+            "WSPEED",
+            "SEASHR",
+            "HRDOW",
+            "HRDOW7",
+            "SHRDOW",
+            "SHRDOW7",
+            "MHRDOW",
+            "MHRDOW7"
+          ],
+          "required_value_counts": {
+            "ANNUAL": 1,
+            "SEASON": 4,
+            "MONTH": 12,
+            "HROFDY": 24,
+            "WSPEED": 6,
+            "SEASHR": 96,
+            "HRDOW": 72,
+            "HRDOW7": 168,
+            "SHRDOW": 288,
+            "SHRDOW7": 672,
+            "MHRDOW": 864,
+            "MHRDOW7": 2016
+          }
+        },
+        {
+          "name": "nox_values",
+          "position": "remaining fields",
+          "type": "nonnegative real list with n*value repeat syntax",
+          "required": true,
+          "units": "PPB by default; controlled by NOX_UNIT",
+          "cardinality": "exact total count determined by time_flag across accumulated cards"
+        }
+      ],
+      "dependencies": {
+        "requires_model_option": "GRSM",
+        "sector_form_requires": "NOXSECTR"
+      },
+      "constraints": [
+        {
+          "rule": "Time flag cannot change for one global/sector scope after values begin; E606."
+        },
+        {
+          "rule": "Negative values are E209; too many expanded values are E231; final vector must meet exact cardinality."
+        },
+        {
+          "rule": "NOX_VALS and NOXVALUE conflict globally or in the same sector (E605)."
+        },
+        {
+          "rule": "May coexist with NOX_FILE and supplies missing-hour substitutions."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "602",
+          "condition": "GRSM not active",
+          "source_lines": "474-483"
+        },
+        {
+          "severity": "error",
+          "code": "606",
+          "condition": "time flag changes for a scope",
+          "source_lines": "6617-6781"
+        },
+        {
+          "severity": "error",
+          "code": "209",
+          "condition": "negative value",
+          "source_lines": "6858-6933"
+        },
+        {
+          "severity": "error",
+          "code": "231",
+          "condition": "too many expanded values",
+          "source_lines": "6858-6933"
+        },
+        {
+          "severity": "error",
+          "code": "605",
+          "condition": "conflicts with NOXVALUE in same scope",
+          "source_lines": "625-667"
+        },
+        {
+          "severity": "error",
+          "code": "193",
+          "condition": "NOX_UNIT specified without NOX_VALS",
+          "source_lines": "677-680"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "474-483",
+        "handler": "NOXVALS / NOXFILL",
+        "handler_lines": "6617-6781 / 6858-6933",
+        "final_checks": "625-680"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.2",
+        "syntax_page": 107,
+        "notes": [
+          "Optional, repeatable; exact temporal cardinalities; default PPB; used for missing NOX_FILE substitutions."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "preservation_notes": [
+        "Retain card boundaries, repeat-value spelling, and exact numeric lexemes."
+      ],
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "NOX_UNIT",
+      "record_role": "units-for-nox-vals",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[CO] NOX_UNIT <PPB|PPM|UG/M3>"
+      ],
+      "fields": [
+        {
+          "name": "nox_units",
+          "position": 3,
+          "type": "enum",
+          "required": true,
+          "allowed_values": [
+            "PPB",
+            "PPM",
+            "UG/M3"
+          ],
+          "default": "PPB for NOX_VALS"
+        }
+      ],
+      "dependencies": {
+        "requires_model_option": "GRSM",
+        "applies_to": "NOX_VALS only"
+      },
+      "constraints": [
+        {
+          "rule": "NOX_UNIT without NOX_VALS is E193."
+        },
+        {
+          "rule": "Does not control NOXVALUE or NOX_FILE units, which are specified on those records."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated",
+          "source_lines": "484-498"
+        },
+        {
+          "severity": "error",
+          "code": "602",
+          "condition": "GRSM not active",
+          "source_lines": "491-497"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing unit",
+          "source_lines": "6983-7031"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "too many fields",
+          "source_lines": "6983-7031"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid unit",
+          "source_lines": "6983-7031"
+        },
+        {
+          "severity": "error",
+          "code": "193",
+          "condition": "NOX_UNIT without NOX_VALS",
+          "source_lines": "677-680"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "484-498",
+        "handler": "NOX_UNIT",
+        "handler_lines": "6983-7031",
+        "final_checks": "677-680"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.2",
+        "syntax_page": 109,
+        "notes": [
+          "Optional, non-repeatable; NOX_VALS defaults to PPB."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "NOX_FILE",
+      "record_role": "hourly-ambient-nox-file",
+      "required": false,
+      "repeatability": "guide describes non-repeatable; source dispatcher permits multiple calls and handler supports sector indexing; retain both evidence layers pending executable probes",
+      "syntax": [
+        "[CO] NOX_FILE <filename> [<units> [<format>]]",
+        "[CO] NOX_FILE <SECT1..SECT6> <filename> [<units> [<format>]]"
+      ],
+      "fields": [
+        {
+          "name": "sector_id",
+          "position": 3,
+          "type": "optional enum",
+          "required": false,
+          "allowed_values": [
+            "SECT1",
+            "SECT2",
+            "SECT3",
+            "SECT4",
+            "SECT5",
+            "SECT6"
+          ]
+        },
+        {
+          "name": "filename",
+          "position": "3 or 4",
+          "type": "case-preserved path string",
+          "required": true,
+          "max_length": 200
+        },
+        {
+          "name": "units",
+          "position": "optional",
+          "type": "enum",
+          "required": false,
+          "allowed_values": [
+            "PPM",
+            "PPB",
+            "UG/M3"
+          ],
+          "default": "UG/M3"
+        },
+        {
+          "name": "format",
+          "position": "optional",
+          "type": "FREE or quoted Fortran format",
+          "required": false,
+          "default": "FREE"
+        }
+      ],
+      "dependencies": {
+        "requires_model_option": "GRSM",
+        "sector_form_requires": "NOXSECTR"
+      },
+      "behavior": {
+        "default_record_order": "year, month, day, hour, NOx value",
+        "missing_values": "negative or >=900 treated as missing",
+        "fallback": "NOXVALUE or NOX_VALS for matching scope; otherwise GRSM derives ambient NOx from equilibrium/background oxidants"
+      },
+      "constraints": [
+        {
+          "rule": "File time period must match processed meteorological period."
+        },
+        {
+          "rule": "Custom Fortran format must contain 1 to 4 integer descriptors and exactly one real descriptor."
+        },
+        {
+          "rule": "Guide/source repeatability discrepancy is not normalized away."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "602",
+          "condition": "GRSM not active",
+          "source_lines": "499-507"
+        },
+        {
+          "severity": "error",
+          "code": "200",
+          "condition": "missing filename",
+          "source_lines": "5945-6169"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "invalid field count",
+          "source_lines": "5945-6169"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid sector, units, or format",
+          "source_lines": "5945-6169"
+        },
+        {
+          "severity": "error",
+          "code": "500",
+          "condition": "file open/read error",
+          "source_lines": "5945-6169"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "coset.f",
+        "dispatcher_lines": "499-507",
+        "handler": "NOXFILE",
+        "handler_lines": "5945-6169"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, v26135",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.2.5.2",
+        "syntax_page": 109,
+        "notes": [
+          "Optional hourly background NOx file; sector form supported; missing values may use NOXVALUE/NOX_VALS."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "preservation_notes": [
+        "Preserve quotes, path case, format text, and repeated cards even while semantic policy remains unresolved."
+      ],
+      "evidence_status": "v26135-source-and-current-manual-verified-repeatability-discrepancy-no-active-fixture"
+    }
+  ]
+}

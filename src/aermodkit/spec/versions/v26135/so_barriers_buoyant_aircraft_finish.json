@@ -1,0 +1,666 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "RBARRIER",
+      "record_role": "single-roadway-barrier-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] RBARRIER <RLINEXT_SrcID> <barrier_height> <barrier_distance_or_side_parameters> ..."
+      ],
+      "fields": [
+        {
+          "name": "source_id",
+          "type": "existing RLINEXT source ID"
+        },
+        {
+          "name": "barrier_parameters",
+          "type": "source-verified numeric tuple"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": [
+          "ALPHA",
+          "FLAT"
+        ],
+        "allowed_source_types": [
+          "RLINEXT"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Only RLINEXT sources are accepted; barrier geometry must satisfy current range checks."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "198",
+          "condition": "ALPHA absent"
+        },
+        {
+          "severity": "error",
+          "code": "713",
+          "condition": "FLAT absent"
+        },
+        {
+          "severity": "error",
+          "code": "278",
+          "condition": "wrong source type"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "543-578",
+        "handler": "RLINEBAR_INPUTS",
+        "handler_file": "soset.f",
+        "handler_lines": "8416-8528"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Legacy roadway barrier input handled by RLINEBAR_INPUTS."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:26",
+          "inputs/allsrcs.inp:105"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "SBARRIER",
+      "record_role": "segmented-solid-barrier-block",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] SBARRIER <BarrierID> STA <NumSegments>",
+        "[SO] SBARRIER <BarrierID> <Xbeg> <Ybeg> <Xend> <Yend> <height> <base_elevation>",
+        "[SO] SBARRIER <BarrierID> END"
+      ],
+      "fields": [
+        {
+          "name": "barrier_id",
+          "type": "string",
+          "max_length": 12
+        },
+        {
+          "name": "secondary_record",
+          "type": "STA, segment, or END"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": [
+          "ALPHA",
+          "FLAT"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "STA declares 1..50 segments; exactly that number of segment records must precede END."
+        },
+        {
+          "rule": "Segment height must satisfy source range checks; block boundaries are preserved."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "306",
+          "condition": "declared and supplied segment counts differ"
+        },
+        {
+          "severity": "error",
+          "code": "320",
+          "condition": "segment count or height out of range"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "579-600",
+        "handler": "SBARRIER_INPUTS",
+        "handler_file": "soset.f",
+        "handler_lines": "8795-8939"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "SBARRIER is a nested block grammar rather than three independent primary records."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture",
+      "secondary_records": {
+        "STA": {
+          "required": true
+        },
+        "SEGMENT": {
+          "repeatable": true
+        },
+        "END": {
+          "required": true
+        }
+      },
+      "fixture_secondary_counts": {}
+    },
+    {
+      "keyword": "VBARRIER",
+      "record_role": "vegetative-barrier-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] VBARRIER <RLINEXT_SrcID> <height1> <width1> <DCL1> <LAI1> <leaf_length1> [<height2> <width2> <DCL2> <LAI2> <leaf_length2>]"
+      ],
+      "fields": [
+        {
+          "name": "source_id",
+          "type": "existing RLINEXT source ID"
+        },
+        {
+          "name": "barrier_1",
+          "type": "five numeric values"
+        },
+        {
+          "name": "barrier_2",
+          "type": "optional five numeric values"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": [
+          "ALPHA",
+          "FLAT"
+        ],
+        "allowed_source_types": [
+          "RLINEXT"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Exactly one or two vegetative barriers may be supplied."
+        },
+        {
+          "rule": "Height 2..10 m, width 2.5..13 m, and current LAI/leaf-length ranges are source enforced."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "371-374",
+          "condition": "vegetative parameter out of range"
+        },
+        {
+          "severity": "error",
+          "code": "278",
+          "condition": "wrong source type"
+        },
+        {
+          "severity": "warning",
+          "code": "375",
+          "condition": "barrier orientation/placement concern"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "601-619",
+        "handler": "VBARRIER_INPUTS",
+        "handler_file": "soset.f",
+        "handler_lines": "8529-8731"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "The executable branch was missing from the earlier keyword-dispatch inventory and is now included."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "RDEPRESS",
+      "record_role": "depressed-roadway-cross-section",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] RDEPRESS <RLINEXT_SrcID> <depth> <top_width> <bottom_width>"
+      ],
+      "fields": [
+        {
+          "name": "source_id",
+          "type": "existing RLINEXT source ID"
+        },
+        {
+          "name": "depth",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "top_width",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "bottom_width",
+          "type": "real",
+          "units": "m"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": [
+          "ALPHA",
+          "FLAT"
+        ],
+        "allowed_source_types": [
+          "RLINEXT"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Depth and widths must satisfy executable nonnegative/geometry ranges."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "278",
+          "condition": "wrong source type"
+        },
+        {
+          "severity": "error",
+          "code": "320",
+          "condition": "depth/width out of range"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "620-653",
+        "handler": "RLINEDPR_INPUTS",
+        "handler_file": "soset.f",
+        "handler_lines": "9597-9700"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact four-field payload after keyword."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:26",
+          "inputs/allsrcs.inp:110"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BLPINPUT",
+      "record_role": "buoyant-line-average-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BLPINPUT <avg_line_length> <avg_building_height> <avg_building_width> <avg_line_width> <avg_building_separation> <avg_line_buoyancy>",
+        "[SO] BLPINPUT <BLGroupID> <avg_line_length> <avg_building_height> <avg_building_width> <avg_line_width> <avg_building_separation> <avg_line_buoyancy>"
+      ],
+      "fields": [
+        {
+          "name": "group_id",
+          "type": "optional string"
+        },
+        {
+          "name": "average_parameters",
+          "type": "six numeric values"
+        }
+      ],
+      "dependencies": {
+        "requires_source_type": "BUOYLINE"
+      },
+      "constraints": [
+        {
+          "rule": "Without a group ID, only one BLPINPUT record is allowed and represents ALL buoyant lines."
+        },
+        {
+          "rule": "With group IDs, IDs must be unique and correspond to BLPGROUP records."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "504",
+          "condition": "duplicate group ID"
+        },
+        {
+          "severity": "error",
+          "code": "508",
+          "condition": "no BUOYLINE source"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "654-664",
+        "handler": "BL_AVGINP",
+        "handler_file": "soset.f",
+        "handler_lines": "8030-8254"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Current source supports both eight- and nine-field total record forms."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 6,
+        "files": 5,
+        "examples": [
+          "inputs/aermod-baldwin45.inp:27",
+          "inputs/aermod-baldwinHoriz.inp:27",
+          "inputs/aermod-baldwinVert.inp:27",
+          "inputs/allsrcs.inp:100"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "BLPGROUP",
+      "record_role": "buoyant-line-group-membership",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] BLPGROUP <BLGroupID|ALL> <BUOYLINE_SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "max_length": 8
+        },
+        {
+          "name": "members",
+          "type": "BUOYLINE IDs/ranges or ALL"
+        }
+      ],
+      "dependencies": {
+        "requires_record": "matching BLPINPUT"
+      },
+      "constraints": [
+        {
+          "rule": "Only BUOYLINE sources may be members; each group ID must have a matching BLPINPUT definition."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "502",
+          "condition": "BLPINPUT group missing"
+        },
+        {
+          "severity": "error",
+          "code": "254/255",
+          "condition": "source missing or not BUOYLINE"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "665-678",
+        "handler": "BLPGRP",
+        "handler_file": "soset.f",
+        "handler_lines": "7227-7432"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Multiple BLP groups are source-supported."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 1,
+        "examples": [
+          "inputs/blp_urban.inp:37",
+          "inputs/blp_urban.inp:38"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "ARCFTSRC",
+      "record_role": "aircraft-source-selection",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] ARCFTSRC ALL",
+        "[SO] ARCFTSRC <AREA|VOLUME SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "source_selectors",
+          "type": "ALL, IDs, or ranges"
+        }
+      ],
+      "dependencies": {
+        "requires_co_record": "ARCFTOPT",
+        "requires_record": "HOUREMIS",
+        "allowed_source_types": [
+          "AREA",
+          "VOLUME"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "ARCFTSRC ALL must be the only payload field when the ALL form is active."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "821",
+          "condition": "ARCFTOPT missing"
+        },
+        {
+          "severity": "error",
+          "code": "823",
+          "condition": "HOUREMIS missing"
+        },
+        {
+          "severity": "error",
+          "code": "279",
+          "condition": "invalid ALL form"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "679-703",
+        "handler": "AIRCRAFT",
+        "handler_file": "soset.f",
+        "handler_lines": "9701-9793"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Aircraft plume-rise processing is applied to existing AREA/VOLUME source types, not a new LOCATION type."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "HBPSRCID",
+      "record_role": "horizontal-buoyancy-source-selection",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] HBPSRCID ALL",
+        "[SO] HBPSRCID <POINT|POINTCAP|POINTHOR SrcID|SrcID-Range> ..."
+      ],
+      "fields": [
+        {
+          "name": "source_selectors",
+          "type": "ALL, point-family IDs, or ranges"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": [
+          "ALPHA",
+          "HBPLUME"
+        ],
+        "allowed_source_families": [
+          "POINT",
+          "POINTCAP",
+          "POINTHOR"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "ALL selects all point-family sources; non-point IDs are not selected."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "300",
+          "condition": "source ID not found"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid range"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "704-726",
+        "handler": "HBPSOURCE",
+        "handler_file": "soset.f",
+        "handler_lines": "6695-6805"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Source selection for the horizontal buoyancy plume option."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "FINISHED",
+      "record_role": "pathway-framing-finish",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] FINISHED"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must occur exactly once in the pathway."
+        },
+        {
+          "rule": "Finalization performs pathway completeness and cross-record checks."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "mandatory STARTING missing"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "727-1008",
+        "handler": "SOCARD",
+        "handler_file": "soset.f",
+        "handler_lines": "1-1008"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Pathway framing record processed directly by the dispatcher."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:24",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:25",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:29",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:29"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    }
+  ]
+}

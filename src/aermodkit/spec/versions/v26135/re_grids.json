@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "RE",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "record_role": "pathway-framing-start",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[RE] STARTING"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must occur exactly once in the pathway."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "32-63",
+        "handler": "RECARD",
+        "handler_file": "reset.f",
+        "handler_lines": "1-207"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Pathway framing record processed directly by the dispatcher."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:26",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:27",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:31",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:31"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "GRIDCART",
+      "record_role": "cartesian-grid-receptor-network",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] GRIDCART <NetID> <STA|XYINC|XPNTS|YPNTS|ELEV|HILL|FLAG|END> <secondary fields...>"
+      ],
+      "fields": [
+        {
+          "name": "network_id",
+          "type": "string"
+        },
+        {
+          "name": "secondary_record",
+          "type": "enum",
+          "allowed_values": [
+            "STA",
+            "XYINC",
+            "XPNTS",
+            "YPNTS",
+            "ELEV",
+            "HILL",
+            "FLAG",
+            "END"
+          ]
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Block begins with STA and ends with END."
+        },
+        {
+          "rule": "Coordinates use either one XYINC record or paired XPNTS and YPNTS records."
+        },
+        {
+          "rule": "ELEV/HILL/FLAG arrays must match the final X-by-Y receptor dimensions."
+        },
+        {
+          "rule": "Network records may omit the repeated NetID while a block is active; that lexical form must be preserved."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "170",
+          "condition": "invalid secondary keyword"
+        },
+        {
+          "severity": "error",
+          "code": "180",
+          "condition": "XYINC conflicts with XPNTS/YPNTS"
+        },
+        {
+          "severity": "error",
+          "code": "212",
+          "condition": "coordinate definition missing"
+        },
+        {
+          "severity": "error",
+          "code": "218",
+          "condition": "ELEV/HILL/FLAG count mismatch"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "64-68",
+        "handler": "RECART",
+        "handler_file": "reset.f",
+        "handler_lines": "258-470"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "GRIDCART is modeled as one primary record family with a nested state machine."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 20,
+        "files": 9,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:28",
+          "inputs/Test1_Base_cart_3cond_SNC.inp:30",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:29",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:31"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "secondary_records": {
+        "STA": {
+          "required": true,
+          "repeatability": "once",
+          "syntax": "<NetID> STA"
+        },
+        "XYINC": {
+          "choice_group": "coordinates",
+          "syntax": "<NetID> XYINC <Xinit> <Xcount> <Xdelta> <Yinit> <Ycount> <Ydelta>"
+        },
+        "XPNTS": {
+          "choice_group": "coordinates",
+          "requires": "YPNTS",
+          "syntax": "<NetID> XPNTS <x1> ..."
+        },
+        "YPNTS": {
+          "choice_group": "coordinates",
+          "requires": "XPNTS",
+          "syntax": "<NetID> YPNTS <y1> ..."
+        },
+        "ELEV": {
+          "repeatable": true,
+          "conditional": "MODELOPT ELEV",
+          "syntax": "<NetID> ELEV <row/index> <values...>"
+        },
+        "HILL": {
+          "repeatable": true,
+          "conditional": "MODELOPT ELEV",
+          "syntax": "<NetID> HILL <row/index> <values...>"
+        },
+        "FLAG": {
+          "repeatable": true,
+          "conditional": "CO FLAGPOLE",
+          "syntax": "<NetID> FLAG <row/index> <values...>"
+        },
+        "END": {
+          "required": true,
+          "repeatability": "once",
+          "syntax": "<NetID> END"
+        }
+      },
+      "state_machine": {
+        "initial": "outside",
+        "transitions": [
+          "outside --STA--> open",
+          "open --XYINC|XPNTS|YPNTS|ELEV|HILL|FLAG--> open",
+          "open --END--> complete"
+        ],
+        "completion": [
+          "STA",
+          "END",
+          "XYINC or (XPNTS and YPNTS)"
+        ]
+      },
+      "fixture_secondary_counts": {
+        "STA": 10,
+        "XYINC": 9,
+        "END": 10,
+        "XPNTS": 1,
+        "YPNTS": 1
+      }
+    },
+    {
+      "keyword": "GRIDPOLR",
+      "record_role": "polar-grid-receptor-network",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] GRIDPOLR <NetID> <STA|ORIG|DIST|DDIR|GDIR|ELEV|HILL|FLAG|END> <secondary fields...>"
+      ],
+      "fields": [
+        {
+          "name": "network_id",
+          "type": "string"
+        },
+        {
+          "name": "secondary_record",
+          "type": "enum",
+          "allowed_values": [
+            "STA",
+            "ORIG",
+            "DIST",
+            "DDIR",
+            "GDIR",
+            "ELEV",
+            "HILL",
+            "FLAG",
+            "END"
+          ]
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Block begins with STA and ends with END."
+        },
+        {
+          "rule": "DIST is mandatory; directions use DDIR or GDIR, not both."
+        },
+        {
+          "rule": "ORIG is optional and defaults to (0,0); source-ID origin form is supported."
+        },
+        {
+          "rule": "ELEV/HILL/FLAG arrays must match distance-by-direction dimensions."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "160",
+          "condition": "duplicate ORIG"
+        },
+        {
+          "severity": "error",
+          "code": "180",
+          "condition": "DDIR/GDIR conflict"
+        },
+        {
+          "severity": "error",
+          "code": "221",
+          "condition": "DIST or directions missing"
+        },
+        {
+          "severity": "warning",
+          "code": "220",
+          "condition": "ORIG omitted; defaults to 0,0"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "69-73",
+        "handler": "REPOLR",
+        "handler_file": "reset.f",
+        "handler_lines": "836-1077"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "GRIDPOLR is modeled as a nested block grammar."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 106,
+        "files": 38,
+        "examples": [
+          "inputs/aertest.inp:55",
+          "inputs/aertest.inp:59",
+          "inputs/allsrcs.inp:137",
+          "inputs/allsrcs.inp:141"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "secondary_records": {
+        "STA": {
+          "required": true,
+          "repeatability": "once",
+          "syntax": "<NetID> STA"
+        },
+        "ORIG": {
+          "repeatability": "zero-or-one",
+          "default": "0 0",
+          "syntax": "<NetID> ORIG <Xorigin> <Yorigin> | <NetID> ORIG <SrcID>"
+        },
+        "DIST": {
+          "required": true,
+          "repeatable": true,
+          "syntax": "<NetID> DIST <distance_1> ..."
+        },
+        "DDIR": {
+          "choice_group": "directions",
+          "repeatable": true,
+          "syntax": "<NetID> DDIR <direction_1> ..."
+        },
+        "GDIR": {
+          "choice_group": "directions",
+          "syntax": "<NetID> GDIR <start> <count> <increment>"
+        },
+        "ELEV": {
+          "repeatable": true,
+          "conditional": "MODELOPT ELEV",
+          "syntax": "<NetID> ELEV <direction> <values...>"
+        },
+        "HILL": {
+          "repeatable": true,
+          "conditional": "MODELOPT ELEV",
+          "syntax": "<NetID> HILL <direction> <values...>"
+        },
+        "FLAG": {
+          "repeatable": true,
+          "conditional": "CO FLAGPOLE",
+          "syntax": "<NetID> FLAG <direction> <values...>"
+        },
+        "END": {
+          "required": true,
+          "repeatability": "once",
+          "syntax": "<NetID> END"
+        }
+      },
+      "state_machine": {
+        "initial": "outside",
+        "transitions": [
+          "outside --STA--> open",
+          "open --ORIG|DIST|DDIR|GDIR|ELEV|HILL|FLAG--> open",
+          "open --END--> complete"
+        ],
+        "completion": [
+          "STA",
+          "DIST",
+          "DDIR or GDIR",
+          "END"
+        ]
+      },
+      "fixture_secondary_counts": {
+        "STA": 38,
+        "ORIG": 19,
+        "DIST": 19,
+        "GDIR": 18,
+        "END": 30
+      }
+    }
+  ]
+}

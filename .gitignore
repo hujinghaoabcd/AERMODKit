@@ -6,10 +6,15 @@ __pycache__/
 .ruff_cache/
 .coverage
 htmlcov/
-build/
 dist/
+build/
 .venv/
 venv/
 .env
 .DS_Store
-Thumbs.db
+.idea/
+.vscode/
+*.amkpack
+*.amkproj/cache/
+*.amkproj/temp/
+*.amkproj/locks/

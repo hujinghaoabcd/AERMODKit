@@ -1,25 +1,15 @@
-"""AERMODKit public API."""
+"""Public package interface for AERMODKit."""
 
-from .schema.models import AermodVersion, Diagnostic, DiagnosticSeverity
-from .schema.registry import SchemaRegistry, get_registry
-from .semantic.project import AermodProjectModel, SourceRecord, build_project_model
-from .syntax.parser import parse_aermod
-from .syntax.writer import write_aermod
-from .validation.engine import validate_document
+from ._version import __version__
+from .diagnostics import Diagnostic, Severity
+from .spec import ModelVersion, VersionMetadata, get_default_version, get_supported_versions
 
 __all__ = [
-    "AermodProjectModel",
-    "AermodVersion",
     "Diagnostic",
-    "DiagnosticSeverity",
-    "SchemaRegistry",
-    "SourceRecord",
-    "build_project_model",
-    "get_registry",
-    "parse_aermod",
-    "validate_document",
-    "write_aermod",
+    "ModelVersion",
+    "Severity",
+    "VersionMetadata",
+    "__version__",
+    "get_default_version",
+    "get_supported_versions",
 ]
-
-__version__ = "0.1.0a2"
-PROJECT_FORMAT_VERSION = "1.0"

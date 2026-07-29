@@ -1,0 +1,33 @@
+{
+  "model_version": "26135",
+  "pathway": "RE",
+  "source_file": "reset.f",
+  "dispatcher": "RECARD",
+  "source_primary_keywords": [
+    "STARTING",
+    "GRIDCART",
+    "GRIDPOLR",
+    "DISCCART",
+    "DISCPOLR",
+    "EVALCART",
+    "ELEVUNIT",
+    "INCLUDED",
+    "FINISHED"
+  ],
+  "bundled_primary_keywords": [
+    "STARTING",
+    "GRIDCART",
+    "GRIDPOLR",
+    "DISCCART",
+    "DISCPOLR",
+    "EVALCART",
+    "ELEVUNIT",
+    "INCLUDED",
+    "FINISHED"
+  ],
+  "source_count": 9,
+  "bundled_count": 9,
+  "missing": [],
+  "extra": [],
+  "method": "Non-comment executable KEYWRD branches in the v26135 dispatcher define the recognized primary syntax set."
+}

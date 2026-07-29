@@ -1,0 +1,36 @@
+{
+  "model_version": "26135",
+  "scope": "SO and RE unresolved source/manual or boundary behavior",
+  "probes": [
+    {
+      "id": "SO-SWPOINT-01",
+      "question": "Confirm official executable accepts SWPOINT only with ALPHA and records the expected six-parameter signature.",
+      "priority": "high"
+    },
+    {
+      "id": "SO-VBARRIER-01",
+      "question": "Confirm one- and two-barrier VBARRIER field counts and warning behavior at range boundaries.",
+      "priority": "high"
+    },
+    {
+      "id": "SO-PLATFORM-01",
+      "question": "Confirm trailing PLATFORM fields are accepted/ignored or rejected; source only checks minimum count.",
+      "priority": "medium"
+    },
+    {
+      "id": "SO-BACKGRND-01",
+      "question": "Confirm duplicate global/sector profile precedence and hourly/static conflict behavior.",
+      "priority": "medium"
+    },
+    {
+      "id": "RE-GRID-ID-01",
+      "question": "Confirm omitted NetID continuation forms preserve the active grid block exactly.",
+      "priority": "medium"
+    },
+    {
+      "id": "RE-DISC-EXTRA-01",
+      "question": "Confirm warning-versus-ignore behavior for terrain/flag fields supplied under inactive options.",
+      "priority": "medium"
+    }
+  ]
+}

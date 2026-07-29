@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "purpose": "Focused official-executable probes for guide/source discrepancies after complete CO schema coverage.",
+  "probes": [
+    {
+      "id": "ozonefil_same_sector_duplicate",
+      "records": [
+        "O3SECTOR",
+        "OZONEFIL"
+      ],
+      "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for one sector?",
+      "status": "planned-manual-official-executable-probe"
+    },
+    {
+      "id": "nox_file_same_sector_duplicate",
+      "records": [
+        "NOXSECTR",
+        "NOX_FILE"
+      ],
+      "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for one sector?",
+      "status": "planned-manual-official-executable-probe"
+    },
+    {
+      "id": "arcftopt_repeat_extra_fields",
+      "records": [
+        "ARCFTOPT"
+      ],
+      "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?",
+      "status": "planned-manual-official-executable-probe"
+    },
+    {
+      "id": "temporal_vector_incomplete",
+      "records": [
+        "O3VALUES",
+        "NOX_VALS"
+      ],
+      "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
+      "status": "planned-manual-official-executable-probe"
+    },
+    {
+      "id": "alpha_dependency_matrix",
+      "records": [
+        "GDSEASON",
+        "GASDEPDF",
+        "GDLANUSE",
+        "GASDEPVD",
+        "LOW_WIND",
+        "AWMADWNW",
+        "ORD_DWNW",
+        "ARCFTOPT"
+      ],
+      "question": "Confirm official executable diagnostics for no-ALPHA and DFAULT conflicts.",
+      "status": "source-verified-probe-pending"
+    }
+  ]
+}

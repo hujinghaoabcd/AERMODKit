@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "mode": "event-processing-output",
+  "dispatcher": {
+    "file": "evset.f",
+    "routine": "EV_OUCARD",
+    "lines": "776-848"
+  },
+  "records": [
+    {
+      "keyword": "STARTING",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "OU STARTING"
+      ]
+    },
+    {
+      "keyword": "EVENTOUT",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] EVENTOUT <SOCONT|DETAIL>"
+      ],
+      "fields": [
+        {
+          "name": "option",
+          "type": "enum",
+          "allowed_values": [
+            "SOCONT",
+            "DETAIL"
+          ]
+        }
+      ],
+      "source": {
+        "file": "evset.f",
+        "handler": "OEVENT",
+        "handler_lines": "849-900"
+      },
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid option"
+        }
+      ]
+    },
+    {
+      "keyword": "FILEFORM",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[OU] FILEFORM <FIX|EXP>"
+      ],
+      "shared_handler": "ouset.f:FILEFORM"
+    },
+    {
+      "keyword": "FINISHED",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "OU FINISHED"
+      ]
+    }
+  ],
+  "completion": {
+    "recognized_records": [
+      "STARTING",
+      "EVENTOUT",
+      "FILEFORM",
+      "FINISHED"
+    ],
+    "mandatory": [
+      "STARTING",
+      "EVENTOUT",
+      "FINISHED"
+    ]
+  },
+  "preservation_policy": {
+    "original_text": true,
+    "comments": true,
+    "case": true,
+    "unknown_fields": true
+  }
+}

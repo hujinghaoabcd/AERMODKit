@@ -1,56 +1,40 @@
 # AERMODKit
 
-AERMODKit is an independent, GIS-first Python toolkit for building, validating,
-running, and analysing projects across the U.S. EPA AERMOD modelling ecosystem.
+AERMODKit is an independent, GIS-first Python toolkit for building, validating, running, and analysing projects across the U.S. EPA AERMOD modelling ecosystem.
 
-> **Current baseline:** EPA AERMOD v26135. EPA manuals, source code, release notes,
-> and official test cases are the source of truth. Third-party projects are references
-> only and are not treated as authoritative implementations.
+> **Early development:** the U.S. EPA manuals, source code, release notes, and official test cases are the source of truth. Third-party projects, including `pyaermod`, are comparison references only.
 
-## Current milestone
+## Initial scope
 
-Version `0.1.0a2` provides:
+The project is being built in layers:
 
-- complete CO, SO, RE, ME, EV, and OU keyword registries for v26135;
-- all v26135 MODELOPT tokens and all 13 source types;
-- lossless reading and exact preserve-mode writing;
-- deterministic canonical writing;
-- GRIDCART/GRIDPOLR continuation validation;
-- keyword, option, ordering, source, and cross-pathway diagnostics;
-- a read-only semantic project view that always retains the original syntax tree.
+1. versioned official specification and traceability;
+2. loss-aware AERMOD input/output handling;
+3. deterministic validation and execution;
+4. GIS-native source, receptor, terrain, building, and result workflows;
+5. shared APIs for Python, CLI, QGIS, desktop, and web applications.
 
-```python
-from aermodkit import (
-    build_project_model,
-    parse_aermod,
-    validate_document,
-    write_aermod,
-)
+The first implementation milestone establishes a small tested core for version metadata and structured diagnostics. It intentionally does **not** claim full AERMOD feature coverage yet.
 
-text = open("aermod.inp", encoding="utf-8").read()
-document = parse_aermod(text, version="26135")
-issues = validate_document(document)
-model = build_project_model(document)
-clone = write_aermod(document, mode="preserve")
-canonical = write_aermod(document, mode="canonical")
-```
+## Current status
 
-## Architecture rules
+Read these files before changing the project:
 
-1. EPA executables remain the numerical truth source.
-2. Every keyword and rule is versioned and evidence-backed.
-3. Unknown input is never silently discarded.
-4. The lossless AST is authoritative; semantic objects are projections.
-5. GIS geometry is never reduced to a lossy first/last-point approximation by default.
-6. The core package remains independent of GUI and web frameworks.
-7. Each completed batch includes tests, a progress record, and a handover update.
+- [`docs/handover/CURRENT_STATE.md`](docs/handover/CURRENT_STATE.md)
+- [`docs/handover/NEXT_STEPS.md`](docs/handover/NEXT_STEPS.md)
+- [`docs/design/INITIAL_ARCHITECTURE_v0.1.md`](docs/design/INITIAL_ARCHITECTURE_v0.1.md)
+- [`docs/decisions/0001-official-source-of-truth.md`](docs/decisions/0001-official-source-of-truth.md)
+- [`docs/decisions/0002-third-party-clean-room-policy.md`](docs/decisions/0002-third-party-clean-room-policy.md)
 
 ## Development
 
 ```bash
 python -m pip install -e ".[dev]"
 pytest
+ruff check .
+mypy src
 ```
 
-See [`HANDOFF.md`](HANDOFF.md) and [`docs/progress/`](docs/progress/) for the
-current implementation boundary and the next locked task.
+## Independence notice
+
+AERMODKit is not affiliated with or endorsed by the U.S. EPA. It does not replace official executables, documentation, regulatory guidance, or professional judgement.
