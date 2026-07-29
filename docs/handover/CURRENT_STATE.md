@@ -1,8 +1,9 @@
 # Current State
 
 - Updated: 2026-07-30
-- Active development branch: `agent/official-behavior-probes-batch3`
-- Active pull request: #11, draft pending final validation and publication
+- Active branch: `main`
+- Official behavior-probe batch 3 PR: #11, merged
+- Batch 3 merge commit: `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`
 - Official behavior-probe batch 2 PR: #9, merged
 - Batch 2 merge commit: `279b61160412a8073632d31156f897cd6edcee4a`
 - Official behavior-probe batch 1 PR: #7, merged
@@ -46,17 +47,7 @@ event-output FILEFORM behavior under DFAULT.
 
 ### Batch 3
 
-Reviewed official evidence:
-
-- workflow run: `30461120811`;
-- artifact ID: `8727721661`;
-- artifact digest: `sha256:c301bfc8ec367569da40923e214431a34bd7266999ba028d3a7cba9e0293e3f0`;
-- official executable SHA-256: `599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`;
-- cases: 35;
-- accepted: 16;
-- rejected: 19;
-- indeterminate: 0;
-- expectations met: 35/35.
+Reviewed evidence contains 35 cases: 16 accepted, 19 rejected, 0 indeterminate, and 35/35 expectations met.
 
 Resolved outcomes:
 
@@ -72,6 +63,18 @@ Resolved outcomes:
 Reviewed evidence is in `reference/probes/v26135/batch3/result.json`,
 `reference/probes/v26135/batch3/case-evidence.csv`, and
 `docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH3.md`.
+
+Final PR #11 head `521bdb9c7c4857f3bc4507de4d742fa517e83d42` passed:
+
+- full nine-job CI `30475925322`;
+- batch-2 official regression `30475925186`;
+- batch-3 official workflow `30475925233`.
+
+Final-head artifact:
+
+- artifact ID: `8733686581`;
+- digest: `sha256:f7e7ffbb80f53de55db56e66a56d14c22731c061ce5fdd733a36fc1e258100c0`;
+- size: `284,393,538` bytes.
 
 ## Retained behavior-probe gate
 
@@ -96,11 +99,10 @@ fixtures.
 Production lexer/parser, immutable loss-aware CST, format-preserving writer, semantic project model,
 runner, output parser, and GIS layers remain pending.
 
-## Validation status
+## Validation baseline
 
 - 53/53 official decks executed in the established evidence workflow;
 - all seven dispatcher exact-set reports pass;
-- reviewed batch-3 official workflow `30461120811` passed;
-- head `c2e3cd6bc00c073864f1a228300b6d7a385a9c48` passed official batch-3 workflow `30463006940` and batch-2 regression `30463007020`;
-- CI `30463006109` passed Linux/macOS and failed only the Windows CRLF byte-hash assertion;
-- final LF-pinned head still requires all nine CI jobs and official workflows before PR #11 can be marked ready.
+- batch-1, batch-2, and batch-3 reviewed official workflows pass;
+- final PR #11 head passed all nine CI jobs plus the batch-2 and batch-3 official workflows;
+- PR #11 merged to `main` as `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`.

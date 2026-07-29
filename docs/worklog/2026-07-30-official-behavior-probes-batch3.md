@@ -2,7 +2,8 @@
 
 - Date: 2026-07-30
 - Development branch: `agent/official-behavior-probes-batch3`
-- Pull request: #11, draft during final validation
+- Pull request: #11, merged
+- Merge commit: `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`
 - Base: behavior-batch-2-complete `main`
 - Phase: official behavior evidence before production loss-aware syntax
 
@@ -76,9 +77,21 @@ Completed catalog entries:
 
 The behavior inventory is now 19 total, 10 executed, 1 source-resolved, and 8 pending. The syntax implementation gate remains closed.
 
-## Publication status
+## Validation and publication
 
-Official batch-3 workflow `30463006940` and batch-2 regression `30463007020` passed on head `c2e3cd6bc00c073864f1a228300b6d7a385a9c48`. The initial cross-platform CI `30463006109` passed Linux/macOS and failed only the Windows byte-hash assertion. Final publication requires the LF-pinned evidence head to pass the full nine-job CI and official workflow before PR #11 is marked ready and merged.
+Final PR #11 head `521bdb9c7c4857f3bc4507de4d742fa517e83d42` passed:
+
+- full nine-job CI `30475925322`;
+- batch-2 official regression `30475925186`;
+- batch-3 official workflow `30475925233`.
+
+Final-head artifact:
+
+- artifact ID: `8733686581`;
+- digest: `sha256:f7e7ffbb80f53de55db56e66a56d14c22731c061ce5fdd733a36fc1e258100c0`;
+- size: `284,393,538` bytes.
+
+PR #11 was merged to `main` as `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`.
 
 ## Boundary
 
