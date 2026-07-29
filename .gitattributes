@@ -1,0 +1,4 @@
+# Retained probe evidence is byte-hashed and must be identical on every checkout.
+reference/probes/v26135/**/case-evidence.csv text eol=lf
+reference/probes/v26135/**/result.json text eol=lf
+reference/probes/v26135/**/source-pattern-evidence.json text eol=lf
