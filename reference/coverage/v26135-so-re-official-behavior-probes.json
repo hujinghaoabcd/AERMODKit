@@ -32,7 +32,39 @@
       "id": "SO-VBARRIER-RANGE-01",
       "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.",
       "priority": "high",
-      "status": "planned-manual-official-executable-probe"
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "Both barrier positions accept HT 2.0..10.0 m, WT 2.5..13.0 m, LAI 4.0..10.92, and LM/LAD 0.55..3.75 inclusively. Immediate below/above values are rejected with E371-E374. For unequal same-side absolute DCL values, W375 identifies and retains the nearer barrier while zeroing the farther barrier. Equal-distance same-side barriers produce no W375 at input, retain both debug records, and later emit W620; v26135 runtime selects barrier 2 on the equality tie because its comparison changes the default only when barrier 1 is strictly closer.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch2/result.json",
+        "cases": [
+          "so_vbarrier_all_min_control",
+          "so_vbarrier_all_max_control",
+          "so_vbarrier_second_all_min_control",
+          "so_vbarrier_second_all_max_control",
+          "so_vbarrier_ht_below_min",
+          "so_vbarrier_ht_above_max",
+          "so_vbarrier_wt_below_min",
+          "so_vbarrier_wt_above_max",
+          "so_vbarrier_lai_below_min",
+          "so_vbarrier_lai_above_max",
+          "so_vbarrier_lm_below_min",
+          "so_vbarrier_lm_above_max",
+          "so_vbarrier_same_side_first_closer",
+          "so_vbarrier_same_side_second_closer",
+          "so_vbarrier_same_side_equal_distance"
+        ],
+        "source_patterns": [
+          "vbarrier-range-e371",
+          "vbarrier-range-e372",
+          "vbarrier-range-e373",
+          "vbarrier-range-e374",
+          "vbarrier-nearest-w375",
+          "vbarrier-runtime-w620"
+        ],
+        "workflow_run_id": 30452705724,
+        "artifact_id": 8724254777
+      },
+      "boundary": "The equal-distance barrier-2 tie result is exact v26135 source behavior, not a general physical recommendation; future versions must remain separately versioned."
     },
     {
       "id": "SO-PLATFORM-01",
