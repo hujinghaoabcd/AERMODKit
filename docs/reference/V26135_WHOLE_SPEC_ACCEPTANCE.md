@@ -28,11 +28,21 @@ or GIS layers exist. Behavior probes remain a separate prerequisite gate.
 
 ## Retained behavior probes
 
-- total: 18
-- executed with retained evidence: 0
+- total: 19
+- executed with retained official-executable evidence: 4
 - source-resolved: 1
-- official-executable pending: 17
+- official-executable pending: 14
+
+The first official-executable batch resolved:
+
+- `SO-SWPOINT-01`;
+- `SO-VBARRIER-01` for valid one- and two-barrier field forms;
+- `ozonefil_same_sector_duplicate`;
+- `nox_file_same_sector_duplicate`.
+
+The earlier combined VBARRIER question was split so that field-form acceptance is complete while
+range-boundary and same-side `W375` behavior remains explicit as `SO-VBARRIER-RANGE-01`.
 
 Record-set acceptance therefore passes, but the project remains before the production
-loss-aware syntax implementation gate until the retained executable
-probes are resolved.
+loss-aware syntax implementation gate until the remaining parser-shaping executable
+probes are resolved or explicitly deferred through a preservation-safe ADR.
