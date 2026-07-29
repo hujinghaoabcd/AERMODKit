@@ -6,7 +6,7 @@ on:
     paths:
       - ".github/workflows/epa-official-behavior-probes.yml"
       - "tools/run_v26135_official_behavior_probes.py"
-      - "reference/probes/v26135/**"
+      - "reference/probes/v26135/**/manifest.json"
       - "tests/test_behavior_probe_manifest.py"
 
 permissions:
