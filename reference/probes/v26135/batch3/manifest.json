@@ -255,140 +255,193 @@
       ]
     },
     {
-      "id": "co_arcftopt_single_control",
-      "question": "Does a single ARCFTOPT card with one AirportID complete when no aircraft source is selected?",
-      "base_input": "allsrcs.inp",
+      "id": "co_arcft_valid_control",
+      "question": "Does one ARCFTOPT card with one AirportID and a complete aircraft source complete under ALPHA?",
+      "base_input": "testgas.inp",
       "expected_outcome": "accepted",
       "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_single_control"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_single_control_ERRORS.OUT"}
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcft_valid_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcft_valid_control_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
       "id": "co_arcftopt_no_payload",
-      "question": "Does ARCFTOPT accept an omitted optional AirportID?",
-      "base_input": "allsrcs.inp",
+      "question": "Does ARCFTOPT accept an omitted optional AirportID when a complete aircraft source is present?",
+      "base_input": "testgas.inp",
       "expected_outcome": "observe",
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_no_payload"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_no_payload_ERRORS.OUT"}
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_no_payload_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
       "id": "co_arcftopt_repeated_same",
-      "question": "Does the executable accept, reject, or silently retain a repeated ARCFTOPT with the same AirportID?",
-      "base_input": "allsrcs.inp",
+      "question": "Does the executable accept or reject repeated ARCFTOPT cards with the same AirportID?",
+      "base_input": "testgas.inp",
       "expected_outcome": "observe",
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_repeated_same"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP1"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_same_ERRORS.OUT"}
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_same_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
       "id": "co_arcftopt_repeated_different",
       "question": "Does a second ARCFTOPT with a different AirportID overwrite, coexist, or fail?",
-      "base_input": "allsrcs.inp",
+      "base_input": "testgas.inp",
       "expected_outcome": "observe",
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_repeated_different"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP2"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_different_ERRORS.OUT"}
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP2"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_different_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
       "id": "co_arcftopt_extra_fields",
       "question": "How are two ARCFTOPT payload fields handled when the dispatcher only assigns AirportID for exactly one?",
-      "base_input": "allsrcs.inp",
+      "base_input": "testgas.inp",
       "expected_outcome": "observe",
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_extra_fields"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1 EXTRA"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_extra_fields_ERRORS.OUT"}
-      ]
-    },
-    {
-      "id": "co_arcftopt_card_no_alpha",
-      "question": "Is ARCFTOPT itself rejected without ALPHA when no ARCFTSRC is present?",
-      "base_input": "allsrcs.inp",
-      "expected_outcome": "observe",
-      "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_card_no_alpha"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   ARCFTOPT AP1"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_card_no_alpha_ERRORS.OUT"}
-      ]
-    },
-    {
-      "id": "co_arcftopt_card_dfault_alpha",
-      "question": "Is ARCFTOPT itself rejected for DFAULT plus ALPHA when no ARCFTSRC is present?",
-      "base_input": "allsrcs.inp",
-      "expected_outcome": "observe",
-      "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_card_dfault_alpha"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   ARCFTOPT AP1"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_card_dfault_alpha_ERRORS.OUT"}
-      ]
-    },
-    {
-      "id": "co_arcftsrc_alpha_control",
-      "question": "Does a complete AREA aircraft source with ARCFTOPT and hourly aircraft parameters complete under ALPHA?",
-      "base_input": "testgas.inp",
-      "expected_outcome": "accepted",
-      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
-      "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_alpha_control"},
-        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1 EXTRA"},
         {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_alpha_control_ERRORS.OUT"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_extra_fields_ERRORS.OUT"},
         {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
         {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
         {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
         {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
-        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
-        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
-        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
-      "id": "co_arcftsrc_no_alpha",
+      "id": "co_arcft_no_alpha",
       "question": "Which final diagnostic is emitted for a complete aircraft source when ALPHA is absent?",
       "base_input": "testgas.inp",
       "expected_outcome": "observe",
-      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
       "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_no_alpha"},
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcft_no_alpha"},
         {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT\n   ARCFTOPT AP1"},
         {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_no_alpha_ERRORS.OUT"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcft_no_alpha_ERRORS.OUT"},
         {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
         {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
         {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
         {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
-        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
-        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
-        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
-      "id": "co_arcftsrc_dfault_alpha",
+      "id": "co_arcft_dfault_alpha",
       "question": "Which final diagnostic is emitted for a complete aircraft source under DFAULT plus ALPHA?",
       "base_input": "testgas.inp",
       "expected_outcome": "observe",
-      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
       "replace_line_once": [
-        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_dfault_alpha"},
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcft_dfault_alpha"},
         {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  DFAULT  ALPHA\n   ARCFTOPT AP1"},
         {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
-        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_dfault_alpha_ERRORS.OUT"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcft_dfault_alpha_ERRORS.OUT"},
         {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
         {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
         {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
         {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
-        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
-        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
-        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
+      ]
+    },
+    {
+      "id": "co_arcft_missing_arcftsrc",
+      "question": "Which diagnostic is emitted when ARCFTOPT is present but ARCFTSRC is omitted?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcft_missing_arcftsrc"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcft_missing_arcftsrc_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "** ARCFTSRC intentionally omitted"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
+      ]
+    },
+    {
+      "id": "co_arcft_missing_houremis",
+      "question": "Which diagnostic is emitted when ARCFTOPT and ARCFTSRC are present but HOUREMIS is omitted?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcft_missing_houremis"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcft_missing_houremis_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "** HOUREMIS intentionally omitted"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
+      ]
+    },
+    {
+      "id": "co_arcftsrc_without_arcftopt",
+      "question": "Which diagnostic is emitted when ARCFTSRC is present without ARCFTOPT?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_without_arcftopt"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_without_arcftopt_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  AIR AREA"}
       ]
     },
     {
@@ -400,7 +453,7 @@
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_secondary_rank_control"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_secondary_rank_control_ERRORS.OUT"},
-        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/ou_maxdcont_secondary_rank_control.out"}
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/mx_sec.out"}
       ]
     },
     {
@@ -412,19 +465,19 @@
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_secondary_rank_unit"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_secondary_rank_unit_ERRORS.OUT"},
-        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/ou_maxdcont_secondary_rank_unit.out 45"}
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/mx_secu.out 95"}
       ]
     },
     {
       "id": "ou_maxdcont_thresh_control",
       "question": "Does the documented THRESH MAXDCONT form complete?",
       "base_input": "no2_1yrAK_1tier.inp",
-      "expected_outcome": "observe",
+      "expected_outcome": "accepted",
       "timeout_seconds": 1800,
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_thresh_control"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_thresh_control_ERRORS.OUT"},
-        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/ou_maxdcont_thresh_control.out"}
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/mx_thr.out"}
       ]
     },
     {
@@ -436,7 +489,7 @@
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_thresh_unit"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_thresh_unit_ERRORS.OUT"},
-        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/ou_maxdcont_thresh_unit.out 46"}
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/mx_thru.out 96"}
       ]
     }
   ]
