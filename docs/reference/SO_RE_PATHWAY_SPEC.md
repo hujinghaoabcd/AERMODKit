@@ -22,3 +22,12 @@ The specification covers framing, source identity and source-type-dependent `SRC
 ## Boundary
 
 This is complete record-level specification, not a production parser, writer, semantic project model, runner, output parser, or GIS implementation.
+
+## Validation
+
+- deterministic source/spec validator: SO 40/40 and RE 9/9, missing 0, extra 0;
+- local focused test baseline: 20 tests passed before submission;
+- verified reconstruction Actions run `30425507010`: nine matrix jobs plus apply passed;
+- clean-tree ordinary CI run `30425627105`: all nine matrix jobs passed.
+
+Official behavior probes remain cataloged for the explicitly retained `SWPOINT`, `VBARRIER`, `PLATFORM`, background, grid-ID continuation, and discrete-extra-field questions. Cataloging a probe is not a claim that it has already been executed.

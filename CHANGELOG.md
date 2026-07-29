@@ -66,3 +66,4 @@ All notable project changes will be recorded here.
 - modeled GRIDCART and GRIDPOLR secondary records as nested loss-aware state machines;
 - added SO/RE evidence tables, exact-set reports, official behavior probes, deterministic validator, tests, ADR, reference notes, and handover updates;
 - corrected earlier inventory omissions for `PLATFORM` and `VBARRIER`.
+- validated the complete SO/RE payload through SHA256-controlled 9-platform reconstruction and a separate clean-tree 9-platform CI run.

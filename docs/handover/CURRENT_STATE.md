@@ -19,3 +19,10 @@ The old inventory omitted SO `PLATFORM` and `VBARRIER` and left `SWPOINT` unconf
 ## Not yet implemented
 
 Production lexer/parser, immutable loss-aware syntax tree, format-preserving writer, semantic model, runner, output parser, and GIS layers remain pending.
+
+## Validation baseline
+
+- verified reconstruction run `30425507010`: nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 jobs passed, followed by a successful apply job;
+- verified payload commit: `d92051675600c61ab3abc1cadf1c46ed8337dd6d`;
+- ordinary CI restored in commit `56e13414ce5753e3cadef50cb157aa02af38804f`;
+- clean-tree ordinary CI run `30425627105`: all nine jobs passed without stage chunks or reconstruction logic.

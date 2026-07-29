@@ -21,3 +21,9 @@ Completed SO and RE together, including source-dependent signatures, barriers, d
 - 20 pytest tests passed locally;
 - changed Python files compiled successfully and contain no lines over the configured 100-character limit;
 - local Ruff and mypy executables were unavailable, so the GitHub Actions matrix remains authoritative for those checks.
+
+## GitHub Actions validation
+
+The SHA256-controlled reconstruction workflow run `30425507010` passed Ruff, strict mypy, and pytest with coverage on Ubuntu, Windows, and macOS with Python 3.11, 3.12, and 3.13. All nine matrix jobs passed, and the apply job committed the verified 30-file payload as `d92051675600c61ab3abc1cadf1c46ed8337dd6d` while deleting the transfer stage.
+
+The ordinary CI workflow was restored in commit `56e13414ce5753e3cadef50cb157aa02af38804f`. Clean-tree run `30425627105` then passed all nine operating-system/Python combinations without any payload reconstruction step.
