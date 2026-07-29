@@ -6,7 +6,9 @@ on:
     paths:
       - ".github/workflows/epa-official-behavior-probes-batch2.yml"
       - "tools/run_v26135_official_behavior_probe_batch.py"
+      - "tools/merge_v26135_behavior_probe_manifests.py"
       - "reference/probes/v26135/batch2/manifest.json"
+      - "reference/probes/v26135/batch2/additional-cases.json"
       - "tests/test_behavior_probe_batch2_manifest.py"
 
 permissions:
@@ -54,6 +56,14 @@ jobs:
           "AERMOD_EXE=$($exe.FullName)" |
             Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
+      - name: Compose reviewed batch manifest
+        shell: pwsh
+        run: |
+          python tools/merge_v26135_behavior_probe_manifests.py `
+            --base reference/probes/v26135/batch2/manifest.json `
+            --fragment reference/probes/v26135/batch2/additional-cases.json `
+            --output "$env:RUNNER_TEMP/aermod-v26135-behavior-probes-batch2-manifest.json"
+
       - name: Run focused official behavior probes
         shell: pwsh
         run: |
@@ -62,7 +72,7 @@ jobs:
             --executable "$env:AERMOD_EXE" `
             --source-root official-source `
             --source-archive aermod-source.zip `
-            --manifest reference/probes/v26135/batch2/manifest.json `
+            --manifest "$env:RUNNER_TEMP/aermod-v26135-behavior-probes-batch2-manifest.json" `
             --output "$env:RUNNER_TEMP/aermod-v26135-behavior-probes-batch2" `
             --git-sha "${{ github.event.pull_request.head.sha || github.sha }}"
 
