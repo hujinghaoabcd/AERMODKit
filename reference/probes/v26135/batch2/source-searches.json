@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "searches": [
+    {
+      "id": "o3values-incomplete-e261",
+      "pattern": "ERRHDL\\(.*'261'",
+      "context_lines": 12
+    },
+    {
+      "id": "nox-vals-incomplete-e603",
+      "pattern": "ERRHDL\\(.*'603'",
+      "context_lines": 12
+    },
+    {
+      "id": "vbarrier-range-e371",
+      "pattern": "ERRHDL\\(.*'371'",
+      "context_lines": 8
+    },
+    {
+      "id": "vbarrier-range-e372",
+      "pattern": "ERRHDL\\(.*'372'",
+      "context_lines": 8
+    },
+    {
+      "id": "vbarrier-range-e373",
+      "pattern": "ERRHDL\\(.*'373'",
+      "context_lines": 8
+    },
+    {
+      "id": "vbarrier-range-e374",
+      "pattern": "ERRHDL\\(.*'374'",
+      "context_lines": 8
+    },
+    {
+      "id": "vbarrier-nearest-w375",
+      "pattern": "ERRHDL\\(.*'375'",
+      "context_lines": 12
+    },
+    {
+      "id": "vbarrier-runtime-w620",
+      "pattern": "ERRHDL\\(.*'620'",
+      "context_lines": 12
+    },
+    {
+      "id": "fileform-reset-w595",
+      "pattern": "ERRHDL\\(.*'595'",
+      "context_lines": 12
+    }
+  ]
+}

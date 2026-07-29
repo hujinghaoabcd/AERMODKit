@@ -21,9 +21,9 @@ def test_v26135_probe_inventory_is_explicit() -> None:
     acceptance = evaluate_v26135_whole_spec(ROOT / "reference/coverage")
 
     assert acceptance.probes.total == 19
-    assert acceptance.probes.executed == 4
+    assert acceptance.probes.executed == 7
     assert acceptance.probes.source_resolved == 1
-    assert acceptance.probes.official_executable_pending == 14
+    assert acceptance.probes.official_executable_pending == 11
     assert len({str(item["id"]) for item in acceptance.probes.entries}) == 19
 
 

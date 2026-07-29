@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-02",
+  "review_status": "reviewed-official-executable-and-source-evidence",
+  "workflow_evidence": {
+    "run_id": 30452705724,
+    "artifact_id": 8724254777,
+    "artifact_name": "aermod-v26135-official-behavior-probes-batch2-aaf683d4d0fa089a6d4159b9ea17b66e959cf1e3",
+    "artifact_digest": "sha256:a7a27eb5c09ccb13a00f2d7a9bf9aa0c60e5cc6297e23765144b354a1c519d2e",
+    "artifact_size_in_bytes": 220514839,
+    "head_sha": "aaf683d4d0fa089a6d4159b9ea17b66e959cf1e3",
+    "created_at": "2026-07-29T12:45:16Z",
+    "expires_at": "2026-08-28T12:44:34Z"
+  },
+  "official_assets": {
+    "executable_size": 3940864,
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_archive_size": 674503,
+    "source_archive_sha256": "5092c1d68b77d9407c9f67d497b440a79d2ee746f9ed6515a63ad4a5b11cd8ed"
+  },
+  "source_evidence": {
+    "source_pattern_file": "source-pattern-evidence.json",
+    "source_pattern_sha256": "2cb334736d9acba9bd1c4fbd5cc9503cd9dd38c63e4433195e4ed9c31b4a55de",
+    "source_files": {
+      "coset.f": "89afcc5f9995174014d42ea2ecde69de8368d53aab305ef595c5ff5bb1d1363a",
+      "soset.f": "addd1e7eaae0f93e05cdb58566b0f6f0fbf012676c25af1ed2dbb60391733ac5",
+      "rline.f": "b23aaf75abda92d210df76d3f274f9fd7f8aa9272b23ec6d477a0bbfc9f52494",
+      "evset.f": "cdc8dd1642215ada3377d5a23f8a54b2e38ab6e2a6e3652d2be78282893e54bd",
+      "ouset.f": "373d4689869e88cee62963889517ef0a895473087c56ebe28c5b2d339b38f4a1"
+    },
+    "diagnostic_patterns": {
+      "E261": ["coset.f:1023", "coset.f:1046", "coset.f:1052", "coset.f:1067", "coset.f:1082"],
+      "E603": ["coset.f:1106", "coset.f:1128", "coset.f:1134", "coset.f:1149", "coset.f:1163"],
+      "E371": ["soset.f:8594", "soset.f:8649"],
+      "E372": ["soset.f:8605", "soset.f:8660"],
+      "E373": ["soset.f:8623", "soset.f:8678"],
+      "E374": ["soset.f:8634", "soset.f:8689"],
+      "W375": ["soset.f:8711", "soset.f:8720"],
+      "W620": ["rline.f:588", "rline.f:769"],
+      "W595": ["ouset.f:3258"]
+    }
+  },
+  "totals": {
+    "preparations": {
+      "items": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "indeterminate": 0,
+      "expectations_met": 1
+    },
+    "cases": {
+      "items": 27,
+      "accepted": 15,
+      "rejected": 12,
+      "indeterminate": 0,
+      "expectations_met": 27
+    }
+  },
+  "preparations": [
+    {
+      "id": "event_input_seed",
+      "observed_outcome": "accepted",
+      "generated_event_input_sha256": "ac66da3b1ea79ea33ce2213cc426615d06e588a41af68c763b08a8d58d63eb71"
+    }
+  ],
+  "cases": [
+    {"id": "co_o3values_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_o3values_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E261 NumVals=11"},
+    {"id": "co_nox_vals_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_nox_vals_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E603 NumVals=11"},
+    {"id": "co_o3values_sector_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_o3values_sector_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E261 O3SECT1 N=11"},
+    {"id": "co_nox_vals_sector_month_complete_control", "observed_outcome": "accepted"},
+    {"id": "co_nox_vals_sector_month_incomplete", "observed_outcome": "rejected", "primary_diagnostic": "E603 NOXSCT1 N=11"},
+    {"id": "so_vbarrier_all_min_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_all_max_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_second_all_min_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_second_all_max_control", "observed_outcome": "accepted"},
+    {"id": "so_vbarrier_ht_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E371"},
+    {"id": "so_vbarrier_ht_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E371"},
+    {"id": "so_vbarrier_wt_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E372"},
+    {"id": "so_vbarrier_wt_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E372"},
+    {"id": "so_vbarrier_lai_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E373"},
+    {"id": "so_vbarrier_lai_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E373"},
+    {"id": "so_vbarrier_lm_below_min", "observed_outcome": "rejected", "primary_diagnostic": "E374"},
+    {"id": "so_vbarrier_lm_above_max", "observed_outcome": "rejected", "primary_diagnostic": "E374"},
+    {"id": "so_vbarrier_same_side_first_closer", "observed_outcome": "accepted", "primary_diagnostic": "W375 VBARRIER 1", "debug_sha256": "25fd8f5af02d0abe5db251ece47b28b727a810fae99b2a7531f62461e8d56460"},
+    {"id": "so_vbarrier_same_side_second_closer", "observed_outcome": "accepted", "primary_diagnostic": "W375 VBARRIER 2", "debug_sha256": "ba62c1089a56c982e055af23cb3a44d944b9bbff0183d45daf62225c59b63faf"},
+    {"id": "so_vbarrier_same_side_equal_distance", "observed_outcome": "accepted", "primary_diagnostic": "W620; no W375", "debug_sha256": "966c9e360ec163f542b85502e32f02e348705ea5926570787557415d43281ab2"},
+    {"id": "ou_event_fileform_exp_nondfault_control", "observed_outcome": "accepted", "numeric_notation": "EXP"},
+    {"id": "ou_event_fileform_exp_dfault_other_control", "observed_outcome": "accepted", "numeric_notation": "EXP"},
+    {"id": "ou_event_fileform_fix_dfault_so2_control", "observed_outcome": "accepted", "numeric_notation": "FIX"},
+    {"id": "ou_event_fileform_exp_dfault_so2", "observed_outcome": "accepted", "primary_diagnostic": "W595", "numeric_notation": "FIX after reset"}
+  ],
+  "selected_file_hashes": {
+    "co_o3values_month_incomplete_deck": "98be4e2df62de55daed07441d9fffd873c9c22b83921dadfc6125b108fa92a30",
+    "co_nox_vals_month_incomplete_deck": "74a09816717c3d3385a40228d218aa535a0d72140ec9ab5641481ae4f5224a0d",
+    "co_o3values_sector_month_incomplete_deck": "84bcc56c66b84f63699929f989e1ef2af45bc20fbbdef59c42d5c1ef4a11027c",
+    "co_nox_vals_sector_month_incomplete_deck": "9e89fdd17a0124d21d5cb5af7a99cce31d9bcd9e8715a75ac2662abe390e91b3",
+    "so_vbarrier_same_side_equal_distance_deck": "45247bf92d040f1249f742c77eb46caed9b0f1a0a17d40d3f497b2427361a23f",
+    "ou_event_fileform_exp_dfault_so2_deck": "d5cd3500cbd172c00b2980b85aeeafbcea73c6d4bf75d4f5b190835bc95c920b",
+    "ou_event_fileform_exp_dfault_so2_output": "1f842e419ab6baaf4b3d89cc3d2589e7de7ef95d1d1b97b66c5dace6860fe269"
+  },
+  "behavior_conclusions": {
+    "temporal_vector_incomplete": [
+      "Complete global and sector-scoped MONTH vectors were accepted for O3VALUES and NOX_VALS.",
+      "An 11-of-12 O3VALUES vector was rejected with E261 and an 11-of-12 NOX_VALS vector with E603.",
+      "Sector diagnostics identify O3SECTn or NOXSCTn.",
+      "The official source compares accumulated count with the flag-derived required maximum across supported scopes and flags."
+    ],
+    "vbarrier_range_and_same_side": [
+      "Both barrier positions accept HT 2..10 m, WT 2.5..13 m, LAI 4..10.92 and LM/LAD 0.55..3.75 inclusively.",
+      "Immediate outside values are rejected with E371, E372, E373 and E374.",
+      "Unequal same-side distances emit W375, retain the nearer barrier and zero the farther barrier.",
+      "Equal same-side distances emit no W375 at input, retain both records, emit W620 at runtime and select barrier 2 on the v26135 equality tie."
+    ],
+    "event_output_fileform": [
+      "FILEFORM EXP remains exponential for non-DFAULT runs and DFAULT with a non-criteria pollutant.",
+      "FILEFORM FIX is accepted under DFAULT for SO2.",
+      "FILEFORM EXP under DFAULT for SO2 emits W595 and is reset to fixed numeric notation."
+    ]
+  },
+  "interpretation_boundaries": [
+    "Executable observations apply to the exact deck and official executable hashes recorded here.",
+    "MONTH is the representative executable time flag; cross-flag generalization uses the retained source branches and cardinality table.",
+    "SO2 is the executable criteria-pollutant case; broader criteria behavior uses the retained PollCrit source branch.",
+    "The equal-distance barrier-2 tie is exact v26135 implementation behavior, not a physical recommendation.",
+    "Return code zero is not sufficient for acceptance.",
+    "The complete per-file evidence remains in workflow artifact 8724254777."
+  ]
+}

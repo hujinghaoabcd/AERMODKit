@@ -36,7 +36,22 @@
       "id": "OU-EVENT-FILEFORM",
       "target": "EV_OUCARD FILEFORM",
       "question": "event output EXP behavior under DFAULT",
-      "status": "cataloged-not-executed"
+      "status": "executed-official-executable-and-source-v26135",
+      "result": "EVENT-processing FILEFORM EXP remains exponential for non-DFAULT runs and for DFAULT with a non-criteria pollutant. FILEFORM FIX completes under DFAULT for SO2. FILEFORM EXP under DFAULT for SO2 completes with W595, is internally reset to FIX, and emits fixed-notation event values. The official source applies this reset to DFAULT + PollCrit + EXP and keeps EXP otherwise.",
+      "evidence": {
+        "result_file": "reference/probes/v26135/batch2/result.json",
+        "preparation": "event_input_seed",
+        "cases": [
+          "ou_event_fileform_exp_nondfault_control",
+          "ou_event_fileform_exp_dfault_other_control",
+          "ou_event_fileform_fix_dfault_so2_control",
+          "ou_event_fileform_exp_dfault_so2"
+        ],
+        "source_patterns": ["fileform-reset-w595"],
+        "workflow_run_id": 30452705724,
+        "artifact_id": 8724254777
+      },
+      "boundary": "SO2 is the executable criteria-pollutant case; general criteria-pollutant behavior is supported by the retained PollCrit source branch."
     },
     {
       "id": "OU-MAXDCONT-FORMS",
