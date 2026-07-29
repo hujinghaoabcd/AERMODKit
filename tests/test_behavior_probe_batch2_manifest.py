@@ -2,13 +2,18 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "reference/probes/v26135/batch2/manifest.json"
+BASE_MANIFEST = ROOT / "reference/probes/v26135/batch2/manifest.json"
+ADDITIONAL_CASES = ROOT / "reference/probes/v26135/batch2/additional-cases.json"
 
 EXPECTED_TEMPORAL_CASES = {
     "co_o3values_month_complete_control",
     "co_o3values_month_incomplete",
     "co_nox_vals_month_complete_control",
     "co_nox_vals_month_incomplete",
+    "co_o3values_sector_month_complete_control",
+    "co_o3values_sector_month_incomplete",
+    "co_nox_vals_sector_month_complete_control",
+    "co_nox_vals_sector_month_incomplete",
 }
 EXPECTED_EVENT_CASES = {
     "ou_event_fileform_exp_nondfault_control",
@@ -29,14 +34,18 @@ EXPECTED_VBARRIER_CASES = {
     "so_vbarrier_lm_above_max",
     "so_vbarrier_same_side_first_closer",
     "so_vbarrier_same_side_second_closer",
+    "so_vbarrier_second_all_min_control",
+    "so_vbarrier_second_all_max_control",
+    "so_vbarrier_same_side_equal_distance",
 }
-EXPECTED_CASES = (
-    EXPECTED_TEMPORAL_CASES | EXPECTED_EVENT_CASES | EXPECTED_VBARRIER_CASES
-)
+EXPECTED_CASES = EXPECTED_TEMPORAL_CASES | EXPECTED_EVENT_CASES | EXPECTED_VBARRIER_CASES
 
 
 def _manifest() -> dict[str, object]:
-    return json.loads(MANIFEST.read_text(encoding="utf-8"))
+    payload = json.loads(BASE_MANIFEST.read_text(encoding="utf-8"))
+    fragment = json.loads(ADDITIONAL_CASES.read_text(encoding="utf-8"))
+    payload["cases"].extend(fragment["cases"])
+    return payload
 
 
 def test_batch2_manifest_has_expected_unique_cases() -> None:
@@ -46,7 +55,7 @@ def test_batch2_manifest_has_expected_unique_cases() -> None:
     identifiers = [str(case["id"]) for case in cases]
 
     assert set(identifiers) == EXPECTED_CASES
-    assert len(identifiers) == len(set(identifiers)) == 20
+    assert len(identifiers) == len(set(identifiers)) == 27
 
 
 def test_batch2_has_one_event_input_preparation() -> None:
@@ -65,23 +74,23 @@ def test_batch2_controls_are_explicit_and_targets_observe() -> None:
     payload = _manifest()
     cases = payload["cases"]
     controls = {
-        case["id"]
-        for case in cases
-        if case["expected_outcome"] == "accepted"
+        case["id"] for case in cases if case["expected_outcome"] == "accepted"
     }
 
     assert controls == {
         "co_o3values_month_complete_control",
         "co_nox_vals_month_complete_control",
+        "co_o3values_sector_month_complete_control",
+        "co_nox_vals_sector_month_complete_control",
         "so_vbarrier_all_min_control",
         "so_vbarrier_all_max_control",
+        "so_vbarrier_second_all_min_control",
+        "so_vbarrier_second_all_max_control",
         "ou_event_fileform_exp_nondfault_control",
         "ou_event_fileform_exp_dfault_other_control",
         "ou_event_fileform_fix_dfault_so2_control",
     }
-    assert all(
-        case["expected_outcome"] in {"accepted", "observe"} for case in cases
-    )
+    assert all(case["expected_outcome"] in {"accepted", "observe"} for case in cases)
     assert all(str(case["question"]).endswith("?") for case in cases)
 
 
