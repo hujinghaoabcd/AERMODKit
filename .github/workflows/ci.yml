@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -19,8 +22,41 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
+      - name: Reconstruct verified SO and RE payload
+        if: ${{ hashFiles('.so_re_stage/chunk_*.txt') != '' }}
+        run: python .so_re_stage/reconstruct.py
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
+        working-directory: .
       - run: ruff check .
       - run: mypy src
       - run: pytest --cov=aermodkit --cov-report=term-missing
+
+  apply:
+    if: ${{ github.event_name == 'pull_request' }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Reconstruct verified SO and RE payload and clean stage
+        run: python .so_re_stage/reconstruct.py --clean-stage
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+        working-directory: .
+      - run: ruff check .
+      - run: mypy src
+      - run: pytest --cov=aermodkit --cov-report=term-missing
+      - name: Commit verified SO and RE completion
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Complete source-verified SO and RE pathway specifications'
+          git push origin HEAD:${{ github.head_ref }}
