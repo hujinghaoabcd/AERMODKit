@@ -24,8 +24,8 @@ _DIAGNOSTIC_RE = re.compile(
     r"^\s*([A-Z]{2})\s+([EWI]\d{3})\s+(\d+)\s+([A-Z0-9_]+):\s*(.*)$",
     re.IGNORECASE,
 )
-_SUCCESS = b"AERMOD Finishes Successfully"
-_UNSUCCESSFUL = b"UN-Successfully"
+_SUCCESS_MARKER = "aermod finishes successfully"
+_UNSUCCESSFUL_MARKER = "un-successfully"
 
 
 def _sha256(path: Path) -> str:
@@ -58,7 +58,12 @@ def _prepare_common_workspace(root: Path, fixtures: Path, executable: Path) -> P
         directory.mkdir(parents=True, exist_ok=True)
 
     for item in (fixtures / "inputs").iterdir():
-        if item.is_file() and item.suffix.lower() != ".inp" and item.name.lower() != "aermod.exe":
+        is_support_file = (
+            item.is_file()
+            and item.suffix.lower() != ".inp"
+            and item.name.lower() != "aermod.exe"
+        )
+        if is_support_file:
             _copy_file(item, inputs / item.name)
     for item in (fixtures / "meteorology").iterdir():
         if item.is_file():
@@ -101,20 +106,31 @@ def _materialize_deck(fixtures: Path, case: dict[str, Any], destination: Path) -
 
 def _parse_diagnostics(paths: list[Path]) -> list[dict[str, object]]:
     diagnostics: list[dict[str, object]] = []
+    seen: set[tuple[str, str, int, str, str]] = set()
     for path in paths:
         text = path.read_bytes().decode("latin1", errors="replace")
         for line in text.splitlines():
             match = _DIAGNOSTIC_RE.match(line)
             if match is None:
                 continue
+            key = (
+                match.group(1).upper(),
+                match.group(2).upper(),
+                int(match.group(3)),
+                match.group(4).upper(),
+                match.group(5).strip(),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
             diagnostics.append(
                 {
                     "file": path.name,
-                    "pathway": match.group(1).upper(),
-                    "code": match.group(2).upper(),
-                    "line": int(match.group(3)),
-                    "module": match.group(4).upper(),
-                    "message": match.group(5).strip(),
+                    "pathway": key[0],
+                    "code": key[1],
+                    "line": key[2],
+                    "module": key[3],
+                    "message": key[4],
                     "raw": line.rstrip(),
                 }
             )
@@ -134,13 +150,22 @@ def _workspace_files(workspace: Path) -> list[dict[str, object]]:
     return result
 
 
+def _markers(main_output: bytes) -> tuple[bool, bool]:
+    normalized = main_output.decode("latin1", errors="replace").casefold()
+    return _SUCCESS_MARKER in normalized, _UNSUCCESSFUL_MARKER in normalized
+
+
 def _classification(
-    *, returncode: int, main_output: bytes, diagnostics: list[dict[str, object]]
+    *,
+    returncode: int,
+    success_marker: bool,
+    unsuccessful_marker: bool,
+    diagnostics: list[dict[str, object]],
 ) -> str:
-    error_codes = [str(item["code"]) for item in diagnostics if str(item["code"]).startswith("E")]
-    if error_codes or _UNSUCCESSFUL in main_output:
+    has_error = any(str(item["code"]).startswith("E") for item in diagnostics)
+    if has_error or unsuccessful_marker:
         return "rejected"
-    if returncode == 0 and _SUCCESS in main_output:
+    if returncode == 0 and success_marker:
         return "accepted"
     return "indeterminate"
 
@@ -179,10 +204,14 @@ def _run_case(
         for path in (workspace / "Outputs").iterdir()
         if path.is_file() and ("ERROR" in path.name.upper() or path.suffix.lower() == ".err")
     ]
+    if main_output_path.exists():
+        diagnostic_files.insert(0, main_output_path)
     diagnostics = _parse_diagnostics(diagnostic_files)
+    success_marker, unsuccessful_marker = _markers(main_output)
     observed = _classification(
         returncode=completed.returncode,
-        main_output=main_output,
+        success_marker=success_marker,
+        unsuccessful_marker=unsuccessful_marker,
         diagnostics=diagnostics,
     )
     expected = str(case.get("expected_outcome", "observe"))
@@ -197,8 +226,8 @@ def _run_case(
         "returncode": completed.returncode,
         "elapsed_seconds": round(elapsed, 3),
         "main_output_exists": main_output_path.exists(),
-        "success_marker": _SUCCESS in main_output,
-        "unsuccessful_marker": _UNSUCCESSFUL in main_output,
+        "success_marker": success_marker,
+        "unsuccessful_marker": unsuccessful_marker,
         "diagnostics": diagnostics,
         "diagnostic_codes": sorted({str(item["code"]) for item in diagnostics}),
         "files": _workspace_files(workspace),
@@ -279,6 +308,7 @@ def main() -> int:
     ]
     executable_sha256 = _sha256(executable)
     expected_executable_sha256 = str(manifest["official_assets"]["executable_sha256"])
+    executable_hash_matches_expected = executable_sha256 == expected_executable_sha256
     summary: dict[str, object] = {
         "schema_version": 1,
         "model_version": str(manifest["model_version"]),
@@ -289,8 +319,7 @@ def main() -> int:
             "executable_size": executable.stat().st_size,
             "executable_sha256": executable_sha256,
             "expected_executable_sha256": expected_executable_sha256,
-            "executable_hash_matches_expected": executable_sha256
-            == expected_executable_sha256,
+            "executable_hash_matches_expected": executable_hash_matches_expected,
             "source_archive_path": source_archive.name,
             "source_archive_size": source_archive.stat().st_size,
             "source_archive_sha256": _sha256(source_archive),
@@ -316,7 +345,7 @@ def main() -> int:
         for item in results
         if item["expected_outcome"] != "observe" and not item["expectation_met"]
     ]
-    if not summary["official_assets"]["executable_hash_matches_expected"]:
+    if not executable_hash_matches_expected:
         raise SystemExit("official executable SHA-256 did not match retained v26135 evidence")
     return 1 if infrastructure_failures else 0
 
