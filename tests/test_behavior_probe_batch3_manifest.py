@@ -1,3 +1,5 @@
+import csv
+import hashlib
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -7,6 +9,8 @@ MANIFEST = ROOT / "reference/probes/v26135/batch3/manifest.json"
 CORRECTIONS = ROOT / "reference/probes/v26135/batch3/corrections.json"
 SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch3/source-searches.json"
 AIRCRAFT_HOURLY = ROOT / "reference/probes/v26135/batch3/aircraft_hourly.dat"
+RESULT = ROOT / "reference/probes/v26135/batch3/result.json"
+CASE_EVIDENCE = ROOT / "reference/probes/v26135/batch3/case-evidence.csv"
 
 DEPENDENCY_RECORDS = {
     "gdseason",
@@ -63,18 +67,20 @@ def _manifest() -> dict[str, object]:
     return payload
 
 
-def test_batch3_manifest_has_expected_unique_cases() -> None:
-    payload = _manifest()
-    cases = payload["cases"]
-    assert isinstance(cases, list)
-    identifiers = [str(case["id"]) for case in cases]
-
+def _expected_case_ids() -> set[str]:
     dependency_ids = {
         f"co_{record}_{suffix}"
         for record in DEPENDENCY_RECORDS
         for suffix in ("alpha_control", "no_alpha", "dfault_alpha")
     }
-    assert set(identifiers) == dependency_ids | AIRCRAFT_CASES | MAXDCONT_CASES
+    return dependency_ids | AIRCRAFT_CASES | MAXDCONT_CASES
+
+
+def test_batch3_manifest_has_expected_unique_cases() -> None:
+    cases = _manifest()["cases"]
+    assert isinstance(cases, list)
+    identifiers = [str(case["id"]) for case in cases]
+    assert set(identifiers) == _expected_case_ids()
     assert len(identifiers) == len(set(identifiers)) == 35
 
 
@@ -131,7 +137,7 @@ def test_aircraft_hourly_support_file_is_frozen() -> None:
     assert all(" AREA " in line for line in lines)
 
 
-def test_maxdcont_filenames_fit_the_official_field_limit() -> None:
+def test_maxdcont_filenames_are_short_fixture_paths() -> None:
     cases = {
         str(case["id"]): case
         for case in _manifest()["cases"]
@@ -156,6 +162,29 @@ def test_batch3_source_searches_cover_target_diagnostics() -> None:
         "arcftopt-dispatch",
         "maxdcont-handler",
     }
+
+
+def test_batch3_reviewed_result_and_case_hashes_are_current() -> None:
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["workflow_evidence"]["run_id"] == 30461120811
+    assert result["workflow_evidence"]["artifact_id"] == 8727721661
+    assert result["totals"] == {
+        "items": 35,
+        "accepted": 16,
+        "rejected": 19,
+        "indeterminate": 0,
+        "expectations_met": 35,
+    }
+    assert hashlib.sha256(CASE_EVIDENCE.read_bytes()).hexdigest() == result[
+        "raw_evidence"
+    ]["case_evidence_sha256"]
+
+    with CASE_EVIDENCE.open(encoding="utf-8", newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    assert {row["case_id"] for row in rows} == _expected_case_ids()
+    assert sum(row["outcome"] == "accepted" for row in rows) == 16
+    assert sum(row["outcome"] == "rejected" for row in rows) == 19
+    assert all(row["outcome"] != "indeterminate" for row in rows)
 
 
 def test_official_executable_hash_matches_retained_evidence() -> None:
