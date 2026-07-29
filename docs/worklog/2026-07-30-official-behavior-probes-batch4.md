@@ -2,7 +2,8 @@
 
 - Date: 2026-07-30
 - Development branch: `agent/official-behavior-probes-batch4`
-- Pull request: #13
+- Pull request: #13, merged
+- Merge commit: `4887bef7629922b076ddb0adcf5ca7e30aaea62a`
 - Phase: official behavior evidence before production loss-aware syntax
 
 ## Objective
@@ -76,6 +77,18 @@ Completed:
 - `RE-DISC-EXTRA-01`.
 
 The inventory becomes 19 total, 14 executed, 1 source-resolved, and 4 pending. Production syntax remains closed.
+
+## Publication status
+
+Final PR head `68e0ed8dc52d666cdc1b0f7db1e59b905fb7d7ac` passed:
+
+- CI `30483264010`, all nine jobs;
+- official Batch 4 workflow `30483264020`;
+- final-head artifact `8736670776`;
+- artifact digest `sha256:2db8897f2e01520cd7f81d17dc1e4429e0862b6d7000f05443f00f84f073a898`;
+- artifact size `338,627,401` bytes.
+
+PR #13 merged to `main` as `4887bef7629922b076ddb0adcf5ca7e30aaea62a`.
 
 ## Boundary
 

@@ -5,8 +5,6 @@ on:
   pull_request:
     paths:
       - ".github/workflows/epa-official-behavior-probes-batch4.yml"
-      - "tools/run_v26135_official_behavior_probe_batch.py"
-      - "tools/extract_v26135_source_pattern_evidence.py"
       - "reference/probes/v26135/batch4/manifest.json"
       - "reference/probes/v26135/batch4/source-searches.json"
       - "reference/probes/v26135/batch4/platform-cases.json"
