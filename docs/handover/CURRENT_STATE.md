@@ -1,108 +1,92 @@
 # Current State
 
 - Updated: 2026-07-30
-- Active branch: `main`
+- Active development branch: `agent/official-behavior-probes-batch4`
+- Active pull request: #13, pending final-head validation and merge
 - Official behavior-probe batch 3 PR: #11, merged
 - Batch 3 merge commit: `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`
 - Official behavior-probe batch 2 PR: #9, merged
 - Batch 2 merge commit: `279b61160412a8073632d31156f897cd6edcee4a`
 - Official behavior-probe batch 1 PR: #7, merged
 - Batch 1 merge commit: `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`
-- Whole-spec acceptance PR: #5, merged
 - Package version: `0.0.1.dev0`
 - Development phase: Phase 0 record-level specification accepted; official behavior-probe gate partially complete
 
 ## Authoritative mainline
 
-The source-verified official-specification line remains authoritative. The former PR #2 parallel
-prototype is retained only at `archive/pr2-parallel-prototype-20260729` and must not be used as a
-development base. See ADR 0005 and `docs/worklog/2026-07-29-mainline-recovery.md`.
+The source-verified official-specification line remains authoritative. The former PR #2 parallel prototype is retained only at `archive/pr2-parallel-prototype-20260729` and must not be used as a development base.
 
 ## Whole-spec record-set acceptance
 
-The deterministic v26135 acceptance evaluator passes all seven dispatch modes and all 138 primary
-source-dispatched records:
+All seven dispatch modes and all 138 source-dispatched primary records remain accepted:
 
-- CO: 39/39;
-- SO: 40/40;
-- RE: 9/9;
-- ME: 23/23;
-- EV: 5/5;
-- ordinary OU: 18/18;
-- event-output OU: 4/4.
+- CO 39/39;
+- SO 40/40;
+- RE 9/9;
+- ME 23/23;
+- EV 5/5;
+- ordinary OU 18/18;
+- event-output OU 4/4.
 
-Machine-readable evidence is in `reference/coverage/v26135-whole-spec-acceptance.json`.
+## Official behavior probes
 
-## Official behavior probes — completed batches
+### Batches 1–3
 
-### Batch 1
+Retained evidence covers SWPOINT, VBARRIER, sector O3/NOx file repetition, temporal vectors, event-output FILEFORM, the ALPHA/DFAULT matrix, ARCFTOPT/aircraft dependencies, and MAXDCONT forms.
 
-Resolved SWPOINT ALPHA dependency and six-field form, valid one/two VBARRIER forms, and sector-scoped
-OZONEFIL/NOX_FILE repeatability.
+### Batch 4
 
-### Batch 2
+Reviewed evidence:
 
-Resolved temporal-vector completeness, VBARRIER inclusive ranges and same-side selection, and
-event-output FILEFORM behavior under DFAULT.
-
-### Batch 3
-
-Reviewed evidence contains 35 cases: 16 accepted, 19 rejected, 0 indeterminate, and 35/35 expectations met.
+- workflow run: `30479954822`;
+- reviewed head: `215764df489d623c3433e6baa0a6b301b0ab3f68`;
+- artifact ID: `8735323902`;
+- artifact digest: `sha256:cc3cb39b85bac2429e11deda087853e3a5a89852f0574a27968f1393012378f1`;
+- artifact size: `338,627,341` bytes;
+- cases: 40;
+- accepted/rejected/indeterminate: 29/11/0;
+- expectations met: 40/40.
 
 Resolved outcomes:
 
-- seven ALPHA controls completed for gas-deposition, low-wind, and downwash cards;
-- gas-deposition records use E196 for DFAULT conflicts and E198 when ALPHA is absent;
-- LOW_WIND/AWMADWNW/ORD_DWNW expose E133/E122/E123 under DFAULT plus ALPHA;
-- aircraft processing produces E198 without ALPHA and E198/E204 under DFAULT plus ALPHA;
-- no-payload, repeated, and extra-field ARCFTOPT cards are accepted;
-- exactly one ARCFTOPT payload assigns the airport ID, with later one-payload repeats winning in source state;
-- aircraft dependencies retain E821, E822, and E823;
-- both MAXDCONT signatures complete with dynamic or explicit trailing file units.
+- PLATFORM accepts the exact payload and trailing numeric fields; trailing numeric values are preservation-only;
+- PLATFORM text extras, non-point use, duplicate source assignment, and PRIME conflict map to E208/E631/E632/E633;
+- repeated static BACKGRND profiles map to E231 and a second HOURLY file to E168/E501;
+- HOURLY and non-HOURLY BACKGRND coexist in either order, with HOURLY primary and static fallback;
+- active GRIDCART/GRIDPOLR blocks accept implicit, NetID-only, and fully explicit secondary lines;
+- a different active-block NetID produces E170;
+- DISCCART/DISCPOLR inactive terrain/flag fields are accepted with W229 and ignored semantically;
+- missing fields required by active options use W228.
 
-Reviewed evidence is in `reference/probes/v26135/batch3/result.json`,
-`reference/probes/v26135/batch3/case-evidence.csv`, and
-`docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH3.md`.
+Evidence is retained in:
 
-Final PR #11 head `521bdb9c7c4857f3bc4507de4d742fa517e83d42` passed:
-
-- full nine-job CI `30475925322`;
-- batch-2 official regression `30475925186`;
-- batch-3 official workflow `30475925233`.
-
-Final-head artifact:
-
-- artifact ID: `8733686581`;
-- digest: `sha256:f7e7ffbb80f53de55db56e66a56d14c22731c061ce5fdd733a36fc1e258100c0`;
-- size: `284,393,538` bytes.
+- `reference/probes/v26135/batch4/result.json`;
+- `reference/probes/v26135/batch4/case-evidence.csv`;
+- `docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH4.md`.
 
 ## Retained behavior-probe gate
 
-The normalized catalogs contain 19 questions:
+The normalized inventory contains 19 questions:
 
-- executed with retained official evidence: 10;
+- executed: 14;
 - source-resolved: 1;
-- official-executable pending: 8.
+- official-executable pending: 4.
 
-The record-set gate remains passed, but the behavior gate remains incomplete. Production loss-aware
-lexer/CST work must not begin until the remaining parser-shaping probes are resolved or explicitly
-deferred through a preservation-safe ADR and the fixture freeze is complete.
+Remaining:
 
-## Cross-platform evidence policy
+- `ME-FORMAT-LEGACY`;
+- `ME-SCIM-6FIELD`;
+- `EV-PAIRING`;
+- `OU-FILE-CONFLICT`.
 
-Byte-hashed retained probe evidence is pinned to LF through narrowly scoped `.gitattributes` rules.
-This fixes Windows checkout hash drift without imposing a global newline policy on future CRLF syntax
-fixtures.
+The behavior gate remains incomplete. Production lexer/CST work is still forbidden until Batch 5, clean-room audit, fixture freeze, and parser-entry ADR are complete.
 
 ## Not yet implemented
 
-Production lexer/parser, immutable loss-aware CST, format-preserving writer, semantic project model,
-runner, output parser, and GIS layers remain pending.
+Production lexer/parser, immutable CST, format-preserving writer, semantic project model, runner, output parser, and GIS layers remain pending.
 
-## Validation baseline
+## Validation status
 
-- 53/53 official decks executed in the established evidence workflow;
-- all seven dispatcher exact-set reports pass;
-- batch-1, batch-2, and batch-3 reviewed official workflows pass;
-- final PR #11 head passed all nine CI jobs plus the batch-2 and batch-3 official workflows;
-- PR #11 merged to `main` as `cab11308b022fe648dcb3bd5ba00bc7e758bc19a`.
+- reviewed Batch 4 run `30479954822` passed all 40 cases;
+- reviewed-head CI `30479955343` passed all nine jobs;
+- final PR head still requires full CI and Batch 4 official workflow before merge.
