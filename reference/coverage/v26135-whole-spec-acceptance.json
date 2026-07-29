@@ -11,258 +11,39 @@
     "accepted_dispatchers": 7
   },
   "pathways": [
-    {
-      "pathway": "CO",
-      "expected_count": 39,
-      "source_count": 39,
-      "bundled_count": 39,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-co-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "SO",
-      "expected_count": 40,
-      "source_count": 40,
-      "bundled_count": 40,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-so-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "RE",
-      "expected_count": 9,
-      "source_count": 9,
-      "bundled_count": 9,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-re-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "ME",
-      "expected_count": 23,
-      "source_count": 23,
-      "bundled_count": 23,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-me-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "EV",
-      "expected_count": 5,
-      "source_count": 5,
-      "bundled_count": 5,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-ev-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "OU",
-      "expected_count": 18,
-      "source_count": 18,
-      "bundled_count": 18,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-ou-source-exact-match.json",
-      "accepted": true
-    },
-    {
-      "pathway": "OU/EVENT",
-      "expected_count": 4,
-      "source_count": 4,
-      "bundled_count": 4,
-      "exact_set_match": true,
-      "framing_valid": true,
-      "syntax_present": true,
-      "preservation_policy_present": true,
-      "source_report": "v26135-event-output-source-exact-match.json",
-      "accepted": true
-    }
+    {"pathway": "CO", "expected_count": 39, "source_count": 39, "bundled_count": 39, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-co-source-exact-match.json", "accepted": true},
+    {"pathway": "SO", "expected_count": 40, "source_count": 40, "bundled_count": 40, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-so-source-exact-match.json", "accepted": true},
+    {"pathway": "RE", "expected_count": 9, "source_count": 9, "bundled_count": 9, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-re-source-exact-match.json", "accepted": true},
+    {"pathway": "ME", "expected_count": 23, "source_count": 23, "bundled_count": 23, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-me-source-exact-match.json", "accepted": true},
+    {"pathway": "EV", "expected_count": 5, "source_count": 5, "bundled_count": 5, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-ev-source-exact-match.json", "accepted": true},
+    {"pathway": "OU", "expected_count": 18, "source_count": 18, "bundled_count": 18, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-ou-source-exact-match.json", "accepted": true},
+    {"pathway": "OU/EVENT", "expected_count": 4, "source_count": 4, "bundled_count": 4, "exact_set_match": true, "framing_valid": true, "syntax_present": true, "preservation_policy_present": true, "source_report": "v26135-event-output-source-exact-match.json", "accepted": true}
   ],
   "behavior_probes": {
     "total": 19,
-    "executed": 7,
+    "executed": 10,
     "source_resolved": 1,
-    "official_executable_pending": 11,
+    "official_executable_pending": 8,
     "entries": [
-      {
-        "scope": "CO",
-        "id": "ozonefil_same_sector_duplicate",
-        "status": "executed-official-executable-v26135",
-        "classification": "executed",
-        "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for one sector?",
-        "records": ["O3SECTOR", "OZONEFIL"]
-      },
-      {
-        "scope": "CO",
-        "id": "nox_file_same_sector_duplicate",
-        "status": "executed-official-executable-v26135",
-        "classification": "executed",
-        "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for one sector?",
-        "records": ["NOXSECTR", "NOX_FILE"]
-      },
-      {
-        "scope": "CO",
-        "id": "arcftopt_repeat_extra_fields",
-        "status": "planned-manual-official-executable-probe",
-        "classification": "official-executable-pending",
-        "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?",
-        "records": ["ARCFTOPT"]
-      },
-      {
-        "scope": "CO",
-        "id": "temporal_vector_incomplete",
-        "status": "executed-official-executable-and-source-v26135",
-        "classification": "executed",
-        "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?",
-        "records": ["O3VALUES", "NOX_VALS"]
-      },
-      {
-        "scope": "CO",
-        "id": "alpha_dependency_matrix",
-        "status": "source-verified-probe-pending",
-        "classification": "official-executable-pending",
-        "question": "Confirm official executable diagnostics for no-ALPHA and DFAULT conflicts.",
-        "records": [
-          "GDSEASON",
-          "GASDEPDF",
-          "GDLANUSE",
-          "GASDEPVD",
-          "LOW_WIND",
-          "AWMADWNW",
-          "ORD_DWNW",
-          "ARCFTOPT"
-        ]
-      },
-      {
-        "scope": "SO/RE",
-        "id": "SO-SWPOINT-01",
-        "status": "executed-official-executable-v26135",
-        "classification": "executed",
-        "question": "Confirm official executable accepts SWPOINT only with ALPHA and records the expected six-parameter signature.",
-        "priority": "high"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "SO-VBARRIER-01",
-        "status": "executed-official-executable-v26135",
-        "classification": "executed",
-        "question": "Confirm the one- and two-barrier VBARRIER field forms with valid in-range parameters.",
-        "priority": "high"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "SO-VBARRIER-RANGE-01",
-        "status": "executed-official-executable-and-source-v26135",
-        "classification": "executed",
-        "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.",
-        "priority": "high"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "SO-PLATFORM-01",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "question": "Confirm trailing PLATFORM fields are accepted/ignored or rejected; source only checks minimum count.",
-        "priority": "medium"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "SO-BACKGRND-01",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "question": "Confirm duplicate global/sector profile precedence and hourly/static conflict behavior.",
-        "priority": "medium"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "RE-GRID-ID-01",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "question": "Confirm omitted NetID continuation forms preserve the active grid block exactly.",
-        "priority": "medium"
-      },
-      {
-        "scope": "SO/RE",
-        "id": "RE-DISC-EXTRA-01",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "question": "Confirm warning-versus-ignore behavior for terrain/flag fields supplied under inactive options.",
-        "priority": "medium"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "ME-FORMAT-LEGACY",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "target": "SURFFILE/PROFFILE",
-        "question": "non-FREE legacy format warning and preservation"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "ME-SCIM-6FIELD",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "target": "SCIMBYHR",
-        "question": "numeric wet-scimming pair versus filename disambiguation"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "ME-TURB-DUP",
-        "status": "source-resolved",
-        "classification": "source-resolved",
-        "target": "turbulence keywords",
-        "question": "second turbulence keyword rejection after first shared IMSTAT selection"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "EV-PAIRING",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "target": "EVENTPER/EVENTLOC",
-        "question": "multiple EVENTLOC per event and count-based FINISHED check"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "OU-FILE-CONFLICT",
-        "status": "cataloged-not-executed",
-        "classification": "official-executable-pending",
-        "target": "external output files",
-        "question": "same filename/unit across families and normalization behavior"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "OU-EVENT-FILEFORM",
-        "status": "executed-official-executable-and-source-v26135",
-        "classification": "executed",
-        "target": "EV_OUCARD FILEFORM",
-        "question": "event output EXP behavior under DFAULT"
-      },
-      {
-        "scope": "ME/EV/OU",
-        "id": "OU-MAXDCONT-FORMS",
-        "status": "source-resolved-needs-official-exe-fixture",
-        "classification": "official-executable-pending",
-        "target": "MAXDCONT",
-        "question": "THRESH and secondary-rank signatures including trailing unit"
-      }
+      {"scope": "CO", "id": "ozonefil_same_sector_duplicate", "status": "executed-official-executable-v26135", "classification": "executed", "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for one sector?", "records": ["O3SECTOR", "OZONEFIL"]},
+      {"scope": "CO", "id": "nox_file_same_sector_duplicate", "status": "executed-official-executable-v26135", "classification": "executed", "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for one sector?", "records": ["NOXSECTR", "NOX_FILE"]},
+      {"scope": "CO", "id": "arcftopt_repeat_extra_fields", "status": "executed-official-executable-and-source-v26135", "classification": "executed", "question": "How does the official executable handle repeated ARCFTOPT and more than one payload field?", "records": ["ARCFTOPT", "ARCFTSRC", "HOUREMIS"]},
+      {"scope": "CO", "id": "temporal_vector_incomplete", "status": "executed-official-executable-and-source-v26135", "classification": "executed", "question": "Which final diagnostic is emitted for incomplete temporal vectors by flag and scope?", "records": ["O3VALUES", "NOX_VALS"]},
+      {"scope": "CO", "id": "alpha_dependency_matrix", "status": "executed-official-executable-and-source-v26135", "classification": "executed", "question": "Confirm official executable diagnostics for no-ALPHA and DFAULT conflicts.", "records": ["GDSEASON", "GASDEPDF", "GDLANUSE", "GASDEPVD", "LOW_WIND", "AWMADWNW", "ORD_DWNW", "ARCFTOPT"]},
+      {"scope": "SO/RE", "id": "SO-SWPOINT-01", "status": "executed-official-executable-v26135", "classification": "executed", "question": "Confirm official executable accepts SWPOINT only with ALPHA and records the expected six-parameter signature.", "priority": "high"},
+      {"scope": "SO/RE", "id": "SO-VBARRIER-01", "status": "executed-official-executable-v26135", "classification": "executed", "question": "Confirm the one- and two-barrier VBARRIER field forms with valid in-range parameters.", "priority": "high"},
+      {"scope": "SO/RE", "id": "SO-VBARRIER-RANGE-01", "status": "executed-official-executable-and-source-v26135", "classification": "executed", "question": "Confirm VBARRIER range-boundary inclusivity for E371-E374 and same-side W375 barrier selection behavior.", "priority": "high"},
+      {"scope": "SO/RE", "id": "SO-PLATFORM-01", "status": "cataloged-not-executed", "classification": "official-executable-pending", "question": "Confirm trailing PLATFORM fields are accepted/ignored or rejected; source only checks minimum count.", "priority": "medium"},
+      {"scope": "SO/RE", "id": "SO-BACKGRND-01", "status": "cataloged-not-executed", "classification": "official-executable-pending", "question": "Confirm duplicate global/sector profile precedence and hourly/static conflict behavior.", "priority": "medium"},
+      {"scope": "SO/RE", "id": "RE-GRID-ID-01", "status": "cataloged-not-executed", "classification": "official-executable-pending", "question": "Confirm omitted NetID continuation forms preserve the active grid block exactly.", "priority": "medium"},
+      {"scope": "SO/RE", "id": "RE-DISC-EXTRA-01", "status": "cataloged-not-executed", "classification": "official-executable-pending", "question": "Confirm warning-versus-ignore behavior for terrain/flag fields supplied under inactive options.", "priority": "medium"},
+      {"scope": "ME/EV/OU", "id": "ME-FORMAT-LEGACY", "status": "cataloged-not-executed", "classification": "official-executable-pending", "target": "SURFFILE/PROFFILE", "question": "non-FREE legacy format warning and preservation"},
+      {"scope": "ME/EV/OU", "id": "ME-SCIM-6FIELD", "status": "cataloged-not-executed", "classification": "official-executable-pending", "target": "SCIMBYHR", "question": "numeric wet-scimming pair versus filename disambiguation"},
+      {"scope": "ME/EV/OU", "id": "ME-TURB-DUP", "status": "source-resolved", "classification": "source-resolved", "target": "turbulence keywords", "question": "second turbulence keyword rejection after first shared IMSTAT selection"},
+      {"scope": "ME/EV/OU", "id": "EV-PAIRING", "status": "cataloged-not-executed", "classification": "official-executable-pending", "target": "EVENTPER/EVENTLOC", "question": "multiple EVENTLOC per event and count-based FINISHED check"},
+      {"scope": "ME/EV/OU", "id": "OU-FILE-CONFLICT", "status": "cataloged-not-executed", "classification": "official-executable-pending", "target": "external output files", "question": "same filename/unit across families and normalization behavior"},
+      {"scope": "ME/EV/OU", "id": "OU-EVENT-FILEFORM", "status": "executed-official-executable-and-source-v26135", "classification": "executed", "target": "EV_OUCARD FILEFORM", "question": "event output EXP behavior under DFAULT"},
+      {"scope": "ME/EV/OU", "id": "OU-MAXDCONT-FORMS", "status": "executed-official-executable-v26135", "classification": "executed", "target": "MAXDCONT", "question": "THRESH and secondary-rank signatures including trailing unit"}
     ],
     "complete": false
   }
