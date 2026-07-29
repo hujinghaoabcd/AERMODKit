@@ -41,4 +41,4 @@ Production lexer/parser, immutable loss-aware concrete syntax tree, format-prese
 - verified ME/EV/OU payload commit: `2ff484789bbdecd468d8d22f1f9d93f597a3b0ad`;
 - ordinary CI restored in commit `bf3b2a3c4c8e9145efdf6305690e6ec07a7d69fb`;
 - clean-tree ordinary CI run `30430048717`: all nine jobs passed without reconstruction chunks or temporary apply logic;
-- final documentation-state CI will be recorded after this handover update is committed.
+- documentation-state CI run `30430392577`: all nine jobs passed for commit `3d7e495663464870e34ebae54355e3c177481924`.
