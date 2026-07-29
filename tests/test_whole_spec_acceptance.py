@@ -3,7 +3,6 @@ from pathlib import Path
 
 from aermodkit.spec import evaluate_v26135_whole_spec
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
