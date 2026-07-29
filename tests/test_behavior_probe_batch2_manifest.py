@@ -4,6 +4,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE_MANIFEST = ROOT / "reference/probes/v26135/batch2/manifest.json"
 ADDITIONAL_CASES = ROOT / "reference/probes/v26135/batch2/additional-cases.json"
+SOURCE_SEARCHES = ROOT / "reference/probes/v26135/batch2/source-searches.json"
+RESULT = ROOT / "reference/probes/v26135/batch2/result.json"
 
 EXPECTED_TEMPORAL_CASES = {
     "co_o3values_month_complete_control",
@@ -39,6 +41,17 @@ EXPECTED_VBARRIER_CASES = {
     "so_vbarrier_same_side_equal_distance",
 }
 EXPECTED_CASES = EXPECTED_TEMPORAL_CASES | EXPECTED_EVENT_CASES | EXPECTED_VBARRIER_CASES
+EXPECTED_SOURCE_SEARCHES = {
+    "o3values-incomplete-e261",
+    "nox-vals-incomplete-e603",
+    "vbarrier-range-e371",
+    "vbarrier-range-e372",
+    "vbarrier-range-e373",
+    "vbarrier-range-e374",
+    "vbarrier-nearest-w375",
+    "vbarrier-runtime-w620",
+    "fileform-reset-w595",
+}
 
 
 def _manifest() -> dict[str, object]:
@@ -103,6 +116,31 @@ def test_batch2_source_ranges_cover_target_handlers() -> None:
     assert [8529, 8731] in snippets["soset.f"]
     assert [776, 900] in snippets["evset.f"]
     assert [3206, 3295] in snippets["ouset.f"]
+
+
+def test_batch2_source_searches_cover_final_diagnostics() -> None:
+    payload = json.loads(SOURCE_SEARCHES.read_text(encoding="utf-8"))
+    identifiers = {str(item["id"]) for item in payload["searches"]}
+
+    assert identifiers == EXPECTED_SOURCE_SEARCHES
+
+
+def test_batch2_reviewed_result_matches_manifest_and_workflow() -> None:
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    result_ids = {str(case["id"]) for case in result["cases"]}
+
+    assert result["review_status"] == "reviewed-official-executable-and-source-evidence"
+    assert result["workflow_evidence"]["run_id"] == 30452705724
+    assert result["workflow_evidence"]["artifact_id"] == 8724254777
+    assert result["totals"]["preparations"]["expectations_met"] == 1
+    assert result["totals"]["cases"] == {
+        "items": 27,
+        "accepted": 15,
+        "rejected": 12,
+        "indeterminate": 0,
+        "expectations_met": 27,
+    }
+    assert result_ids == EXPECTED_CASES
 
 
 def test_official_executable_hash_matches_retained_evidence() -> None:
