@@ -13,6 +13,7 @@ on:
       - "reference/probes/v26135/batch4/background-cases.json"
       - "reference/probes/v26135/batch4/grid-cases.json"
       - "reference/probes/v26135/batch4/discrete-cases.json"
+      - "reference/probes/v26135/batch4/discpolr-cases.json"
       - "tests/test_behavior_probe_batch4_manifest.py"
 
 permissions:
@@ -77,6 +78,7 @@ jobs:
             --fragment reference/probes/v26135/batch4/background-cases.json `
             --fragment reference/probes/v26135/batch4/grid-cases.json `
             --fragment reference/probes/v26135/batch4/discrete-cases.json `
+            --fragment reference/probes/v26135/batch4/discpolr-cases.json `
             --output "$env:RUNNER_TEMP/aermod-v26135-behavior-probes-batch4-manifest.json"
 
       - name: Run focused official behavior probes
