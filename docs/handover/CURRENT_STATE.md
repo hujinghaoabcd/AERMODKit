@@ -37,4 +37,8 @@ Production lexer/parser, immutable loss-aware concrete syntax tree, format-prese
 - EV source/spec comparison: 5/5, missing 0, extra 0;
 - ordinary OU source/spec comparison: 18/18, missing 0, extra 0;
 - event-output source/spec comparison: 4/4, missing 0, extra 0;
-- GitHub Actions reconstruction, clean-tree, and final documentation run identifiers will be recorded after remote completion.
+- SHA256-controlled reconstruction run `30429920125`: all nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 jobs passed and the apply job committed the verified payload;
+- verified ME/EV/OU payload commit: `2ff484789bbdecd468d8d22f1f9d93f597a3b0ad`;
+- ordinary CI restored in commit `bf3b2a3c4c8e9145efdf6305690e6ec07a7d69fb`;
+- clean-tree ordinary CI run `30430048717`: all nine jobs passed without reconstruction chunks or temporary apply logic;
+- final documentation-state CI will be recorded after this handover update is committed.
