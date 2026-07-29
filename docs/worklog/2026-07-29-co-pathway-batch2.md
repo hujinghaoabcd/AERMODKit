@@ -25,7 +25,14 @@ Extend the source-verified CO specification without prematurely implementing par
 - fragment validation accepts positive fragment batches no newer than the aggregate;
 - three new machine-readable fragments and structural tests were added;
 - evidence and promotion tables were updated;
-- documentation now records source/manual discrepancies instead of flattening them.
+- documentation now records source/manual discrepancies instead of flattening them;
+- temporary connector staging files were removed from the final repository tree.
+
+## Validation
+
+- local reconstructed package: 13 tests passed and all 24 record keywords were unique;
+- GitHub Actions run `30417130492`: success;
+- Ubuntu, Windows and macOS with Python 3.11, 3.12 and 3.13 all passed Ruff, strict mypy and pytest.
 
 ## Deferred by design
 

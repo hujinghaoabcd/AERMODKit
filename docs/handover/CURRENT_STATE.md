@@ -36,9 +36,12 @@
 - EPA's official executable exactly reproduces focused `capped` expected outputs.
 - Heavy asset, fixture and executable workflows remain manual-only.
 
-## CI
+## Validation state
 
-Batch 2 must not be considered finished until Ruff, strict mypy and pytest pass on Ubuntu, Windows and macOS with Python 3.11, 3.12 and 3.13.
+- local reconstructed-package validation: 13 pytest tests passed;
+- committed batch-2 CI run: `30417130492`;
+- Ruff, strict mypy and pytest passed on Ubuntu, Windows and macOS with Python 3.11, 3.12 and 3.13;
+- the temporary `_batch2_stage` path is absent from the final repository tree.
 
 ## Non-negotiable constraints
 
