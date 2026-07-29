@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-01",
+  "purpose": "Focused official-executable probes for source/manual discrepancies that affect future loss-aware syntax and validation behavior.",
+  "official_assets": {
+    "executable_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip",
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip",
+    "fixture_artifact_id": 8701857473
+  },
+  "classification_policy": {
+    "accepted": "return code 0, official success marker present, no E### diagnostic",
+    "rejected": "at least one E### diagnostic or official unsuccessful marker",
+    "indeterminate": "neither accepted nor rejected criteria are satisfied",
+    "observe": "targeted cases collect behavior without asserting acceptance or rejection"
+  },
+  "cases": [
+    {
+      "id": "control_test3_rline_barrier",
+      "question": "Does the retained official Test3 RLINEXT/RBARRIER deck still complete with the downloaded official executable?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "accepted"
+    },
+    {
+      "id": "so_swpoint_alpha",
+      "question": "Does the official executable accept the source-recognized six-parameter SWPOINT form when MODELOPT ALPHA is active?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-SWPOINT-01 with ALPHA"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_swpoint_alpha_ERRORS.OUT"},
+        {"contains": "LOCATION  BASE  RLINEXT", "replacement": "   LOCATION  SWP  SWPOINT   0.0   0.0   0.0"},
+        {"contains": "SRCPARAM  BASE", "replacement": "   SRCPARAM  SWP   1.0   5.0   10.0   20.0   5.0   0.0"}
+      ],
+      "delete_line_once": ["RBARRIER  BASE"]
+    },
+    {
+      "id": "so_swpoint_no_alpha",
+      "question": "Which official diagnostic is emitted for the same six-parameter SWPOINT form when MODELOPT ALPHA is absent?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-SWPOINT-01 without ALPHA"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC FLAT WARNCHKD BETA"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_swpoint_no_alpha_ERRORS.OUT"},
+        {"contains": "LOCATION  BASE  RLINEXT", "replacement": "   LOCATION  SWP  SWPOINT   0.0   0.0   0.0"},
+        {"contains": "SRCPARAM  BASE", "replacement": "   SRCPARAM  SWP   1.0   5.0   10.0   20.0   5.0   0.0"}
+      ],
+      "delete_line_once": ["RBARRIER  BASE"]
+    },
+    {
+      "id": "so_vbarrier_one",
+      "question": "Does the official executable accept the documented one-vegetative-barrier field form for an ALPHA/FLAT RLINEXT source?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-VBARRIER-01 one barrier"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_one_ERRORS.OUT"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   3.0   0.05"}
+      ]
+    },
+    {
+      "id": "so_vbarrier_two",
+      "question": "Does the official executable accept the documented two-vegetative-barrier field form for an ALPHA/FLAT RLINEXT source?",
+      "base_input": "Test3_Base_cart_3cond_SNC_bar.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-VBARRIER-01 two barriers"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_two_ERRORS.OUT"},
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   3.0   0.05   5.0   5.0   -10.0   3.0   0.05"}
+      ]
+    },
+    {
+      "id": "co_ozonefil_same_sector_duplicate",
+      "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for the same O3SECTOR sector?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit probe duplicate OZONEFIL in SECT1"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3SECTOR 0.0 180.0\n   OZONEVAL SECT1 40.0 PPB\n   OZONEVAL SECT2 40.0 PPB"},
+        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ozonefil_same_sector_duplicate_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_nox_file_same_sector_duplicate",
+      "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for the same NOXSECTR sector?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "observe",
+      "support_copies": [
+        {"source": "ozone.dat", "destination": "nox_a.dat"},
+        {"source": "ozone.dat", "destination": "nox_b.dat"}
+      ],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit probe duplicate NOX_FILE in SECT1"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOXSECTR 0.0 180.0\n   NOXVALUE SECT1 10.0 PPB\n   NOXVALUE SECT2 10.0 PPB\n   NOX_FILE SECT1 nox_a.dat PPB (i2,3i3,f9.3)\n   NOX_FILE SECT1 nox_b.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_file_same_sector_duplicate_ERRORS.OUT"}
+      ]
+    }
+  ]
+}
