@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "batch": "parser-shaping-03",
+  "purpose": "Official-executable probes for ALPHA/DFAULT dependencies, ARCFTOPT dispatcher discrepancies, and MAXDCONT signatures.",
+  "official_assets": {
+    "executable_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_exe.zip",
+    "executable_sha256": "599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da",
+    "source_url": "https://gaftp.epa.gov/Air/aqmg/SCRAM/models/preferred/aermod/aermod_source.zip",
+    "fixture_artifact_id": 8701857473
+  },
+  "classification_policy": {
+    "accepted": "return code 0, official success marker present, and no E### diagnostic",
+    "rejected": "at least one E### diagnostic or official unsuccessful marker",
+    "indeterminate": "neither accepted nor rejected criteria are satisfied",
+    "observe": "targeted cases collect behavior without asserting acceptance or rejection"
+  },
+  "source_snippets": {
+    "coset.f": [[220, 530], [720, 970], [7248, 8145]],
+    "soset.f": [[679, 703], [6370, 6554], [9701, 9793]],
+    "ouset.f": [[163, 182], [3888, 4233]]
+  },
+  "preparations": [],
+  "cases": [
+    {
+      "id": "co_gdseason_alpha_control",
+      "question": "Does GDSEASON complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdseason_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   GDSEASON 12*1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdseason_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gdseason_no_alpha",
+      "question": "Which diagnostic is emitted for GDSEASON when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdseason_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   GDSEASON 12*1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdseason_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gdseason_dfault_alpha",
+      "question": "Which diagnostic is emitted for GDSEASON when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdseason_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   GDSEASON 12*1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdseason_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepdf_alpha_control",
+      "question": "Does GASDEPDF complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepdf_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   GASDEPDF 0.0 0.5 0.25"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepdf_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepdf_no_alpha",
+      "question": "Which diagnostic is emitted for GASDEPDF when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepdf_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   GASDEPDF 0.0 0.5 0.25"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepdf_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepdf_dfault_alpha",
+      "question": "Which diagnostic is emitted for GASDEPDF when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepdf_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   GASDEPDF 0.0 0.5 0.25"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepdf_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gdlanuse_alpha_control",
+      "question": "Does GDLANUSE complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdlanuse_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   GDLANUSE 36*4"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdlanuse_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gdlanuse_no_alpha",
+      "question": "Which diagnostic is emitted for GDLANUSE when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdlanuse_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   GDLANUSE 36*4"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdlanuse_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gdlanuse_dfault_alpha",
+      "question": "Which diagnostic is emitted for GDLANUSE when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gdlanuse_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   GDLANUSE 36*4"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gdlanuse_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepvd_alpha_control",
+      "question": "Does GASDEPVD complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepvd_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   GASDEPVD 0.01"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepvd_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepvd_no_alpha",
+      "question": "Which diagnostic is emitted for GASDEPVD when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepvd_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   GASDEPVD 0.01"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepvd_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_gasdepvd_dfault_alpha",
+      "question": "Which diagnostic is emitted for GASDEPVD when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_gasdepvd_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   GASDEPVD 0.01"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_gasdepvd_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_low_wind_alpha_control",
+      "question": "Does LOW_WIND complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_low_wind_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   LOW_WIND 0.2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_low_wind_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_low_wind_no_alpha",
+      "question": "Which diagnostic is emitted for LOW_WIND when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_low_wind_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   LOW_WIND 0.2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_low_wind_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_low_wind_dfault_alpha",
+      "question": "Which diagnostic is emitted for LOW_WIND when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_low_wind_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   LOW_WIND 0.2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_low_wind_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_awmadwnw_alpha_control",
+      "question": "Does AWMADWNW complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_awmadwnw_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   AWMADWNW AWMAUTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_awmadwnw_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_awmadwnw_no_alpha",
+      "question": "Which diagnostic is emitted for AWMADWNW when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_awmadwnw_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   AWMADWNW AWMAUTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_awmadwnw_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_awmadwnw_dfault_alpha",
+      "question": "Which diagnostic is emitted for AWMADWNW when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_awmadwnw_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   AWMADWNW AWMAUTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_awmadwnw_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_ord_dwnw_alpha_control",
+      "question": "Does ORD_DWNW complete when ALPHA is active?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_ord_dwnw_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ORD_DWNW ORDTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ord_dwnw_alpha_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_ord_dwnw_no_alpha",
+      "question": "Which diagnostic is emitted for ORD_DWNW when ALPHA is absent?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_ord_dwnw_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   ORD_DWNW ORDTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ord_dwnw_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_ord_dwnw_dfault_alpha",
+      "question": "Which diagnostic is emitted for ORD_DWNW when DFAULT and ALPHA are both requested?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_ord_dwnw_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   ORD_DWNW ORDTURB"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ord_dwnw_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_single_control",
+      "question": "Does a single ARCFTOPT card with one AirportID complete when no aircraft source is selected?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "accepted",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_single_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_single_control_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_no_payload",
+      "question": "Does ARCFTOPT accept an omitted optional AirportID?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_no_payload"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_no_payload_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_repeated_same",
+      "question": "Does the executable accept, reject, or silently retain a repeated ARCFTOPT with the same AirportID?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_repeated_same"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_same_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_repeated_different",
+      "question": "Does a second ARCFTOPT with a different AirportID overwrite, coexist, or fail?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_repeated_different"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1\n   ARCFTOPT AP2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_repeated_different_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_extra_fields",
+      "question": "How are two ARCFTOPT payload fields handled when the dispatcher only assigns AirportID for exactly one?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_extra_fields"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  ALPHA\n   ARCFTOPT AP1 EXTRA"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_extra_fields_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_card_no_alpha",
+      "question": "Is ARCFTOPT itself rejected without ALPHA when no ARCFTSRC is present?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_card_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA\n   ARCFTOPT AP1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_card_no_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftopt_card_dfault_alpha",
+      "question": "Is ARCFTOPT itself rejected for DFAULT plus ALPHA when no ARCFTSRC is present?",
+      "base_input": "allsrcs.inp",
+      "expected_outcome": "observe",
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftopt_card_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC   FLAT  WARNCHKD BETA  DFAULT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftopt_card_dfault_alpha_ERRORS.OUT"}
+      ]
+    },
+    {
+      "id": "co_arcftsrc_alpha_control",
+      "question": "Does a complete AREA aircraft source with ARCFTOPT and hourly aircraft parameters complete under ALPHA?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "accepted",
+      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_alpha_control"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_alpha_control_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+      ]
+    },
+    {
+      "id": "co_arcftsrc_no_alpha",
+      "question": "Which final diagnostic is emitted for a complete aircraft source when ALPHA is absent?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "observe",
+      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_no_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_no_alpha_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+      ]
+    },
+    {
+      "id": "co_arcftsrc_dfault_alpha",
+      "question": "Which final diagnostic is emitted for a complete aircraft source under DFAULT plus ALPHA?",
+      "base_input": "testgas.inp",
+      "expected_outcome": "observe",
+      "support_files": [{"path": "aircraft_hourly.dat", "content": "SO HOUREMIS 90 01 01 01 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 02 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 03 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 04 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 05 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\nSO HOUREMIS 90 01 01 06 AREA 0.001 10.0 100000.0 50.0 30.0 5.0 -99999.0 0.0\n"}],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 co_arcftsrc_dfault_alpha"},
+        {"contains": "MODELOPT", "replacement": "   MODELOPT  CONC  FLAT  DFAULT  ALPHA\n   ARCFTOPT AP1"},
+        {"contains": "POLLUTID", "replacement": "   POLLUTID  SO2"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_arcftsrc_dfault_alpha_ERRORS.OUT"},
+        {"contains": "GDSEASON", "replacement": "** removed GDSEASON for aircraft probe"},
+        {"contains": "GDLANUSE", "replacement": "** removed GDLANUSE for aircraft probe"},
+        {"contains": "LOCATION  STACK1", "replacement": "   LOCATION  AREA  AREA  0.0  0.0  0.0"},
+        {"contains": "SRCPARAM  STACK1", "replacement": "   SRCPARAM  AREA  0.001  1.0  20.0  20.0"},
+        {"contains": "GASDEPOS  STACK1", "replacement": "   ARCFTSRC AREA"},
+        {"contains": "DEPOUNIT", "replacement": "   HOUREMIS aircraft_hourly.dat AREA"},
+        {"contains": "SRCGROUP  ALL", "replacement": "   SRCGROUP  ALL AREA"}
+      ]
+    },
+    {
+      "id": "ou_maxdcont_secondary_rank_control",
+      "question": "Does the documented primary-rank plus secondary-rank MAXDCONT form complete?",
+      "base_input": "no2_1yrAK_1tier.inp",
+      "expected_outcome": "accepted",
+      "timeout_seconds": 1800,
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_secondary_rank_control"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_secondary_rank_control_ERRORS.OUT"},
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/ou_maxdcont_secondary_rank_control.out"}
+      ]
+    },
+    {
+      "id": "ou_maxdcont_secondary_rank_unit",
+      "question": "Does the secondary-rank MAXDCONT form accept a trailing file unit?",
+      "base_input": "no2_1yrAK_1tier.inp",
+      "expected_outcome": "observe",
+      "timeout_seconds": 1800,
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_secondary_rank_unit"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_secondary_rank_unit_ERRORS.OUT"},
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 8 ../Outputs/ou_maxdcont_secondary_rank_unit.out 45"}
+      ]
+    },
+    {
+      "id": "ou_maxdcont_thresh_control",
+      "question": "Does the documented THRESH MAXDCONT form complete?",
+      "base_input": "no2_1yrAK_1tier.inp",
+      "expected_outcome": "observe",
+      "timeout_seconds": 1800,
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_thresh_control"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_thresh_control_ERRORS.OUT"},
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/ou_maxdcont_thresh_control.out"}
+      ]
+    },
+    {
+      "id": "ou_maxdcont_thresh_unit",
+      "question": "Does the THRESH MAXDCONT form accept a trailing file unit?",
+      "base_input": "no2_1yrAK_1tier.inp",
+      "expected_outcome": "observe",
+      "timeout_seconds": 1800,
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit batch 3 ou_maxdcont_thresh_unit"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/ou_maxdcont_thresh_unit_ERRORS.OUT"},
+        {"contains": "MAXDCONT ALL 8  8", "replacement": "   MAXDCONT ALL 8 THRESH 188.0 ../Outputs/ou_maxdcont_thresh_unit.out 46"}
+      ]
+    }
+  ]
+}
