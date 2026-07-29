@@ -1,8 +1,9 @@
 # Current State
 
 - Updated: 2026-07-29
-- Active development branch: `agent/official-behavior-probes-batch2`
-- Active pull request: #9, draft pending final branch validation and publication
+- Active branch: `main`
+- Official behavior-probe batch 2 PR: #9, merged
+- Batch 2 merge commit: `279b61160412a8073632d31156f897cd6edcee4a`
 - Official behavior-probe batch 1 PR: #7, merged
 - Batch 1 merge commit: `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`
 - Whole-spec acceptance PR: #5, merged
@@ -47,16 +48,25 @@ Reviewed evidence is in `reference/probes/v26135/batch1/result.json` and
 
 ## Official behavior probes — batch 2
 
-The reviewed batch-2 evidence uses:
+The reviewed evidence used workflow `30452705724`, artifact `8724254777`, and official executable
+SHA-256 `599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`.
+The final PR head `cad179c0aeadfd4a3c52040ae351f99eaa46622d` independently passed:
 
-- workflow run: `30452705724`;
-- reviewed head: `aaf683d4d0fa089a6d4159b9ea17b66e959cf1e3`;
-- artifact ID: `8724254777`;
-- artifact digest: `sha256:a7a27eb5c09ccb13a00f2d7a9bf9aa0c60e5cc6297e23765144b354a1c519d2e`;
-- official executable SHA-256: `599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`;
+- full nine-job CI `30454599189`;
+- batch-1 official regression `30454599319`;
+- batch-2 official 27-case workflow `30454598843`.
+
+The final-head batch-2 artifact is:
+
+- artifact ID: `8725024839`;
+- digest: `sha256:12e28236b5669156cf3acd2fb81db8ce9b88c2ad179346e0f0fa2d0c531d6cee`;
+- size: `220,514,827` bytes.
+
+Batch 2 results:
+
 - preparation: 1 accepted;
 - cases: 27 total, 15 accepted, 12 rejected, 0 indeterminate;
-- expectations met: 28/28 including the preparation.
+- expectations met: 28/28 including preparation.
 
 Resolved outcomes:
 
@@ -84,6 +94,11 @@ The record-set gate remains passed, but the behavior-probe gate remains incomple
 loss-aware lexer/CST work must not begin until the remaining parser-shaping probes are resolved or
 explicitly deferred through a preservation-safe ADR and the fixture freeze is complete.
 
+## Workflow hygiene
+
+The batch-1 workflow path filter is now restricted to `batch1/manifest.json`; later behavior batches
+will no longer trigger an unnecessary batch-1 rerun solely because they add another manifest.
+
 ## Not yet implemented
 
 Production lexer/parser, immutable loss-aware concrete syntax tree, format-preserving writer,
@@ -96,5 +111,5 @@ semantic project model, runner, output parser, and GIS layers remain pending.
 - whole-spec acceptance CI run `30443993754` passed all nine jobs;
 - batch-1 official evidence workflow `30447131971` passed;
 - batch-2 reviewed evidence workflow `30452705724` passed;
-- batch-2 reviewed evidence head passed all nine jobs in CI `30452701635`;
-- final documentation/catalog commits still require the branch's final CI before PR #9 can be marked ready.
+- final PR #9 head passed CI `30454599189`, batch-1 regression `30454599319`, and batch-2 official workflow `30454598843`;
+- PR #9 merged to `main` as `279b61160412a8073632d31156f897cd6edcee4a`.
