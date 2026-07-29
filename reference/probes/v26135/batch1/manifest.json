@@ -58,7 +58,7 @@
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-VBARRIER-01 one barrier"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_one_ERRORS.OUT"},
-        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   3.0   0.05"}
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   6.0   1.0"}
       ]
     },
     {
@@ -69,24 +69,59 @@
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE  AERMODKit probe SO-VBARRIER-01 two barriers"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/so_vbarrier_two_ERRORS.OUT"},
-        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   3.0   0.05   5.0   5.0   -10.0   3.0   0.05"}
+        {"contains": "RBARRIER  BASE", "replacement": "   VBARRIER  BASE   5.0   5.0   10.0   6.0   1.0   5.0   5.0   -10.0   6.0   1.0"}
+      ]
+    },
+    {
+      "id": "co_ozonefil_distinct_sectors_control",
+      "question": "Does the official executable accept two OZONEFIL records when they target two distinct O3SECTOR sectors?",
+      "base_input": "no2_1yrAK_pvmrm.inp",
+      "expected_outcome": "accepted",
+      "support_copies": [
+        {"source": "ozone.dat", "destination": "ozone_a.dat"},
+        {"source": "ozone.dat", "destination": "ozone_b.dat"}
+      ],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit control distinct-sector OZONEFIL"},
+        {"contains": "OZONEVAL 40.", "replacement": "   O3SECTOR 0.0 180.0\n   OZONEVAL SECT1 40.0 PPB\n   OZONEVAL SECT2 40.0 PPB"},
+        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone_a.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT2 ozone_b.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ozonefil_distinct_sectors_control_ERRORS.OUT"}
       ]
     },
     {
       "id": "co_ozonefil_same_sector_duplicate",
-      "question": "Does the official executable accept, overwrite, or reject a repeated OZONEFIL for the same O3SECTOR sector?",
+      "question": "Does the official executable accept, overwrite, or reject two different OZONEFIL files assigned to the same O3SECTOR sector?",
       "base_input": "no2_1yrAK_pvmrm.inp",
       "expected_outcome": "observe",
+      "support_copies": [
+        {"source": "ozone.dat", "destination": "ozone_a.dat"},
+        {"source": "ozone.dat", "destination": "ozone_b.dat"}
+      ],
       "replace_line_once": [
         {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit probe duplicate OZONEFIL in SECT1"},
         {"contains": "OZONEVAL 40.", "replacement": "   O3SECTOR 0.0 180.0\n   OZONEVAL SECT1 40.0 PPB\n   OZONEVAL SECT2 40.0 PPB"},
-        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT1 ozone.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "OZONEFIL ozone.dat", "replacement": "   OZONEFIL SECT1 ozone_a.dat PPB (i2,3i3,f9.3)\n   OZONEFIL SECT1 ozone_b.dat PPB (i2,3i3,f9.3)"},
         {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_ozonefil_same_sector_duplicate_ERRORS.OUT"}
       ]
     },
     {
+      "id": "co_nox_file_distinct_sectors_control",
+      "question": "Does the official executable accept two NOX_FILE records when they target two distinct NOXSECTR sectors?",
+      "base_input": "no2_1yrAK_grsm.inp",
+      "expected_outcome": "accepted",
+      "support_copies": [
+        {"source": "ozone.dat", "destination": "nox_a.dat"},
+        {"source": "ozone.dat", "destination": "nox_b.dat"}
+      ],
+      "replace_line_once": [
+        {"contains": "TITLEONE", "replacement": "   TITLEONE AERMODKit control distinct-sector NOX_FILE"},
+        {"contains": "NOXVALUE 10.0", "replacement": "   NOXSECTR 0.0 180.0\n   NOXVALUE SECT1 10.0 PPB\n   NOXVALUE SECT2 10.0 PPB\n   NOX_FILE SECT1 nox_a.dat PPB (i2,3i3,f9.3)\n   NOX_FILE SECT2 nox_b.dat PPB (i2,3i3,f9.3)"},
+        {"contains": "ERRORFIL", "replacement": "   ERRORFIL  ../Outputs/co_nox_file_distinct_sectors_control_ERRORS.OUT"}
+      ]
+    },
+    {
       "id": "co_nox_file_same_sector_duplicate",
-      "question": "Does the official executable accept, overwrite, or reject a repeated NOX_FILE for the same NOXSECTR sector?",
+      "question": "Does the official executable accept, overwrite, or reject two different NOX_FILE files assigned to the same NOXSECTR sector?",
       "base_input": "no2_1yrAK_grsm.inp",
       "expected_outcome": "observe",
       "support_copies": [
