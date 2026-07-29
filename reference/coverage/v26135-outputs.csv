@@ -1,18 +1,18 @@
-keyword,output_category,destination,content,repeatability,format_control,v26135_change,evidence_status,official_reference,parser_priority,notes
-RECTABLE,main-report,main .out,receptor summary tables,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-MAXTABLE,main-report,main .out,maximum-value tables,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-DAYTABLE,main-report,main .out,daily-value tables,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-MAXIFILE,external-file,user-named file,maximum-value/threshold sequential file,repeatable,FILEFORM/NOHEADER where applicable,v26135 fixes duplicate records in restart processing.,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,v26135 fixes duplicate records in restart processing.
-POSTFILE,external-file,user-named file,sequential results for postprocessing,repeatable,FILEFORM/NOHEADER where applicable,v26135 fixes first-hour behavior with MULTYR.,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,v26135 fixes first-hour behavior with MULTYR.
-PLOTFILE,external-file,user-named file,high-value summary for plotting,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,
-TOXXFILE,external-file,user-named file,TOXX model input,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-RANKFILE,external-file,user-named file,ranked-value output,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,
-EVALFILE,external-file,user-named file,evaluation receptor results,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,
-SEASONHR,external-file,user-named file,season-by-hour output,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-MAXDAILY,external-file,user-named file,maximum daily value output,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-MXDYBYYR,external-file,user-named file,maximum daily values by year,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-MAXDCONT,external-file,user-named file,maximum design-value source contributions,repeatable,FILEFORM/NOHEADER where applicable,v26135 adds/fixes GRSM source-group contributions.,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,v26135 adds/fixes GRSM source-group contributions.
-SUMMFILE,external-file,user-named file,run summary file,non-repeatable-or-repeatable-to-verify,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P0,
-FILEFORM,external-file,user-named file,external output format selector,repeatable-or-global-to-verify,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-NOHEADER,external-file,user-named file,suppress selected file headers,repeatable-or-global-to-verify,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
-EVENTOUT,event,event output,event-processing output control,repeatable,FILEFORM/NOHEADER where applicable,,confirmed-current,AERMOD Quick Reference Guide v26135; User Guide EPA-454/B-26-001,P1,
+keyword,output_category,destination,content,repeatability,format_control,scope
+RECTABLE,main-report,main .out,receptor high-value tables,repeatable,not external,main report
+MAXTABLE,main-report,main .out,maximum-value tables,repeatable,not external,main report
+DAYTABLE,main-report,main .out,daily-value tables,once,not external,main report
+MAXIFILE,external,user file,threshold exceedance/maxima,repeatable,FILEFORM+NOHEADER,period+group+threshold
+POSTFILE,external,user file,postprocessing sequential results,repeatable,own UNFORM/PLOT plus FILEFORM/header,period+group
+PLOTFILE,external,user file,ranked plotting values,repeatable,FILEFORM+NOHEADER,period+group+rank
+TOXXFILE,external,user file,TOXX model input,repeatable,FILEFORM,period+threshold
+SEASONHR,external,user file,season by hour results,repeatable,FILEFORM+NOHEADER,group
+RANKFILE,external,user file,ranked values,repeatable,FILEFORM+NOHEADER,period+rank
+EVALFILE,external,user file,evaluation receptor/source results,repeatable,FILEFORM,source
+SUMMFILE,external,user file,high-ranked summary,once,fixed summary structure,global
+MAXDAILY,external,user file,maximum daily values,repeatable,FILEFORM+NOHEADER,group
+MXDYBYYR,external,user file,maximum daily values by year,repeatable,FILEFORM+NOHEADER,group
+MAXDCONT,external,user file,design-value source contributions,repeatable,FILEFORM+NOHEADER,group+rank/threshold
+EVENTOUT,event-report,event output,SOCONT or DETAIL event output,once in event mode,FILEFORM,event mode
+FILEFORM,control,all eligible external files,FIX/EXP numeric format,once,global,ordinary/event mode
+NOHEADER,control,selected external families,suppress headers,once,family selector,ordinary mode

@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "EV",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "EV STARTING"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "evset.f",
+        "dispatcher": "EVCARD",
+        "dispatcher_lines": "49-56",
+        "handler": "EVCARD",
+        "handler_file": "evset.f",
+        "handler_lines": "1-1039"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "EV pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "EVENTPER",
+      "role": "event-period-definition",
+      "required": true,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[EV] EVENTPER <event_name> <averaging_period> <source_group> <yymmddhh|yyyymmddhh> <original_concentration>"
+      ],
+      "fields": [
+        {
+          "name": "event_name",
+          "type": "string",
+          "max_length": 10
+        },
+        {
+          "name": "averaging_period",
+          "type": "integer",
+          "must_match_CO_AVERTIME": true
+        },
+        {
+          "name": "source_group",
+          "type": "existing SO SRCGROUP"
+        },
+        {
+          "name": "end_date_hour",
+          "type": "8- or 10-digit integer date/hour"
+        },
+        {
+          "name": "original_concentration",
+          "type": "real"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Each EVENTPER starts one event and must be paired with a following EVENTLOC."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "evset.f",
+        "dispatcher": "EVCARD",
+        "dispatcher_lines": "57-68",
+        "handler": "EVPER",
+        "handler_file": "evset.f",
+        "handler_lines": "176-349"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "EV pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "EVENTLOC",
+      "role": "event-receptor-location",
+      "required": true,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[EV] EVENTLOC <event_name> <x_id> <x> <y_id> <y> <elevation> <hill_height> [<flagpole_height>]"
+      ],
+      "fields": [
+        {
+          "name": "event_name",
+          "type": "existing event name"
+        },
+        {
+          "name": "x_id/y_id",
+          "type": "labels retained for compatibility"
+        },
+        {
+          "name": "x/y",
+          "type": "real"
+        },
+        {
+          "name": "elevation/hill_height",
+          "type": "real"
+        },
+        {
+          "name": "flagpole_height",
+          "type": "optional real"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Event name must match the current EVENTPER; field count is 8..10 total."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "evset.f",
+        "dispatcher": "EVCARD",
+        "dispatcher_lines": "69-73",
+        "handler": "EVLOC",
+        "handler_file": "evset.f",
+        "handler_lines": "350-475"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "EV pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "INCLUDED",
+      "role": "include-event-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[EV] INCLUDED <filename>"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "case-preserved path"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Include boundaries remain explicit syntax nodes."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "evset.f",
+        "dispatcher": "EVCARD",
+        "dispatcher_lines": "74-82",
+        "handler": "INCLUD",
+        "handler_file": "setup.f",
+        "handler_lines": "1874-1910"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "EV pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "FINISHED",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "EV FINISHED"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        },
+        {
+          "rule": "At least one EVENTPER and EVENTLOC are mandatory."
+        },
+        {
+          "rule": "EVENTPER count may not exceed EVENTLOC count."
+        },
+        {
+          "rule": "Overall event start/end dates are derived from event end-date hours."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "evset.f",
+        "dispatcher": "EVCARD",
+        "dispatcher_lines": "83-170",
+        "handler": "EVCARD",
+        "handler_file": "evset.f",
+        "handler_lines": "1-1039"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "EV pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

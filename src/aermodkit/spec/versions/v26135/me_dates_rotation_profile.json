@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "ME",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTEND",
+      "role": "processing-date-window",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] STARTEND <sy> <sm> <sd> <ey> <em> <ed>",
+        "[ME] STARTEND <sy> <sm> <sd> <sh> <ey> <em> <ed> <eh>"
+      ],
+      "fields": [
+        {
+          "name": "start/end date",
+          "type": "6 or 8 integers"
+        }
+      ],
+      "dependencies": {
+        "conflicts_with": [
+          "SCIM"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Start must not follow end; hours are 1..24 when present."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "154",
+          "condition": "used with SCIM"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "101-116",
+        "handler": "STAEND",
+        "handler_file": "meset.f",
+        "handler_lines": "820-1195"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 10,
+        "files": 10,
+        "examples": [
+          "flatelev.inp:35",
+          "aermod-baldwinVert.inp:45",
+          "testpm10_1986.inp:69",
+          "testpm10_1989.inp:69"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "DAYRANGE",
+      "role": "selected-processing-days",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[ME] DAYRANGE <day-or-range> [<day-or-range> ...]"
+      ],
+      "fields": [
+        {
+          "name": "selector",
+          "type": "Julian day, Julian range, MM/DD, or MM/DD-MM/DD"
+        }
+      ],
+      "dependencies": {
+        "conflicts_with": [
+          "SCIM"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "First occurrence clears default all-day selection; repeated cards accumulate selected days."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "117-133",
+        "handler": "DAYRNG",
+        "handler_file": "meset.f",
+        "handler_lines": "1196-1511"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "WDROTATE",
+      "role": "wind-direction-rotation",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] WDROTATE <degrees>"
+      ],
+      "fields": [
+        {
+          "name": "rotation",
+          "type": "real",
+          "units": "degrees"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "134-144",
+        "handler": "WDROTA",
+        "handler_file": "meset.f",
+        "handler_lines": "1512-1562"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "SITEDATA",
+      "role": "onsite-station-metadata",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] SITEDATA <station_id> <year> [<station_name> [<x> <y>]]"
+      ],
+      "fields": [
+        {
+          "name": "station_id",
+          "type": "integer"
+        },
+        {
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "name": "station_name",
+          "type": "optional string",
+          "default": "UNKNOWN"
+        },
+        {
+          "name": "x/y",
+          "type": "optional real pair"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "145-155",
+        "handler": "ONDATA",
+        "handler_file": "meset.f",
+        "handler_lines": "657-738"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 15,
+        "files": 15,
+        "examples": [
+          "multurb.inp:34",
+          "allsrcs.inp:161",
+          "flatelev.inp:34",
+          "Test4_Base_cart_3cond_SNC_dep.inp:43"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "PROFBASE",
+      "role": "profile-base-elevation",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[ME] PROFBASE <elevation> [METERS|FEET]"
+      ],
+      "fields": [
+        {
+          "name": "elevation",
+          "type": "real"
+        },
+        {
+          "name": "unit",
+          "type": "enum",
+          "allowed_values": [
+            "METERS",
+            "FEET"
+          ],
+          "default": "METERS"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Converted to metres; source and receptor elevation arrays are adjusted consistently."
+        }
+      ],
+      "diagnostics": [],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "156-166",
+        "handler": "PRBASE",
+        "handler_file": "meset.f",
+        "handler_lines": "739-819"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:46",
+          "multurb.inp:35",
+          "no2_1yrAK_arm2.inp:77",
+          "allsrcs.inp:162"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

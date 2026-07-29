@@ -1,0 +1,612 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "ME",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "NOTURB",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOTURB"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": true
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-theta and sigma-w for all hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOTURBST",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOTURBST"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": true
+      },
+      "constraints": [
+        {
+          "rule": "ignore both for stable hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOTURBCO",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOTURBCO"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore both for convective hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSA",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSA"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-theta for all hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSW",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSW"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-w for all hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSAST",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSAST"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-theta for stable hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSWST",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSWST"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-w for stable hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSACO",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSACO"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-theta for convective hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "NOSWCO",
+      "role": "turbulence-profile-filter",
+      "required": false,
+      "repeatability": "mutually-exclusive-single-selection",
+      "syntax": [
+        "[ME] NOSWCO"
+      ],
+      "fields": [],
+      "dependencies": {
+        "default_compatible": false
+      },
+      "constraints": [
+        {
+          "rule": "ignore sigma-w for convective hours"
+        },
+        {
+          "rule": "The dispatcher permits only one turbulence keyword because all share IMSTAT(14)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "information",
+          "code": "443",
+          "condition": "option selected"
+        },
+        {
+          "severity": "warning",
+          "code": "444",
+          "condition": "non-default-compatible option used under DFAULT; reset false"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "202-215",
+        "handler": "TURBOPT",
+        "handler_file": "meset.f",
+        "handler_lines": "2356-2428"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-manual-verified-no-current-fixture",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    },
+    {
+      "keyword": "FINISHED",
+      "role": "pathway-framing",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "ME FINISHED"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "No semantic payload is required; extra text must remain in the loss-aware syntax tree."
+        },
+        {
+          "rule": "SURFFILE, PROFFILE, SURFDATA, UAIRDATA, and PROFBASE are mandatory."
+        },
+        {
+          "rule": "SCIM requires SCIMBYHR."
+        },
+        {
+          "rule": "The surface/profile files are opened and the selected processing-hour count is finalized."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated framing record"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "meset.f",
+        "dispatcher": "MECARD",
+        "dispatcher_lines": "216-303",
+        "handler": "MECARD",
+        "handler_file": "meset.f",
+        "handler_lines": "1-2577"
+      },
+      "manual": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "ME pathway"
+      },
+      "fixture_evidence": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "psdcred.inp:47",
+          "multurb.inp:36",
+          "no2_1yrAK_arm2.inp:78",
+          "allsrcs.inp:163"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "preservation": {
+        "original_text": true,
+        "case": true,
+        "unknown_trailing_fields": true,
+        "comments": true
+      },
+      "notes": []
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "model_version": "26135",
+  "scope": "ME, EV, ordinary OU, and event-output OU submode",
+  "probes": [
+    {
+      "id": "ME-FORMAT-LEGACY",
+      "target": "SURFFILE/PROFFILE",
+      "question": "non-FREE legacy format warning and preservation",
+      "status": "cataloged-not-executed"
+    },
+    {
+      "id": "ME-SCIM-6FIELD",
+      "target": "SCIMBYHR",
+      "question": "numeric wet-scimming pair versus filename disambiguation",
+      "status": "cataloged-not-executed"
+    },
+    {
+      "id": "ME-TURB-DUP",
+      "target": "turbulence keywords",
+      "question": "second turbulence keyword rejection after first shared IMSTAT selection",
+      "status": "source-resolved"
+    },
+    {
+      "id": "EV-PAIRING",
+      "target": "EVENTPER/EVENTLOC",
+      "question": "multiple EVENTLOC per event and count-based FINISHED check",
+      "status": "cataloged-not-executed"
+    },
+    {
+      "id": "OU-FILE-CONFLICT",
+      "target": "external output files",
+      "question": "same filename/unit across families and normalization behavior",
+      "status": "cataloged-not-executed"
+    },
+    {
+      "id": "OU-EVENT-FILEFORM",
+      "target": "EV_OUCARD FILEFORM",
+      "question": "event output EXP behavior under DFAULT",
+      "status": "cataloged-not-executed"
+    },
+    {
+      "id": "OU-MAXDCONT-FORMS",
+      "target": "MAXDCONT",
+      "question": "THRESH and secondary-rank signatures including trailing unit",
+      "status": "source-resolved-needs-official-exe-fixture"
+    }
+  ],
+  "boundary": "Cataloging a probe does not claim it has been executed."
+}

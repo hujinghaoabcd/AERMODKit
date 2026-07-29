@@ -28,14 +28,14 @@ All notable project changes will be recorded here.
 - CO pathway batch 2 as three fragments covering 10 decay, receptor/urban, static ozone and NO2-ratio records;
 - CO batch 2 evidence/promotions and tests for source-default, range and preservation boundaries;
 - complete 39-record CO pathway specification, final 15-record evidence set, source exact-match verifier and official behavior-probe catalog;
-- complete MODELOPT status audit for all 40 source-recognized tokens.
+- complete `MODELOPT` status audit for all 40 source-recognized tokens.
 
 ### Changed
 
-- v26135 metadata completeness now reports a complete source-verified CO pathway with all 39 primary records;
+- v26135 metadata completeness now reports complete source-verified record-level specifications for all primary pathways and the event-output submode;
 - pathway fragment loading now composes positive older/equal batches into a newer aggregate batch;
 - EPA archive, fixture and executable evidence workflows are manual-only after their initial successful evidence runs;
-- keyword promotions are recorded in a companion status-override/evidence layer until the main inventory is regenerated deterministically.
+- keyword promotions are recorded in companion status-override/evidence layers until the main inventory is regenerated deterministically.
 
 ### Fixed
 
@@ -44,7 +44,9 @@ All notable project changes will be recorded here.
 - restored a fully green GitHub Actions matrix after the repository became public and actionable logs became available;
 - prevented official expected outputs from being overwritten during local numerical validation;
 - corrected PM10 1987–1990 validation by preserving the MULTYEAR state-file chain;
-- corrected interpretation of the `capped` maximum relative difference: it is localized to selected `STACK1C` second-highest table cells, not the overall maximum.
+- corrected interpretation of the `capped` maximum relative difference: it is localized to selected `STACK1C` second-highest table cells, not the overall maximum;
+- corrected earlier SO inventory omissions for `PLATFORM` and `VBARRIER`;
+- separated ordinary `OUCARD` from event-mode `EV_OUCARD` so `EVENTOUT` is not misclassified as an ordinary output record.
 
 ### Documentation
 
@@ -56,14 +58,21 @@ All notable project changes will be recorded here.
 - documented Intel Fortran runtime evidence without overstating the exact compiler version;
 - documented CO pathway continuation, loss-aware preservation, restart dependencies and repeatable `DEBUGOPT` behavior;
 - preserved the `EVENTFIL` source-comment/implementation discrepancy for future executable tests;
-- documented decay source-range boundaries, OZONEFIL manual/source repeatability evidence, NO2STACK sentinel behavior and ARMRATIO trailing-field preservation;
-- completed the CO pathway and advanced specification work to combined SO+RE, then ME+EV+OU stages.
+- documented decay source-range boundaries, `OZONEFIL` manual/source repeatability evidence, `NO2STACK` sentinel behavior and `ARMRATIO` trailing-field preservation;
+- completed record-level specifications for CO, SO, RE, ME, EV, ordinary OU, and event-output mode.
 
 ### Added — complete SO + RE specifications
 
 - bundled all 40 v26135 SO primary records and all 9 RE primary records;
-- added exact source-type-dependent LOCATION/SRCPARAM signatures, including source-recognized ALPHA `SWPOINT`;
-- modeled GRIDCART and GRIDPOLR secondary records as nested loss-aware state machines;
+- added exact source-type-dependent `LOCATION`/`SRCPARAM` signatures, including source-recognized ALPHA `SWPOINT`;
+- modeled `GRIDCART` and `GRIDPOLR` secondary records as nested loss-aware state machines;
 - added SO/RE evidence tables, exact-set reports, official behavior probes, deterministic validator, tests, ADR, reference notes, and handover updates;
-- corrected earlier inventory omissions for `PLATFORM` and `VBARRIER`.
 - validated the complete SO/RE payload through SHA256-controlled 9-platform reconstruction and a separate clean-tree 9-platform CI run.
+
+### Added — complete ME + EV + OU specifications
+
+- bundled all 23 v26135 ME primary records, all 5 EV primary records, and all 18 ordinary OU primary records;
+- represented the 4-record `EV_OUCARD` event-output mode explicitly rather than merging it into ordinary `OUCARD`;
+- added meteorological file/station/date/wind/SCIM/turbulence schemas and event period/location/include completeness rules;
+- added ordinary and event output-family schemas, file-unit/name QA, `FILEFORM`, `NOHEADER`, daily/design-value, annual, multiyear, rank, evaluation, summary, and contribution controls;
+- added exact-set reports, fixture occurrence evidence, output-family inventory, behavior probes, deterministic validator, tests, ADR, reference notes, worklog, and handover updates.

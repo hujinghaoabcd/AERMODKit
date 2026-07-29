@@ -4,25 +4,37 @@
 - Branch: `agent/bootstrap-project-foundation`
 - Pull request: #1 (draft, unmerged)
 - Package version: `0.0.1.dev0`
-- Development phase: Phase 0 complete CO + SO + RE specifications; ME + EV + OU pending
+- Development phase: Phase 0 complete record-level specifications for all primary pathways; full-spec acceptance and loss-aware syntax implementation pending
 
 ## Complete pathway specifications
 
-- CO: 39/39 primary records.
-- SO: 40/40 primary records, 13 executable-recognized source types, exact source-type-dependent SRCPARAM signatures.
-- RE: 9/9 primary records; GRIDCART/GRIDPOLR secondary records modeled as block state machines.
+- CO: 39/39 primary `COCARD` records.
+- SO: 40/40 primary `SOCARD` records, 13 executable-recognized source types, and source-type-dependent `SRCPARAM` signatures.
+- RE: 9/9 primary `RECARD` records; `GRIDCART` and `GRIDPOLR` secondary records are modeled as nested block state machines.
+- ME: 23/23 primary `MECARD` records.
+- EV: 5/5 primary `EVCARD` records.
+- OU: 18/18 ordinary `OUCARD` records.
+- Event output: 4/4 `EV_OUCARD` records represented as an explicit event-output submode.
 
-## Corrected evidence
+## ME, EV, and OU coverage
 
-The old inventory omitted SO `PLATFORM` and `VBARRIER` and left `SWPOINT` unconfirmed. Official v26135 executable source confirms all three syntax paths; manual/regulatory status remains separate.
+The bundled specifications now cover meteorological files and station metadata, date selection, wind controls, SCIM and turbulence filters, event period/location pairing, include boundaries, ordinary report tables, all current external output families, `FILEFORM`, `NOHEADER`, daily/design-value controls, and event-mode `EVENTOUT`.
+
+Ordinary `OUCARD` and event-mode `EV_OUCARD` remain separate because `EVENTOUT` is mandatory in event processing but is not accepted by the ordinary output dispatcher.
+
+## Evidence boundaries
+
+Complete pathway specification means record-level source/evidence coverage. It does not mean that every cataloged official-executable behavior probe has been run, that source-recognized development syntax is regulatory, or that a production parser or application layer exists.
 
 ## Not yet implemented
 
-Production lexer/parser, immutable loss-aware syntax tree, format-preserving writer, semantic model, runner, output parser, and GIS layers remain pending.
+Production lexer/parser, immutable loss-aware concrete syntax tree, format-preserving writer, semantic project model, runner, output parser, and GIS layers remain pending.
 
 ## Validation baseline
 
-- verified reconstruction run `30425507010`: nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 jobs passed, followed by a successful apply job;
-- verified payload commit: `d92051675600c61ab3abc1cadf1c46ed8337dd6d`;
-- ordinary CI restored in commit `56e13414ce5753e3cadef50cb157aa02af38804f`;
-- clean-tree ordinary CI run `30425627105`: all nine jobs passed without stage chunks or reconstruction logic.
+- local focused ME/EV/OU baseline: 27 pytest tests passed;
+- ME source/spec comparison: 23/23, missing 0, extra 0;
+- EV source/spec comparison: 5/5, missing 0, extra 0;
+- ordinary OU source/spec comparison: 18/18, missing 0, extra 0;
+- event-output source/spec comparison: 4/4, missing 0, extra 0;
+- GitHub Actions reconstruction, clean-tree, and final documentation run identifiers will be recorded after remote completion.
