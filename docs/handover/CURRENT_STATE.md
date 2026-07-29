@@ -1,7 +1,8 @@
 # Current State
 
 - Updated: 2026-07-29
-- Active branch: `main`
+- Active development branch: `agent/official-behavior-probes-batch2`
+- Active pull request: #9, draft pending final branch validation and publication
 - Official behavior-probe batch 1 PR: #7, merged
 - Batch 1 merge commit: `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`
 - Whole-spec acceptance PR: #5, merged
@@ -34,41 +35,54 @@ Machine-readable evidence is in `reference/coverage/v26135-whole-spec-acceptance
 
 ## Official behavior probes — batch 1
 
-The first reviewed official-executable batch used AERMOD v26135 executable SHA-256
-`599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`.
+Batch 1 resolved:
 
-- reviewed evidence workflow: `30447131971`;
-- evidence artifact ID: `8721942233`;
-- final branch CI: `30448106914`, 9/9 passed;
-- final branch official workflow: `30448106897`, passed;
-- cases: 9;
-- accepted: 6;
-- rejected: 3;
-- indeterminate: 0.
-
-Resolved outcomes:
-
-- six-parameter SWPOINT is accepted with ALPHA and rejected without ALPHA by `SO E198`;
-- valid one- and two-barrier VBARRIER forms are accepted for ALPHA/FLAT RLINEXT;
-- OZONEFIL is repeatable across distinct O3 sectors but same-sector reassignment is rejected by `CO E501`;
-- NOX_FILE is repeatable across distinct NOx sectors but same-sector reassignment is rejected by `CO E501`.
+- six-parameter SWPOINT with/without ALPHA;
+- valid one- and two-barrier VBARRIER field forms;
+- distinct-sector versus same-sector OZONEFIL behavior;
+- distinct-sector versus same-sector NOX_FILE behavior.
 
 Reviewed evidence is in `reference/probes/v26135/batch1/result.json` and
 `docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH1.md`.
+
+## Official behavior probes — batch 2
+
+The reviewed batch-2 evidence uses:
+
+- workflow run: `30452705724`;
+- reviewed head: `aaf683d4d0fa089a6d4159b9ea17b66e959cf1e3`;
+- artifact ID: `8724254777`;
+- artifact digest: `sha256:a7a27eb5c09ccb13a00f2d7a9bf9aa0c60e5cc6297e23765144b354a1c519d2e`;
+- official executable SHA-256: `599b491b021c7ec254ba3a1062386f287e56e54a0d3bb9b67cfa72275d6916da`;
+- preparation: 1 accepted;
+- cases: 27 total, 15 accepted, 12 rejected, 0 indeterminate;
+- expectations met: 28/28 including the preparation.
+
+Resolved outcomes:
+
+- complete global/sector MONTH O3VALUES and NOX_VALS vectors are accepted;
+- incomplete O3VALUES is rejected with E261 and incomplete NOX_VALS with E603;
+- both VBARRIER positions use inclusive HT 2..10, WT 2.5..13, LAI 4..10.92 and LM 0.55..3.75 ranges;
+- immediate outside-range values map to E371-E374;
+- unequal same-side barriers produce W375 and retain the nearer barrier;
+- equal-distance same-side barriers retain both input records, emit no W375, then emit runtime W620 and use barrier 2 on the v26135 equality tie;
+- event-output EXP remains exponential outside DFAULT + criteria pollutant;
+- DFAULT + SO2 + EXP emits W595 and resets output to fixed notation.
+
+Reviewed evidence is in `reference/probes/v26135/batch2/result.json` and
+`docs/reference/V26135_OFFICIAL_BEHAVIOR_PROBES_BATCH2.md`.
 
 ## Retained behavior-probe gate
 
 The refined catalogs normalize to 19 questions:
 
-- executed with retained official-executable evidence: 4;
+- executed with retained official-executable evidence: 7;
 - source-resolved: 1;
-- official-executable pending: 14.
+- official-executable pending: 11.
 
-`SO-VBARRIER-RANGE-01` keeps range-boundary inclusivity and same-side `W375` behavior explicit rather
-than incorrectly treating those untested details as complete.
-
-The behavior-probe gate remains incomplete. Production loss-aware lexer/CST work must not begin until
-the remaining parser-shaping probes are resolved or explicitly deferred through a preservation-safe ADR.
+The record-set gate remains passed, but the behavior-probe gate remains incomplete. Production
+loss-aware lexer/CST work must not begin until the remaining parser-shaping probes are resolved or
+explicitly deferred through a preservation-safe ADR and the fixture freeze is complete.
 
 ## Not yet implemented
 
@@ -80,6 +94,7 @@ semantic project model, runner, output parser, and GIS layers remain pending.
 - 53/53 current official decks executed in the established evidence workflow;
 - all seven dispatcher exact-set reports pass;
 - whole-spec acceptance CI run `30443993754` passed all nine jobs;
-- official behavior-probe batch 1 evidence workflow `30447131971` passed;
-- final PR #7 head passed all nine CI jobs in `30448106914` and the official workflow `30448106897`;
-- PR #7 merged to `main` as `4e6e92ddd86420144438a4e6d2eb0b77b3db33ab`.
+- batch-1 official evidence workflow `30447131971` passed;
+- batch-2 reviewed evidence workflow `30452705724` passed;
+- batch-2 reviewed evidence head passed all nine jobs in CI `30452701635`;
+- final documentation/catalog commits still require the branch's final CI before PR #9 can be marked ready.
