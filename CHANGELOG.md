@@ -26,11 +26,13 @@ All notable project changes will be recorded here.
 - source-verified catalogs for 40 `MODELOPT` tokens and 23 `DEBUGOPT` tokens;
 - CO batch 1 evidence table, human-readable reference and structural tests;
 - CO pathway batch 2 as three fragments covering 10 decay, receptor/urban, static ozone and NO2-ratio records;
-- CO batch 2 evidence/promotions and tests for source-default, range and preservation boundaries.
+- CO batch 2 evidence/promotions and tests for source-default, range and preservation boundaries;
+- complete 39-record CO pathway specification, final 15-record evidence set, source exact-match verifier and official behavior-probe catalog;
+- complete MODELOPT status audit for all 40 source-recognized tokens.
 
 ### Changed
 
-- v26135 metadata completeness now reports CO batches 1-2 with 24 source-verified records;
+- v26135 metadata completeness now reports a complete source-verified CO pathway with all 39 primary records;
 - pathway fragment loading now composes positive older/equal batches into a newer aggregate batch;
 - EPA archive, fixture and executable evidence workflows are manual-only after their initial successful evidence runs;
 - keyword promotions are recorded in a companion status-override/evidence layer until the main inventory is regenerated deterministically.
@@ -55,4 +57,4 @@ All notable project changes will be recorded here.
 - documented CO pathway continuation, loss-aware preservation, restart dependencies and repeatable `DEBUGOPT` behavior;
 - preserved the `EVENTFIL` source-comment/implementation discrepancy for future executable tests;
 - documented decay source-range boundaries, OZONEFIL manual/source repeatability evidence, NO2STACK sentinel behavior and ARMRATIO trailing-field preservation;
-- advanced the handover from CO batch 2 to temporal ozone and ambient NOx controls.
+- completed the CO pathway and advanced specification work to combined SO+RE, then ME+EV+OU stages.

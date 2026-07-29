@@ -1,46 +1,29 @@
-# CO pathway source-verified specification
+# AERMOD v26135 complete CO pathway specification
 
 ## Status
 
-The bundled AERMOD v26135 CO specification remains **partial**. Batch 1 covers 14 framing/control records. Batch 2 adds 10 decay, urban/receptor, static ozone and NO2-ratio records, for **24 records total**. All other CO records remain inventory-only.
+The bundled CO pathway specification now covers all **39 primary records** dispatched by `COCARD` in EPA AERMOD v26135. The loader composes ten immutable JSON fragments and verifies that the aggregate record order contains no duplicates.
 
-```python
-from aermodkit.spec import load_pathway_specification
+This is complete **record-specification coverage**, not a claim that a production parser, writer, runner, or regulatory-use workflow already exists.
 
-co = load_pathway_specification("CO", "26135")
-ozone_file = co.get_record("OZONEFIL")
-```
+## Coverage
 
-## Batch 2 records
+- batches 1–2: 24 framing, model/run, restart, debug, decay, urban, static ozone, and NO2-ratio records;
+- unified completion stage: 15 remaining records for temporal ozone, ambient NOx, gas deposition, low wind, PRIME research options, and aircraft plume rise;
+- `MODELOPT`: all 40 source-recognized tokens now carry explicit guide/status classifications, including legacy source/guide discrepancies.
 
-| Keyword | Purpose | Current fixtures | Handler |
-|---|---|---:|---|
-| `HALFLIFE` | exponential-decay half-life | 0 | `EDECAY` |
-| `DCAYCOEF` | exponential-decay coefficient | 0 | `EDECAY` |
-| `FLAGPOLE` | default receptor height | 5 | `FLAGDF` |
-| `URBANOPT` | single/multiple urban areas | 7 | `URBOPT` |
-| `O3SECTOR` | ozone wind sectors | 0 | `O3SECTOR` |
-| `OZONEVAL` | constant/fallback ozone | 16 | `O3VAL` |
-| `OZONEFIL` | hourly ozone file | 8 | `O3FILE` |
-| `NO2EQUIL` | ambient equilibrium ratio | 7 | `NO2EQ` |
-| `NO2STACK` | global in-stack ratio | 16 | `NO2STK` |
-| `ARMRATIO` | ARM2 min/max ratios | 2 | `ARM2_Ratios` |
+## Completion invariant
 
-## Source-behavior boundaries
+`tools/verify_complete_co_specification.py` extracts all `KEYWRD .EQ.` branches from `coset.f` and requires an exact set match with the bundled schema. Current expected result: 39 source records, 39 bundled records, no missing or extra records.
 
-- `HALFLIFE` and `DCAYCOEF` are mutually exclusive and the first form wins. `EDECAY` does not explicitly reject zero or negative values; this is recorded rather than replaced by invented source validation.
-- `FLAGPOLE` defaults to 0.0 m when the optional value is absent.
-- `URBANOPT` has distinct single- and multiple-area forms. A non-1.0 roughness is forced to 1.0 under DFAULT and is non-default otherwise.
-- `O3SECTOR` accepts two to six ascending circular sector starts. Widths below 30 degrees are errors; widths below 60 degrees generate warnings.
-- `OZONEVAL` and `OZONEFIL` default to UG/M3. Sector forms depend on `O3SECTOR`. The source does not explicitly reject same-sector duplicate records, so focused executable probes remain required.
-- The User's Guide labels `OZONEFIL` non-repeatable, while the source dispatcher/handler supports sector-indexed calls. Both pieces of evidence are retained rather than silently choosing one interpretation.
-- `NO2STACK` has no current default of 0.1; setup uses a negative sentinel until a CO or source-level ratio is supplied.
-- `ARMRATIO` applies 0.50/0.90 defaults when omitted. Its handler checks for too few fields but does not explicitly reject trailing extra fields, which must be preserved.
+## Important retained evidence boundaries
 
-## Fragment composition
+1. `OZONEFIL` and `NOX_FILE`: current guide wording and source sector-index behavior are both retained; same-sector repeat behavior remains an official-executable probe.
+2. `ARCFTOPT`: guide says non-repeatable, while the dispatcher does not issue the standard repeat error and only assigns the airport ID for exactly one payload field.
+3. `ROMBERG` and `TOXICS`: source-recognized legacy tokens are preserved but are not advertised as current guide options.
+4. v26135 includes a `BETA` family marker but no actual BETA options.
+5. Source recognition never implies regulatory approval.
 
-Aggregate CO batch 2 intentionally composes older batch 1 fragments with new batch 2 fragments. The loader accepts a fragment only when its batch is positive and no newer than the aggregate batch. This lets completed evidence remain immutable while later batches extend the same pathway.
+## Loss-aware boundary
 
-## Still excluded
-
-`O3VALUES`, `OZONUNIT`, all NOX background records, deposition, low-wind/direction-window controls, aircraft controls and remaining option-dependent records are not yet bundled. No production lexer/parser/AST/writer is claimed.
+Comments, blank lines, original case, spacing, repeat-value syntax, path quoting, unknown records, future tokens, and uninspected extra fields must survive syntax parsing. Semantic validation may diagnose them but must not silently discard them.
