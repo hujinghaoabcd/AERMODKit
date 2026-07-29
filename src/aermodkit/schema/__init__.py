@@ -2,6 +2,7 @@
 
 from .models import (
     AermodVersion,
+    ContinuationFamilySpec,
     Diagnostic,
     DiagnosticSeverity,
     EvidenceRef,
@@ -17,6 +18,7 @@ from .registry import SchemaRegistry, get_registry
 
 __all__ = [
     "AermodVersion",
+    "ContinuationFamilySpec",
     "Diagnostic",
     "DiagnosticSeverity",
     "EvidenceRef",

@@ -8,6 +8,7 @@ from typing import Iterable
 
 from .models import (
     AermodVersion,
+    ContinuationFamilySpec,
     Diagnostic,
     DiagnosticSeverity,
     KeywordSpec,
@@ -23,6 +24,7 @@ class SchemaRegistry:
     keywords: dict[tuple[Pathway, str], KeywordSpec]
     model_options: dict[str, ModelOptionSpec]
     source_types: dict[str, SourceTypeSpec]
+    continuation_families: dict[tuple[Pathway, str], ContinuationFamilySpec]
 
     def keyword(self, pathway: Pathway | str, name: str) -> KeywordSpec | None:
         return self.keywords.get((Pathway.parse(pathway), name.upper()))
@@ -32,6 +34,22 @@ class SchemaRegistry:
 
     def source_type(self, name: str) -> SourceTypeSpec | None:
         return self.source_types.get(name.upper())
+
+    def continuation_family(
+        self,
+        pathway: Pathway | str,
+        keyword: str,
+    ) -> ContinuationFamilySpec | None:
+        return self.continuation_families.get((Pathway.parse(pathway), keyword.upper()))
+
+    def pathway_keywords(self, pathway: Pathway | str) -> tuple[KeywordSpec, ...]:
+        target = Pathway.parse(pathway)
+        return tuple(
+            sorted(
+                (spec for spec in self.keywords.values() if spec.pathway is target),
+                key=lambda spec: (spec.order, spec.name),
+            )
+        )
 
     def canonical_option_order(self, options: Iterable[str]) -> tuple[str, ...]:
         unique = {option.upper() for option in options}
@@ -81,9 +99,7 @@ class SchemaRegistry:
                     Diagnostic(
                         rule_id="AERMODKIT-V26135-MODELOPT-REQUIRES-ALL",
                         severity=DiagnosticSeverity.ERROR,
-                        message=(
-                            f"{option} requires option(s): {', '.join(sorted(missing_all))}"
-                        ),
+                        message=f"{option} requires option(s): {', '.join(sorted(missing_all))}",
                         pathway=Pathway.CONTROL,
                         keyword="MODELOPT",
                         evidence=spec.evidence,
@@ -95,18 +111,14 @@ class SchemaRegistry:
                     Diagnostic(
                         rule_id="AERMODKIT-V26135-MODELOPT-REQUIRES-ANY",
                         severity=DiagnosticSeverity.ERROR,
-                        message=(
-                            f"{option} requires one of: "
-                            f"{', '.join(sorted(spec.requires_any))}"
-                        ),
+                        message=f"{option} requires one of: {', '.join(sorted(spec.requires_any))}",
                         pathway=Pathway.CONTROL,
                         keyword="MODELOPT",
                         evidence=spec.evidence,
                     )
                 )
 
-            active_conflicts = spec.conflicts & selected
-            for conflict in sorted(active_conflicts):
+            for conflict in sorted(spec.conflicts & selected):
                 if option < conflict:
                     diagnostics.append(
                         Diagnostic(
@@ -140,7 +152,6 @@ class SchemaRegistry:
                     keyword="MODELOPT",
                 )
             )
-
         return _deduplicate_diagnostics(diagnostics)
 
 

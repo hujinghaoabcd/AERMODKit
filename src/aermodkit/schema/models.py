@@ -99,16 +99,51 @@ class KeywordSpec:
     max_args: int | None = 0
     repeatable: bool = False
     mandatory: bool = False
+    mandatory_unless: frozenset[str] = frozenset()
+    requires_keywords: frozenset[str] = frozenset()
+    requires_options: frozenset[str] = frozenset()
+    conflicts_keywords: frozenset[str] = frozenset()
+    first_if_present: bool = False
+    must_be_last: bool = False
     order: int = 1000
     evidence: tuple[EvidenceRef, ...] = ()
     notes: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "name", self.name.upper())
+        object.__setattr__(self, "mandatory_unless", _upper_set(self.mandatory_unless))
+        object.__setattr__(self, "requires_keywords", _upper_set(self.requires_keywords))
+        object.__setattr__(self, "requires_options", _upper_set(self.requires_options))
+        object.__setattr__(self, "conflicts_keywords", _upper_set(self.conflicts_keywords))
         if self.min_args < 0:
             raise ValueError("min_args cannot be negative")
         if self.max_args is not None and self.max_args < self.min_args:
             raise ValueError("max_args cannot be smaller than min_args")
+
+
+@dataclass(frozen=True, slots=True)
+class ContinuationFamilySpec:
+    """A repeated-keyword card family controlled by action tokens.
+
+    ``action_index`` is zero-based within :attr:`Statement.arguments`.
+    For ``RE GRIDCART NET1 STA`` the action index is 1.
+    """
+
+    pathway: Pathway
+    keyword: str
+    action_index: int
+    start_tokens: frozenset[str]
+    end_tokens: frozenset[str]
+    member_tokens: frozenset[str]
+    evidence: tuple[EvidenceRef, ...] = ()
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "keyword", self.keyword.upper())
+        object.__setattr__(self, "start_tokens", _upper_set(self.start_tokens))
+        object.__setattr__(self, "end_tokens", _upper_set(self.end_tokens))
+        object.__setattr__(self, "member_tokens", _upper_set(self.member_tokens))
+        if self.action_index < 0:
+            raise ValueError("action_index cannot be negative")
 
 
 @dataclass(frozen=True, slots=True)

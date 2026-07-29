@@ -1,9 +1,9 @@
 # AERMODKit handover
 
 - Updated: 2026-07-29
-- Current package version: 0.1.0a1
+- Current package version: 0.1.0a2
 - EPA baseline: AERMOD v26135
-- Current completed unit: 0.1 progress 01 — versioned schema and lossless syntax core
+- Current completed unit: 0.1 progress 02 — full registry and semantic mapping
 
 ## Original task
 
@@ -20,44 +20,47 @@ support Python, CLI, QGIS, desktop, and web applications.
 4. Unknown keywords, comments, ordering, and raw text are retained.
 5. Road geometries may not be collapsed to first/last points or first multipart members.
 6. Large spatial assets stay outside small JSON/YAML project configuration files.
-7. Each work unit updates progress and handover documents.
+7. The semantic project view never replaces the lossless AST as source of truth.
+8. Each work unit updates tests, progress, and handover documents.
 
-## Implemented files
+## Completed
 
-- `src/aermodkit/schema/`: version models, registry, and v26135 data.
-- `src/aermodkit/syntax/`: lossless AST, lexer, parser, and writers.
-- `src/aermodkit/validation/`: schema-driven validation engine.
-- `tests/`: registry, round-trip, and compatibility tests.
-- `docs/progress/2026-07-29_0.1_schema_syntax_core.md`.
+- Versioned schema primitives and v26135 registry loading.
+- All 36 v26135 MODELOPT tokens and all 13 source types.
+- Full CO/SO/RE/ME/EV/OU statement-keyword registry.
+- Lossless parser plus preserve/canonical writers.
+- Explicit GRIDCART and GRIDPOLR continuation families.
+- Keyword, option, source, ordering, continuation, and cross-pathway diagnostics.
+- Read-only semantic projection for options, pollutant, periods, sources, met, outputs,
+  and include references.
+- Official-syntax multi-pathway fixture and expanded regression tests.
 
-## Current behavioral guarantees
+## Current guarantees
 
-- `parse -> preserve write` does not discard unknown statements or comments.
-- Canonical output is deterministic.
-- v26135 MODELOPT tokens are registered once in a central schema.
-- All 13 source types have explicit LOCATION and SRCPARAM contracts.
-- `RLINEXT` and `SWPOINT` require ALPHA.
-- Diagnostic records contain rule IDs, severity, pathway, keyword, line, source ID,
-  and evidence slots.
+- `parse -> preserve write` retains every original line.
+- Unknown future keywords remain in the AST and produce warnings rather than deletion.
+- Every known keyword carries pathway-specific EPA v26135 evidence.
+- The complete registered keyword surface is test-asserted.
+- Semantic mapping retains `model.document is original_document`.
 
 ## Known boundaries
 
-- Only the first CO/SO keyword subset is semantically registered.
-- Unknown keywords are preserved and warned about, but not interpreted.
-- Continuation-card semantics and include-file expansion are not yet modeled.
-- No EPA binary execution is part of this first unit.
-- No GIS data model has been implemented yet.
+- Multi-form keywords still use conservative argument ranges rather than discriminated forms.
+- Included files are referenced but are not recursively expanded.
+- Values are not yet fully converted to typed fields with units/range validation.
+- No EPA binary runner or numeric parity harness is included yet.
+- GIS roadway conversion remains intentionally deferred.
 
 ## Next locked task
 
-### 0.1 progress 02 — complete v26135 keyword registry and semantic mapping
+### 0.1 progress 03 — typed keyword forms, include graph, and official binary harness
 
-1. Extract all CO and SO keywords from the July 2026 Quick Reference/User's Guide.
-2. Add RE, ME, EV, and OU keyword schemas.
-3. Model repeatable keywords and continuation-card families explicitly.
-4. Add keyword dependencies, ordering rules, and version evidence.
-5. Introduce semantic project mapping while retaining the AST as the lossless authority.
-6. Add official sample/test-case fixtures and prepare real v26135 executable validation.
+1. Add discriminated forms for complex keywords and continuation records.
+2. Implement safe include resolution, cycle detection, and dependency graph export.
+3. Add typed fields, units, enum/range validation, and field-level diagnostics.
+4. Add v26135 binary discovery/build provenance and execution metadata.
+5. Import selected official EPA test cases and compare generated outputs.
+6. Add a workspace manifest and immutable run ledger.
 
-Do not start the QGIS plugin, web UI, output visualization, or roadway GIS conversion before
-this schema/syntax foundation is complete.
+Do not start QGIS, desktop, or web UI work until the official binary harness and project
+workspace are stable.

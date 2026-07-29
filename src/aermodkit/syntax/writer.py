@@ -7,7 +7,7 @@ from typing import Literal
 from aermodkit.schema.models import Pathway
 from aermodkit.schema.registry import SchemaRegistry, get_registry
 
-from .ast import AermodDocument, PathwayBlock, RawLine, Statement
+from .ast import AermodDocument, RawLine, Statement
 
 WriteMode = Literal["preserve", "canonical"]
 PATHWAY_ORDER = {

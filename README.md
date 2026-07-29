@@ -7,48 +7,43 @@ running, and analysing projects across the U.S. EPA AERMOD modelling ecosystem.
 > and official test cases are the source of truth. Third-party projects are references
 > only and are not treated as authoritative implementations.
 
-## Project purpose
+## Current milestone
 
-AERMODKit does **not** replace the EPA Fortran numerical core. It builds a stable,
-version-aware layer around the official programs:
+Version `0.1.0a2` provides:
 
-- lossless reading and writing of AERMOD runstreams;
-- machine-readable, versioned keyword and compatibility schemas;
-- structured diagnostics tied to official evidence;
-- GIS-first source, receptor, terrain, and result workflows;
-- reproducible workspaces, execution ledgers, and official-binary regression tests;
-- one UI-independent core for Python, CLI, QGIS, desktop, and web adapters.
-
-## Current milestone: 0.1 schema and syntax core
-
-The first implemented unit provides:
-
-- an EPA v26135 registry for the initial CO/SO keyword set;
-- all 36 MODELOPT tokens documented by the v26135 Quick Reference, including
-  `BAREDGE` described in the option details;
-- all 13 source types, including `POINTCAP`, `POINTHOR`, `RLINEXT`, and `SWPOINT`;
-- schema-driven `DFAULT`/`ALPHA`/chemistry compatibility checks;
-- a lossless AST that retains comments, spacing, quoted filenames, and unknown keywords;
-- `preserve` and deterministic `canonical` writer modes.
+- complete CO, SO, RE, ME, EV, and OU keyword registries for v26135;
+- all v26135 MODELOPT tokens and all 13 source types;
+- lossless reading and exact preserve-mode writing;
+- deterministic canonical writing;
+- GRIDCART/GRIDPOLR continuation validation;
+- keyword, option, ordering, source, and cross-pathway diagnostics;
+- a read-only semantic project view that always retains the original syntax tree.
 
 ```python
-from aermodkit import parse_aermod, validate_document, write_aermod
+from aermodkit import (
+    build_project_model,
+    parse_aermod,
+    validate_document,
+    write_aermod,
+)
 
 text = open("aermod.inp", encoding="utf-8").read()
 document = parse_aermod(text, version="26135")
 issues = validate_document(document)
+model = build_project_model(document)
 clone = write_aermod(document, mode="preserve")
 canonical = write_aermod(document, mode="canonical")
 ```
 
-## Non-negotiable engineering rules
+## Architecture rules
 
 1. EPA executables remain the numerical truth source.
 2. Every keyword and rule is versioned and evidence-backed.
 3. Unknown input is never silently discarded.
-4. GIS geometry is never reduced to a lossy first/last-point approximation by default.
-5. The core package remains independent of GUI and web frameworks.
-6. Each completed batch includes tests, a progress record, and a handover update.
+4. The lossless AST is authoritative; semantic objects are projections.
+5. GIS geometry is never reduced to a lossy first/last-point approximation by default.
+6. The core package remains independent of GUI and web frameworks.
+7. Each completed batch includes tests, a progress record, and a handover update.
 
 ## Development
 
