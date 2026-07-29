@@ -7,8 +7,10 @@ on:
       - ".github/workflows/epa-official-behavior-probes-batch2.yml"
       - "tools/run_v26135_official_behavior_probe_batch.py"
       - "tools/merge_v26135_behavior_probe_manifests.py"
+      - "tools/extract_v26135_source_pattern_evidence.py"
       - "reference/probes/v26135/batch2/manifest.json"
       - "reference/probes/v26135/batch2/additional-cases.json"
+      - "reference/probes/v26135/batch2/source-searches.json"
       - "tests/test_behavior_probe_batch2_manifest.py"
 
 permissions:
@@ -55,6 +57,14 @@ jobs:
           }
           "AERMOD_EXE=$($exe.FullName)" |
             Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Retain exact official source diagnostic contexts
+        shell: pwsh
+        run: |
+          python tools/extract_v26135_source_pattern_evidence.py `
+            --source-root official-source `
+            --config reference/probes/v26135/batch2/source-searches.json `
+            --output "$env:RUNNER_TEMP/aermod-v26135-behavior-probes-batch2/source-pattern-evidence.json"
 
       - name: Compose reviewed batch manifest
         shell: pwsh
