@@ -4,44 +4,18 @@
 - Branch: `agent/bootstrap-project-foundation`
 - Pull request: #1 (draft, unmerged)
 - Package version: `0.0.1.dev0`
-- Development phase: Phase 0 complete CO specification, remaining pathway specification pending
+- Development phase: Phase 0 complete CO + SO + RE specifications; ME + EV + OU pending
 
-## Complete CO specification
+## Complete pathway specifications
 
-All 39 primary records dispatched by EPA AERMOD v26135 `COCARD` are bundled in a versioned, source-verified specification. The aggregate contains ten fragments and no duplicate or missing CO primary keyword.
+- CO: 39/39 primary records.
+- SO: 40/40 primary records, 13 executable-recognized source types, exact source-type-dependent SRCPARAM signatures.
+- RE: 9/9 primary records; GRIDCART/GRIDPOLR secondary records modeled as block state machines.
 
-The final combined stage added:
+## Corrected evidence
 
-- `O3VALUES`, `OZONUNIT`;
-- `NOXSECTR`, `NOXVALUE`, `NOX_VALS`, `NOX_UNIT`, `NOX_FILE`;
-- `GDSEASON`, `GASDEPDF`, `GDLANUSE`, `GASDEPVD`;
-- `LOW_WIND`, `AWMADWNW`, `ORD_DWNW`;
-- `ARCFTOPT`;
-- explicit current-status classifications for all 40 source-recognized `MODELOPT` tokens.
+The old inventory omitted SO `PLATFORM` and `VBARRIER` and left `SWPOINT` unconfirmed. Official v26135 executable source confirms all three syntax paths; manual/regulatory status remains separate.
 
-The source-dispatch exact-set check reports:
+## Not yet implemented
 
-```text
-source COCARD primary records: 39
-bundled CO records:           39
-missing records:              0
-extra records:                0
-```
-
-## Validation state
-
-The verified reconstruction workflow checked the compressed payload SHA256, every target-file SHA256, package installation, Ruff, strict mypy, and pytest with coverage. GitHub Actions run `30421642505` completed successfully across Ubuntu, Windows, and macOS with Python 3.11, 3.12, and 3.13; all nine matrix jobs and the final apply job passed.
-
-After removing all temporary reconstruction content and restoring the ordinary workflow, clean-tree CI run `30421914707` also passed all nine Ubuntu/Windows/macOS × Python 3.11/3.12/3.13 combinations. The final branch no longer contains payload chunks, the reconstruction script, or the one-time apply workflow.
-
-## Evidence boundary
-
-Complete CO specification means exact record-level syntax/evidence coverage. It does not mean the production parser, AST, writer, runner, output parser, GIS layer, or all regulatory workflows are implemented. Guide/source discrepancies are preserved for focused executable probes rather than normalized without evidence.
-
-## Existing parity baseline
-
-- all official assets hashed and indexed;
-- official 29-unit source build order recorded;
-- GNU Fortran 14.2 build completes all 53 official decks;
-- official executable parity tier separated from reproduced source-build tiers;
-- CO source/specification coverage is now exact at the primary-record dispatch level.
+Production lexer/parser, immutable loss-aware syntax tree, format-preserving writer, semantic model, runner, output parser, and GIS layers remain pending.

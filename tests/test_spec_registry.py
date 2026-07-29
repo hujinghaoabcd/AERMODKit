@@ -11,12 +11,11 @@ def test_default_version_is_registered() -> None:
     assert default in get_supported_versions()
 
 
-def test_v26135_metadata_reports_complete_co_only() -> None:
+def test_v26135_metadata_reports_complete_co_so_re() -> None:
     metadata = load_metadata("26135")
     assert metadata.release_date == date(2026, 7, 9)
-    assert "complete source-verified CO pathway" in metadata.schema_completeness
-    assert "39 primary" in metadata.schema_completeness
-    assert "other pathways remain partial" in metadata.schema_completeness
+    assert "complete source-verified CO, SO, and RE" in metadata.schema_completeness
+    assert "ME, EV, and OU" in metadata.schema_completeness
 
 
 def test_unknown_version_fails_loudly() -> None:

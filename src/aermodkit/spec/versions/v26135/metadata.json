@@ -4,11 +4,15 @@
   "release_date": "2026-07-09",
   "authority": "U.S. EPA SCRAM",
   "status": "current baseline for AERMODKit bootstrap",
-  "schema_completeness": "complete source-verified CO pathway specification; all 39 primary COCARD records bundled; other pathways remain partial/inventory-only",
+  "schema_completeness": "complete source-verified CO, SO, and RE pathway specifications; ME, EV, and OU remain inventory-only",
   "notes": [
     "Official manuals, source code, release notes, errata, executable behavior, and test cases remain authoritative.",
     "All 39 primary CO records dispatched by coset.f are now represented in the bundled specification.",
     "Complete CO record coverage does not imply production parser/execution support or regulatory approval of non-default options.",
-    "Guide/source discrepancies for OZONEFIL, NOX_FILE, ARCFTOPT, ROMBERG, and TOXICS are preserved and require/retain focused behavior evidence."
+    "Guide/source discrepancies for OZONEFIL, NOX_FILE, ARCFTOPT, ROMBERG, and TOXICS are preserved and require/retain focused behavior evidence.",
+    "CO: 39/39 primary COCARD records bundled.",
+    "SO: 40/40 primary SOCARD records bundled, including source-recognized PLATFORM and VBARRIER.",
+    "RE: 9/9 primary RECARD records bundled; GRID secondary syntax is represented as loss-aware block state machines.",
+    "ME, EV, and OU remain pending exact specification."
   ]
 }

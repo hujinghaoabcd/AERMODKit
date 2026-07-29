@@ -2,19 +2,18 @@
 
 ## Immediate major stage
 
-Complete the remaining input pathways in two large stages rather than many small batches:
+Complete **ME + EV + OU together**:
 
-1. **SO + RE together** — all source definitions, source-type-dependent SRCPARAM signatures, downwash/barriers/roads/background/hourly emissions, Cartesian/polar/discrete receptor blocks, and include handling.
-2. **ME + EV + OU together** — meteorology, event processing, output controls, output-family schemas, and file-format/header behavior.
-
-## Parallel evidence work
-
-Run the focused official-executable probes listed in `reference/coverage/v26135-co-official-behavior-probes.json` for the remaining guide/source discrepancies. These probes do not block moving to SO+RE because the ambiguity is explicit and loss-aware preservation is already required.
+- meteorological file/data/date/turbulence controls;
+- event period/location/include records;
+- every output control and output-family file schema;
+- file-format, header, averaging-period, group, rank and annual/multiyear behavior;
+- exact source-dispatch matching, fixtures, probes, tests, CI, and handover.
 
 ## After all pathways
 
-- complete clean-room PyAERMOD coverage audit;
-- run deterministic full-spec consistency generation;
+- complete clean-room PyAERMOD audit;
+- run deterministic full-spec acceptance;
 - select unknown/development syntax fixtures;
-- implement token/source-location model, pathway state machine, immutable loss-aware syntax tree, format-preserving writer, and round-trip tests;
-- only then map to semantic project models and runner/output/GIS layers.
+- implement token/source-location model, pathway state machine, immutable loss-aware syntax tree, and format-preserving writer;
+- only then implement semantic project models, runner, output parsing, and GIS integrations.

@@ -1,0 +1,601 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "STARTING",
+      "record_role": "pathway-framing-start",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] STARTING"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must occur exactly once in the pathway."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "75-119",
+        "handler": "SOCARD",
+        "handler_file": "soset.f",
+        "handler_lines": "1-1008"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Pathway framing record processed directly by the dispatcher."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:12",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:13",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:12",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:12"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "LOCATION",
+      "record_role": "source-identity-type-and-geometry",
+      "required": true,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] LOCATION <SrcID> <POINT|POINTCAP|POINTHOR|VOLUME|AREA|AREAPOLY|AREACIRC|OPENPIT|SWPOINT> <X> <Y> [<Zs>|FLAT]",
+        "[SO] LOCATION <SrcID> <LINE|BUOYLINE|RLINE> <X1> <Y1> <X2> <Y2> [<Zs>|FLAT]",
+        "[SO] LOCATION <SrcID> RLINEXT <X1> <Y1> <Z1> <X2> <Y2> <Z2> [<Zs>|FLAT]"
+      ],
+      "fields": [
+        {
+          "name": "SrcID",
+          "type": "string",
+          "max_length": 12,
+          "reserved_values": [
+            "BACKGROUND",
+            "BACKGRND"
+          ]
+        },
+        {
+          "name": "source_type",
+          "type": "enum",
+          "allowed_values": [
+            "POINT",
+            "POINTCAP",
+            "POINTHOR",
+            "VOLUME",
+            "AREA",
+            "AREAPOLY",
+            "AREACIRC",
+            "OPENPIT",
+            "LINE",
+            "BUOYLINE",
+            "RLINE",
+            "RLINEXT",
+            "SWPOINT"
+          ]
+        },
+        {
+          "name": "coordinates",
+          "type": "source-type-dependent numeric tuple"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Source IDs must be unique and LOCATION must precede every source-specific record."
+        },
+        {
+          "rule": "OPEN_PIT and OPEN-PIT normalize to OPENPIT in the executable source."
+        },
+        {
+          "rule": "SWPOINT is executable-source-recognized and ALPHA-only although omitted from the current manual source-type summary; the discrepancy is preserved."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "source-type-dependent field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "230",
+          "condition": "source ID longer than 12 characters"
+        },
+        {
+          "severity": "error",
+          "code": "300/310",
+          "condition": "invalid or duplicate source identity"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "120-130",
+        "handler": "SOLOCA",
+        "handler_file": "soset.f",
+        "handler_lines": "2036-2525"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact accepted LOCATION source types are taken from SOLOCA rather than inferred from the manual list."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 289,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:16",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:17",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:16",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:16"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "source_types": [
+        {
+          "type": "POINT",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "POINTCAP",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "POINTHOR",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "VOLUME",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "release_height",
+            "initial_sigma_y",
+            "initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "AREA",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "x_length",
+            "optional_y_length",
+            "optional_angle",
+            "optional_initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "AREAPOLY",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "vertex_count",
+            "optional_initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "AREACIRC",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "radius",
+            "optional_vertex_count",
+            "optional_initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "OPENPIT",
+          "aliases": [
+            "OPEN_PIT",
+            "OPEN-PIT"
+          ],
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "x_length",
+            "y_length",
+            "pit_volume",
+            "optional_angle"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "LINE",
+          "location_fields": [
+            "x1",
+            "y1",
+            "x2",
+            "y2",
+            "optional_elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_length",
+            "release_height",
+            "width",
+            "optional_initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "BUOYLINE",
+          "location_fields": [
+            "x1",
+            "y1",
+            "x2",
+            "y2",
+            "optional_elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "average_emission_rate",
+            "average_release_height"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "RLINE",
+          "location_fields": [
+            "x1",
+            "y1",
+            "x2",
+            "y2",
+            "optional_elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate_per_length",
+            "release_height",
+            "road_width",
+            "optional_initial_sigma_z"
+          ],
+          "status": "current-manual-and-source"
+        },
+        {
+          "type": "RLINEXT",
+          "location_fields": [
+            "x1",
+            "y1",
+            "z1",
+            "x2",
+            "y2",
+            "z2",
+            "optional_elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "offset_from_centerline",
+            "road_width",
+            "initial_sigma_z"
+          ],
+          "status": "current-manual-and-source-alpha-features"
+        },
+        {
+          "type": "SWPOINT",
+          "location_fields": [
+            "x",
+            "y",
+            "elevation_or_FLAT"
+          ],
+          "srcparam_fields": [
+            "emission_rate",
+            "release_height",
+            "building_width",
+            "building_length",
+            "building_height",
+            "building_angle"
+          ],
+          "status": "source-recognized-alpha-development-manual-list-omission"
+        }
+      ]
+    },
+    {
+      "keyword": "SRCPARAM",
+      "record_role": "source-type-dependent-physical-parameters",
+      "required": true,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] SRCPARAM <SrcID> <source-type-dependent numeric parameters>"
+      ],
+      "fields": [
+        {
+          "name": "SrcID",
+          "type": "existing source ID"
+        },
+        {
+          "name": "parameters",
+          "type": "source-type-dependent numeric tuple"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Exactly one SRCPARAM record is required for every defined source."
+        },
+        {
+          "rule": "The source type selected by LOCATION determines the accepted signature and field count."
+        },
+        {
+          "rule": "SWPOINT signature is accepted only with MODELOPT ALPHA."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "wrong source-type-dependent field count"
+        },
+        {
+          "severity": "error",
+          "code": "315",
+          "condition": "duplicate SRCPARAM for source"
+        },
+        {
+          "severity": "error",
+          "code": "300",
+          "condition": "LOCATION not previously defined"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric parameter"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "131-143",
+        "handler": "SOPARM",
+        "handler_file": "soset.f",
+        "handler_lines": "2526-2787"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact signatures are source-verified against SOPARM and its source-type handlers."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 289,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:21",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:22",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:21",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:21"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified",
+      "source_type_signatures": {
+        "POINT": {
+          "fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "min_values": 5,
+          "max_values": 5
+        },
+        "POINTCAP": {
+          "fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "min_values": 5,
+          "max_values": 5
+        },
+        "POINTHOR": {
+          "fields": [
+            "emission_rate",
+            "stack_height",
+            "exit_temperature",
+            "exit_velocity",
+            "stack_diameter"
+          ],
+          "min_values": 5,
+          "max_values": 5
+        },
+        "VOLUME": {
+          "fields": [
+            "emission_rate",
+            "release_height",
+            "initial_sigma_y",
+            "initial_sigma_z"
+          ],
+          "min_values": 4,
+          "max_values": 4
+        },
+        "AREA": {
+          "fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "x_length",
+            "optional_y_length",
+            "optional_angle",
+            "optional_initial_sigma_z"
+          ],
+          "min_values": 3,
+          "max_values": 6
+        },
+        "AREAPOLY": {
+          "fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "vertex_count",
+            "optional_initial_sigma_z"
+          ],
+          "min_values": 3,
+          "max_values": 4
+        },
+        "AREACIRC": {
+          "fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "radius",
+            "optional_vertex_count",
+            "optional_initial_sigma_z"
+          ],
+          "min_values": 3,
+          "max_values": 5
+        },
+        "OPENPIT": {
+          "fields": [
+            "emission_rate_per_area",
+            "release_height",
+            "x_length",
+            "y_length",
+            "pit_volume",
+            "optional_angle"
+          ],
+          "min_values": 5,
+          "max_values": 6
+        },
+        "LINE": {
+          "fields": [
+            "emission_rate_per_length",
+            "release_height",
+            "width",
+            "optional_initial_sigma_z"
+          ],
+          "min_values": 3,
+          "max_values": 4
+        },
+        "BUOYLINE": {
+          "fields": [
+            "average_emission_rate",
+            "average_release_height"
+          ],
+          "min_values": 2,
+          "max_values": 2
+        },
+        "RLINE": {
+          "fields": [
+            "emission_rate_per_length",
+            "release_height",
+            "road_width",
+            "optional_initial_sigma_z"
+          ],
+          "min_values": 3,
+          "max_values": 4
+        },
+        "RLINEXT": {
+          "fields": [
+            "emission_rate",
+            "offset_from_centerline",
+            "road_width",
+            "initial_sigma_z"
+          ],
+          "min_values": 4,
+          "max_values": 4
+        },
+        "SWPOINT": {
+          "fields": [
+            "emission_rate",
+            "release_height",
+            "building_width",
+            "building_length",
+            "building_height",
+            "building_angle"
+          ],
+          "min_values": 6,
+          "max_values": 6
+        }
+      }
+    }
+  ]
+}

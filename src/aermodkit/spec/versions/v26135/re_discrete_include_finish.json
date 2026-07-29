@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "RE",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "DISCCART",
+      "record_role": "discrete-cartesian-receptor",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] DISCCART <X> <Y> [<elevation> <hill_height>] [<flagpole_height>]"
+      ],
+      "fields": [
+        {
+          "name": "x",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "y",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "elevation",
+          "type": "conditional real",
+          "units": "selected ELEVUNIT"
+        },
+        {
+          "name": "hill_height",
+          "type": "conditional real",
+          "units": "selected ELEVUNIT"
+        },
+        {
+          "name": "flagpole_height",
+          "type": "conditional real",
+          "units": "m"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Accepted field count depends on active ELEV/FLAT and FLAGPOLE options; extra inactive fields generate warnings and are not silently discarded."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "200/202",
+          "condition": "outside 2..5 numeric payload fields"
+        },
+        {
+          "severity": "warning",
+          "code": "228/229",
+          "condition": "conditional terrain/flag fields missing or extra"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "74-78",
+        "handler": "DISCAR",
+        "handler_file": "reset.f",
+        "handler_lines": "1818-1988"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Direct receptor with Cartesian coordinates."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 121,
+        "files": 6,
+        "examples": [
+          "inputs/allsrcs.inp:150",
+          "inputs/lovett_rec.dat:11",
+          "inputs/lovett_rec.dat:12",
+          "inputs/lovett_rec.dat:13"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "DISCPOLR",
+      "record_role": "discrete-polar-receptor",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] DISCPOLR <SrcID> <distance> <direction> [<elevation> <hill_height>] [<flagpole_height>]"
+      ],
+      "fields": [
+        {
+          "name": "origin_source_id",
+          "type": "existing source ID",
+          "max_length": 12
+        },
+        {
+          "name": "distance",
+          "type": "real",
+          "units": "m"
+        },
+        {
+          "name": "direction",
+          "type": "real",
+          "units": "degrees"
+        },
+        {
+          "name": "elevation",
+          "type": "conditional real"
+        },
+        {
+          "name": "hill_height",
+          "type": "conditional real"
+        },
+        {
+          "name": "flagpole_height",
+          "type": "conditional real"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "The source ID defines the polar origin; accepted optional fields depend on terrain and flagpole options."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "300",
+          "condition": "origin source not found"
+        },
+        {
+          "severity": "warning",
+          "code": "228/229",
+          "condition": "conditional fields missing or extra"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "79-83",
+        "handler": "DISPOL",
+        "handler_file": "reset.f",
+        "handler_lines": "1989-2186"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Converted to Cartesian coordinates during setup."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 1,
+        "files": 1,
+        "examples": [
+          "inputs/allsrcs.inp:148"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "EVALCART",
+      "record_role": "evaluation-receptor",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] EVALCART <X> <Y> <elevation> <hill_height> <flagpole_height> <ArcID> [<name>]"
+      ],
+      "fields": [
+        {
+          "name": "x",
+          "type": "real"
+        },
+        {
+          "name": "y",
+          "type": "real"
+        },
+        {
+          "name": "elevation",
+          "type": "real"
+        },
+        {
+          "name": "hill_height",
+          "type": "real"
+        },
+        {
+          "name": "flagpole_height",
+          "type": "real"
+        },
+        {
+          "name": "arc_id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "optional string"
+        }
+      ],
+      "dependencies": {
+        "conflicts_with_modeopt": "PSDCREDIT"
+      },
+      "constraints": [
+        {
+          "rule": "Exactly six required payload fields plus optional name."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "147",
+          "condition": "used with PSDCREDIT"
+        },
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "field count outside 8..9 total"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "84-93",
+        "handler": "EVCART",
+        "handler_file": "reset.f",
+        "handler_lines": "2244-2379"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Evaluation receptor used for paired/model-evaluation outputs."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 361,
+        "files": 2,
+        "examples": [
+          "inputs/allsrcs.inp:152",
+          "inputs/in_urban.inp:32",
+          "inputs/in_urban.inp:33",
+          "inputs/in_urban.inp:34"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "ELEVUNIT",
+      "record_role": "receptor-elevation-units",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[RE] ELEVUNIT <METERS|FEET>"
+      ],
+      "fields": [
+        {
+          "name": "unit",
+          "type": "enum",
+          "allowed_values": [
+            "METERS",
+            "FEET"
+          ],
+          "default": "METERS"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must be the first functional RE record after STARTING, before any receptor definition."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated"
+        },
+        {
+          "severity": "error",
+          "code": "152",
+          "condition": "appears after receptor definition"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "94-108",
+        "handler": "REELUN",
+        "handler_file": "reset.f",
+        "handler_lines": "208-257"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Receptor elevations/hill heights are converted to metres at FINISHED."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 7,
+        "files": 7,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:27",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:28",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:32",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:32"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "INCLUDED",
+      "record_role": "include-receptor-runstream-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[RE] INCLUDED <filename>"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "path",
+          "max_length": 200,
+          "preserve_case": true
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Included content is recursively processed in RE context; include boundaries and filename spelling are loss-aware syntax."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "500",
+          "condition": "file cannot be opened"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "109-117",
+        "handler": "INCLUD",
+        "handler_file": "setup.f",
+        "handler_lines": "1874-1910"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Shared INCLUD routine."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 3,
+        "files": 3,
+        "examples": [
+          "inputs/flatelev.inp:26",
+          "inputs/lovett.inp:23",
+          "inputs/multurb.inp:26"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "FINISHED",
+      "record_role": "pathway-framing-finish",
+      "required": true,
+      "repeatability": "once",
+      "syntax": [
+        "[RE] FINISHED"
+      ],
+      "fields": [],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must occur exactly once in the pathway."
+        },
+        {
+          "rule": "Finalization performs pathway completeness and cross-record checks."
+        },
+        {
+          "rule": "No GRIDCART/GRIDPOLR block may remain open."
+        },
+        {
+          "rule": "At least one receptor must be defined by GRIDCART, GRIDPOLR, DISCCART, DISCPOLR, EVALCART, or INCLUDED content."
+        },
+        {
+          "rule": "Under ELEV mode all receptors require elevation and hill-height data; flagpole consistency is checked against CO FLAGPOLE."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "keyword repeated"
+        },
+        {
+          "severity": "error",
+          "code": "130",
+          "condition": "mandatory STARTING missing"
+        },
+        {
+          "severity": "error",
+          "code": "175",
+          "condition": "grid block missing END"
+        },
+        {
+          "severity": "error",
+          "code": "185",
+          "condition": "no receptors defined"
+        },
+        {
+          "severity": "error",
+          "code": "259",
+          "condition": "required receptor elevation/hill value missing"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "reset.f",
+        "dispatcher": "RECARD",
+        "dispatcher_lines": "118-207",
+        "handler": "RECARD",
+        "handler_file": "reset.f",
+        "handler_lines": "1-207"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.4 / Appendix A-5/A-6",
+        "notes": [
+          "Pathway framing record processed directly by the dispatcher."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 53,
+        "files": 53,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:31",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:32",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:36",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:36"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    }
+  ]
+}

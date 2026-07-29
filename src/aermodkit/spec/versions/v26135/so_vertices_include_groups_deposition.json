@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "AREAVERT",
+      "record_role": "area-polygon-vertices",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] AREAVERT <SrcID> <X1> <Y1> [<X2> <Y2> ...]"
+      ],
+      "fields": [
+        {
+          "name": "SrcID",
+          "type": "existing AREAPOLY source ID"
+        },
+        {
+          "name": "vertices",
+          "type": "x/y numeric pairs"
+        }
+      ],
+      "dependencies": {
+        "allowed_source_types": [
+          "AREAPOLY"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "Records accumulate vertices; the first vertex must match LOCATION and the final set must match SRCPARAM vertex_count."
+        },
+        {
+          "rule": "Odd coordinate counts and excess vertices are invalid."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "262",
+          "condition": "first vertex differs from LOCATION"
+        },
+        {
+          "severity": "error",
+          "code": "264",
+          "condition": "too many vertices"
+        },
+        {
+          "severity": "error",
+          "code": "300",
+          "condition": "source not defined"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "353-364",
+        "handler": "ARVERT",
+        "handler_file": "soset.f",
+        "handler_lines": "3229-3320"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Polygon closure/completeness is checked during final source QA."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 4,
+        "files": 2,
+        "examples": [
+          "inputs/allsrcs.inp:75",
+          "inputs/allsrcs.inp:76",
+          "inputs/scimtest.inp:29",
+          "inputs/scimtest.inp:30"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "INCLUDED",
+      "record_role": "include-source-runstream-file",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] INCLUDED <filename>"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "path",
+          "max_length": 200,
+          "preserve_case": true
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Included content is processed recursively in SO context; original include boundary and filename spelling must be preserved."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "missing or extra fields"
+        },
+        {
+          "severity": "error",
+          "code": "500",
+          "condition": "file cannot be opened"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "365-374",
+        "handler": "INCLUD",
+        "handler_file": "setup.f",
+        "handler_lines": "1874-1910"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Shared INCLUD routine; paths containing spaces may be quoted."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 3,
+        "files": 3,
+        "examples": [
+          "inputs/lovett.inp:13",
+          "inputs/multurb.inp:22",
+          "inputs/surfcoal.inp:15"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "SRCGROUP",
+      "record_role": "output-source-group-definition",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] SRCGROUP <GroupID|ALL> <SrcID|SrcID-Range> ... [BACKGROUND|BACKGRND]",
+        "[SO] SRCGROUP ALL [BACKGROUND|BACKGRND|NOBACKGROUND|NOBACKGRND]"
+      ],
+      "fields": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "max_length": 8
+        },
+        {
+          "name": "members",
+          "type": "source IDs/ranges or ALL"
+        },
+        {
+          "name": "background_switch",
+          "type": "optional enum",
+          "allowed_values": [
+            "BACKGROUND",
+            "BACKGRND",
+            "NOBACKGROUND",
+            "NOBACKGRND"
+          ]
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "At least one SRCGROUP is mandatory for non-PSDCREDIT runs and it must be the last functional SO keyword before FINISHED."
+        },
+        {
+          "rule": "BACKGROUND may appear only once for a group and is meaningful when background inputs are active."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "245",
+          "condition": "group ID too long"
+        },
+        {
+          "severity": "error",
+          "code": "323",
+          "condition": "invalid duplicate background marker"
+        },
+        {
+          "severity": "error",
+          "code": "140",
+          "condition": "later SO keyword appears after group finalization"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "375-386",
+        "handler": "SOGRP",
+        "handler_file": "soset.f",
+        "handler_lines": "5852-6050"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Group records may continue across multiple cards with the same group ID."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 148,
+        "files": 52,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:23",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:24",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:28",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:28"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "GASDEPOS",
+      "record_role": "source-specific-gas-deposition-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] GASDEPOS <SrcID|SrcID-Range> <air_diffusivity> <water_diffusivity> <leaf_cuticle_resistance> <henry_constant>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "air_diffusivity",
+          "type": "real",
+          "units": "cm2/s"
+        },
+        {
+          "name": "water_diffusivity",
+          "type": "real",
+          "units": "cm2/s"
+        },
+        {
+          "name": "leaf_cuticle_resistance",
+          "type": "real"
+        },
+        {
+          "name": "henry_constant",
+          "type": "real"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA GASDEP"
+      },
+      "constraints": [
+        {
+          "rule": "All four values must be positive, except zero invokes pollutant lookup defaults for supported pollutants."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201/202",
+          "condition": "field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "380",
+          "condition": "invalid deposition parameter"
+        },
+        {
+          "severity": "warning",
+          "code": "473",
+          "condition": "pollutant lookup default used"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "387-411",
+        "handler": "GASDEP",
+        "handler_file": "soset.f",
+        "handler_lines": "5242-5595"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Current source includes lookup values for selected pollutants such as SO2 and NO2."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/testgas.inp:24",
+          "inputs/testgas2.inp:25"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "METHOD_2",
+      "record_role": "particle-deposition-method-2-parameters",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] METHOD_2 <SrcID|SrcID-Range> <fine_mass_fraction> <mass_mean_diameter>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "fine_mass_fraction",
+          "type": "real",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        {
+          "name": "mass_mean_diameter",
+          "type": "real",
+          "units": "micrometers"
+        }
+      ],
+      "dependencies": {
+        "requires_modeopt": "ALPHA particle deposition",
+        "conflicts_with": [
+          "PARTDIAM",
+          "MASSFRAX",
+          "PARTDENS"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "A source cannot use Method 1 and Method 2 simultaneously."
+        },
+        {
+          "rule": "Zero values may invoke pollutant-specific lookup defaults where defined."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "332",
+          "condition": "fine mass fraction outside 0..1"
+        },
+        {
+          "severity": "error",
+          "code": "386/387",
+          "condition": "method conflict or duplicate"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "412-438",
+        "handler": "METH_2",
+        "handler_file": "soset.f",
+        "handler_lines": "5596-5851"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Method 2 collapses particle inputs to a single effective category."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 3,
+        "files": 3,
+        "examples": [
+          "inputs/openpits.inp:24",
+          "inputs/testpart.inp:21",
+          "inputs/testprt2.inp:22"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    }
+  ]
+}

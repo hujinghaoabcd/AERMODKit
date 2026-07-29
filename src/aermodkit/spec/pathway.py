@@ -113,9 +113,9 @@ def load_pathway_specification(
 ) -> PathwaySpecification:
     """Load and validate a bundled pathway specification.
 
-    The current v26135 CO file is explicitly partial. Loading it means that the
-    included records are source-verified; it does not imply that all CO records or
-    the complete AERMOD runstream are implemented.
+    A bundled pathway may be complete at the record-specification level while the
+    production lexer, loss-aware syntax tree, writer, semantic model, and runner
+    remain unimplemented. Completeness is therefore pathway- and version-specific.
     """
 
     resolved = get_default_version() if version is None else ModelVersion.parse(version)

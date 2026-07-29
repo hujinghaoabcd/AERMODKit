@@ -58,3 +58,11 @@ All notable project changes will be recorded here.
 - preserved the `EVENTFIL` source-comment/implementation discrepancy for future executable tests;
 - documented decay source-range boundaries, OZONEFIL manual/source repeatability evidence, NO2STACK sentinel behavior and ARMRATIO trailing-field preservation;
 - completed the CO pathway and advanced specification work to combined SO+RE, then ME+EV+OU stages.
+
+### Added — complete SO + RE specifications
+
+- bundled all 40 v26135 SO primary records and all 9 RE primary records;
+- added exact source-type-dependent LOCATION/SRCPARAM signatures, including source-recognized ALPHA `SWPOINT`;
+- modeled GRIDCART and GRIDPOLR secondary records as nested loss-aware state machines;
+- added SO/RE evidence tables, exact-set reports, official behavior probes, deterministic validator, tests, ADR, reference notes, and handover updates;
+- corrected earlier inventory omissions for `PLATFORM` and `VBARRIER`.

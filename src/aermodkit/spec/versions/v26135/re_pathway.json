@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "model": "AERMOD",
+  "model_version": "26135",
+  "pathway": "RE",
+  "batch": 1,
+  "status": "complete-source-verified-re-pathway-specification",
+  "authority_order": [
+    "EPA v26135 executable source code",
+    "EPA v26135 manual/release material",
+    "EPA current fixtures"
+  ],
+  "scope": {
+    "included_keywords": [
+      "STARTING",
+      "GRIDCART",
+      "GRIDPOLR",
+      "DISCCART",
+      "DISCPOLR",
+      "EVALCART",
+      "ELEVUNIT",
+      "INCLUDED",
+      "FINISHED"
+    ],
+    "excluded_note": "GRID secondary records are modeled within GRIDCART/GRIDPOLR blocks, not promoted to primary keywords."
+  },
+  "preservation_policy": {
+    "original_text": true,
+    "comments": true,
+    "blank_lines": true,
+    "case": true,
+    "unknown_fields": true,
+    "unknown_records": true,
+    "include_boundaries": true,
+    "block_continuations": true,
+    "rule": "Semantic validation may diagnose unsupported or extra content, but the syntax layer must retain it verbatim."
+  },
+  "record_files": [
+    "re_grids.json",
+    "re_discrete_include_finish.json"
+  ],
+  "completion": {
+    "source_dispatch_primary_records": 9,
+    "bundled_records": 9,
+    "missing_records": [],
+    "extra_records": [],
+    "completion_rule": "Every primary RE keyword dispatched by non-comment v26135 RECARD resolves to one bundled record."
+  }
+}

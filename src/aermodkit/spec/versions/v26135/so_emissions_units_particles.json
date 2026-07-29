@@ -1,0 +1,724 @@
+{
+  "schema_version": 1,
+  "model_version": "26135",
+  "pathway": "SO",
+  "batch": 1,
+  "records": [
+    {
+      "keyword": "EMISFACT",
+      "record_role": "temporal-emission-rate-factors",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] EMISFACT <SrcID|SrcID-Range> <time_flag> <factor_1> ... <factor_N>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "time_flag",
+          "type": "enum",
+          "allowed_values": [
+            "SEASON",
+            "MONTH",
+            "HROFDY",
+            "WSPEED",
+            "SEASHR",
+            "HRDOW",
+            "HRDOW7",
+            "SHRDOW",
+            "SHRDOW7",
+            "MHRDOW",
+            "MHRDOW7"
+          ]
+        },
+        {
+          "name": "factors",
+          "type": "real list",
+          "required_value_counts": {
+            "SEASON": 4,
+            "MONTH": 12,
+            "HROFDY": 24,
+            "WSPEED": 6,
+            "SEASHR": 96,
+            "HRDOW": 72,
+            "HRDOW7": 168,
+            "SHRDOW": 288,
+            "SHRDOW7": 672,
+            "MHRDOW": 864,
+            "MHRDOW7": 2016
+          }
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Number of factors must exactly match the selected temporal profile."
+        },
+        {
+          "rule": "EMISFACT and HOUREMIS are alternative temporal-emission mechanisms for the same source."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid time flag or source range"
+        },
+        {
+          "severity": "error",
+          "code": "260",
+          "condition": "wrong number of factors"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "202-212",
+        "handler": "EMVARY",
+        "handler_file": "soset.f",
+        "handler_lines": "4371-4546"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Temporal cardinalities are shared with BACKGRND and other current AERMOD temporal profiles."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 33,
+        "files": 1,
+        "examples": [
+          "inputs/hrdow.inp:46",
+          "inputs/hrdow.inp:48",
+          "inputs/hrdow.inp:50",
+          "inputs/hrdow.inp:55"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "EMISUNIT",
+      "record_role": "emission-unit-label-conversion",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] EMISUNIT <conversion_factor> <input_unit_label> <output_unit_label>"
+      ],
+      "fields": [
+        {
+          "name": "conversion_factor",
+          "type": "real"
+        },
+        {
+          "name": "input_unit_label",
+          "type": "string"
+        },
+        {
+          "name": "output_unit_label",
+          "type": "string"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Changes emission labels/conversion metadata; original labels must be preserved exactly by the syntax layer."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "200/201/202",
+          "condition": "field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric conversion factor"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "213-232",
+        "handler": "EMUNIT",
+        "handler_file": "soset.f",
+        "handler_lines": "4612-4671"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact three-field payload after keyword."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "RLEMCONV",
+      "record_role": "road-line-emission-conversion-switch",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] RLEMCONV"
+      ],
+      "fields": [],
+      "dependencies": {
+        "applies_to": [
+          "RLINE",
+          "RLINEXT"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "No trailing parameters are accepted."
+        },
+        {
+          "rule": "Current source no longer enforces the historical BETA gate; status is retained as a source/manual evolution note."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated"
+        },
+        {
+          "severity": "error",
+          "code": "202",
+          "condition": "trailing fields"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "233-258",
+        "handler": "SOCARD",
+        "handler_file": "soset.f",
+        "handler_lines": "1-1008"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Inline SOCARD switch controlling RLINE emission conversion."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "PARTDIAM",
+      "record_role": "particle-diameter-distribution",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] PARTDIAM <SrcID|SrcID-Range> <value_1> ... <value_N>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "values",
+          "type": "real list",
+          "units": "micrometers"
+        }
+      ],
+      "dependencies": {
+        "requires_particle_deposition_method": "Method 1",
+        "paired_records": [
+          "PARTDIAM",
+          "MASSFRAX",
+          "PARTDENS"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "The three arrays must have matching category counts for each source."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "missing list values"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric value"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "259-277",
+        "handler": "PARTDEP",
+        "handler_file": "soset.f",
+        "handler_lines": "4807-4862"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "PARTDEP dispatches to the method-1 particle array readers."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/openpits.inp:22",
+          "inputs/surfcoal.inp:17"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "MASSFRAX",
+      "record_role": "particle-mass-fraction-distribution",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] MASSFRAX <SrcID|SrcID-Range> <value_1> ... <value_N>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "values",
+          "type": "real list",
+          "units": "fraction"
+        }
+      ],
+      "dependencies": {
+        "requires_particle_deposition_method": "Method 1",
+        "paired_records": [
+          "PARTDIAM",
+          "MASSFRAX",
+          "PARTDENS"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "The three arrays must have matching category counts for each source."
+        },
+        {
+          "rule": "Mass fractions must be nonnegative and sum to 1 within executable tolerance."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "missing list values"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric value"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "259-277",
+        "handler": "PARTDEP",
+        "handler_file": "soset.f",
+        "handler_lines": "4807-4862"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "PARTDEP dispatches to the method-1 particle array readers."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/openpits.inp:20",
+          "inputs/surfcoal.inp:19"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "PARTDENS",
+      "record_role": "particle-density-distribution",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] PARTDENS <SrcID|SrcID-Range> <value_1> ... <value_N>"
+      ],
+      "fields": [
+        {
+          "name": "source_selector",
+          "type": "source ID or range"
+        },
+        {
+          "name": "values",
+          "type": "real list",
+          "units": "g/cm3"
+        }
+      ],
+      "dependencies": {
+        "requires_particle_deposition_method": "Method 1",
+        "paired_records": [
+          "PARTDIAM",
+          "MASSFRAX",
+          "PARTDENS"
+        ]
+      },
+      "constraints": [
+        {
+          "rule": "The three arrays must have matching category counts for each source."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "missing list values"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric value"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "259-277",
+        "handler": "PARTDEP",
+        "handler_file": "soset.f",
+        "handler_lines": "4807-4862"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "PARTDEP dispatches to the method-1 particle array readers."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 2,
+        "files": 2,
+        "examples": [
+          "inputs/openpits.inp:21",
+          "inputs/surfcoal.inp:21"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "ELEVUNIT",
+      "record_role": "source-elevation-units",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] ELEVUNIT <METERS|FEET>"
+      ],
+      "fields": [
+        {
+          "name": "unit",
+          "type": "enum",
+          "allowed_values": [
+            "METERS",
+            "FEET"
+          ],
+          "default": "METERS"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Must appear before any LOCATION record."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "135",
+          "condition": "repeated"
+        },
+        {
+          "severity": "error",
+          "code": "152",
+          "condition": "appears after LOCATION"
+        },
+        {
+          "severity": "error",
+          "code": "203",
+          "condition": "invalid unit"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "278-296",
+        "handler": "SOELUN",
+        "handler_file": "soset.f",
+        "handler_lines": "1986-2035"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Source elevations are converted to metres during setup."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 24,
+        "files": 24,
+        "examples": [
+          "inputs/Test1_Base_cart_3cond_SNC.inp:13",
+          "inputs/Test20_Urban_cart_3cond_SNC.inp:14",
+          "inputs/Test3_Base_cart_3cond_SNC_bar.inp:13",
+          "inputs/Test4_Base_cart_3cond_SNC_dep.inp:13"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "HOUREMIS",
+      "record_role": "hourly-emission-file-assignment",
+      "required": false,
+      "repeatability": "repeatable",
+      "syntax": [
+        "[SO] HOUREMIS <filename> <ALL|SrcID|SrcID-Range> [<source selector> ...]"
+      ],
+      "fields": [
+        {
+          "name": "filename",
+          "type": "path",
+          "preserve_case": true
+        },
+        {
+          "name": "source_selectors",
+          "type": "ALL, source IDs, or ranges",
+          "min_items": 1
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "A source may not be assigned conflicting hourly-emission files."
+        },
+        {
+          "rule": "Quoted filenames with spaces are preserved by the future syntax layer."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "201",
+          "condition": "filename/source selector missing"
+        },
+        {
+          "severity": "error",
+          "code": "291",
+          "condition": "filename too long"
+        },
+        {
+          "severity": "error",
+          "code": "834/835",
+          "condition": "conflicting source/file assignment"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "297-311",
+        "handler": "HREMIS",
+        "handler_file": "soset.f",
+        "handler_lines": "6370-6554"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "v26135 supports dynamic file-unit allocation and multiple hourly-emission files."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 8884,
+        "files": 6,
+        "examples": [
+          "inputs/in_urban.dat:1",
+          "inputs/in_urban.dat:2",
+          "inputs/in_urban.dat:3",
+          "inputs/in_urban.dat:4"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    },
+    {
+      "keyword": "CONCUNIT",
+      "record_role": "concentration-unit-label-conversion",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] CONCUNIT <conversion_factor> <input_unit_label> <output_unit_label>"
+      ],
+      "fields": [
+        {
+          "name": "conversion_factor",
+          "type": "real"
+        },
+        {
+          "name": "input_unit_label",
+          "type": "string"
+        },
+        {
+          "name": "output_unit_label",
+          "type": "string"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Changes concentration labels/conversion metadata; original labels must be preserved exactly by the syntax layer."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "200/201/202",
+          "condition": "field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric conversion factor"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "312-331",
+        "handler": "COUNIT",
+        "handler_file": "soset.f",
+        "handler_lines": "4672-4728"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact three-field payload after keyword."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 0,
+        "files": 0,
+        "examples": []
+      },
+      "evidence_status": "v26135-source-and-current-manual-verified-no-active-fixture"
+    },
+    {
+      "keyword": "DEPOUNIT",
+      "record_role": "deposition-unit-label-conversion",
+      "required": false,
+      "repeatability": "once",
+      "syntax": [
+        "[SO] DEPOUNIT <conversion_factor> <input_unit_label> <output_unit_label>"
+      ],
+      "fields": [
+        {
+          "name": "conversion_factor",
+          "type": "real"
+        },
+        {
+          "name": "input_unit_label",
+          "type": "string"
+        },
+        {
+          "name": "output_unit_label",
+          "type": "string"
+        }
+      ],
+      "dependencies": {},
+      "constraints": [
+        {
+          "rule": "Changes deposition labels/conversion metadata; original labels must be preserved exactly by the syntax layer."
+        }
+      ],
+      "diagnostics": [
+        {
+          "severity": "error",
+          "code": "200/201/202",
+          "condition": "field count mismatch"
+        },
+        {
+          "severity": "error",
+          "code": "208",
+          "condition": "non-numeric conversion factor"
+        }
+      ],
+      "source": {
+        "authority": "U.S. EPA AERMOD v26135 source",
+        "file": "soset.f",
+        "dispatcher": "SOCARD",
+        "dispatcher_lines": "332-352",
+        "handler": "DPUNIT",
+        "handler_file": "soset.f",
+        "handler_lines": "4729-4806"
+      },
+      "manual_evidence": {
+        "document": "AERMOD User's Guide, EPA-454/B-26-001, July 2026",
+        "authority": "U.S. EPA SCRAM",
+        "section": "3.3 / Appendix A-3/A-4",
+        "notes": [
+          "Exact three-field payload after keyword."
+        ]
+      },
+      "fixtures": {
+        "occurrences": 4,
+        "files": 4,
+        "examples": [
+          "inputs/testgas.inp:27",
+          "inputs/testgas2.inp:28",
+          "inputs/testpart.inp:13",
+          "inputs/testprt2.inp:14"
+        ]
+      },
+      "evidence_status": "v26135-source-manual-and-fixture-verified"
+    }
+  ]
+}
