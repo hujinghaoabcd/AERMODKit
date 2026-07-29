@@ -3,16 +3,16 @@
   "model_version": "26135",
   "batch": "parser-shaping-03",
   "case_patches": [
-    {"id": "co_arcft_valid_control", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcftopt_no_payload", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcftopt_repeated_same", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcftopt_repeated_different", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcftopt_extra_fields", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcft_no_alpha", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcft_dfault_alpha", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcft_missing_arcftsrc", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcft_missing_houremis", "delete_replace_line_contains": ["SRCGROUP  ALL"]},
-    {"id": "co_arcftsrc_without_arcftopt", "delete_replace_line_contains": ["SRCGROUP  ALL"]}
+    {"id": "co_arcft_valid_control", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcftopt_no_payload", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcftopt_repeated_same", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcftopt_repeated_different", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcftopt_extra_fields", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcft_no_alpha", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcft_dfault_alpha", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcft_missing_arcftsrc", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcft_missing_houremis", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}},
+    {"id": "co_arcftsrc_without_arcftopt", "delete_replace_line_contains": ["SRCGROUP  ALL"], "set_replace_line_replacement": {"POLLUTID": "   POLLUTID  OTHER"}}
   ],
-  "reason": "Keep the official testgas SRCGROUP ALL so existing PLOTFILE and POSTFILE group references remain valid."
+  "reason": "Keep the official testgas SRCGROUP ALL and use non-criteria OTHER so the six-hour aircraft fixture is not rejected by unrelated annual SO2 completeness checks."
 }
