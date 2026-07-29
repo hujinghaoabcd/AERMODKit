@@ -9,14 +9,17 @@ FRAGMENTS = [
     ROOT / "reference/probes/v26135/batch4/background-cases.json",
     ROOT / "reference/probes/v26135/batch4/grid-cases.json",
     ROOT / "reference/probes/v26135/batch4/discrete-cases.json",
+    ROOT / "reference/probes/v26135/batch4/discpolr-cases.json",
 ]
 
 PLATFORM_CASES = {
     "so_platform_valid_control",
     "so_platform_one_extra_numeric",
-    "so_platform_two_extra_tokens",
+    "so_platform_two_extra_numeric",
+    "so_platform_one_extra_text",
     "so_platform_duplicate_same_source",
     "so_platform_nonpoint_area",
+    "so_platform_prime_conflict",
 }
 BACKGROUND_CASES = {
     "so_backgrnd_global_annual_control",
@@ -25,6 +28,8 @@ BACKGROUND_CASES = {
     "so_backgrnd_sector_annual_control",
     "so_backgrnd_sector_duplicate_same",
     "so_backgrnd_sector_duplicate_different",
+    "so_backgrnd_hourly_only_control",
+    "so_backgrnd_static_only_control",
     "so_backgrnd_static_then_hourly",
     "so_backgrnd_hourly_then_static",
     "so_backgrnd_hourly_duplicate_different_files",
@@ -39,7 +44,7 @@ GRID_CASES = {
     "re_gridpolr_full_explicit_control",
     "re_gridpolr_wrong_id_in_active_block",
 }
-DISCRETE_CASES = {
+DISCCART_CASES = {
     "re_disccart_flat_no_flag_control",
     "re_disccart_flat_no_flag_terrain_extra",
     "re_disccart_flat_no_flag_terrain_and_flag_extra",
@@ -48,6 +53,14 @@ DISCRETE_CASES = {
     "re_disccart_elev_no_flag_control",
     "re_disccart_elev_no_flag_flag_extra",
     "re_disccart_elev_flag_control",
+}
+DISCPOLR_CASES = {
+    "re_discpolr_flat_no_flag_control",
+    "re_discpolr_flat_no_flag_extra",
+    "re_discpolr_flat_flag_control",
+    "re_discpolr_flat_flag_terrain_extra",
+    "re_discpolr_elev_no_flag_control",
+    "re_discpolr_elev_no_flag_extra",
 }
 
 
@@ -64,9 +77,15 @@ def test_batch4_manifest_has_expected_unique_cases() -> None:
     cases = _manifest()["cases"]
     assert isinstance(cases, list)
     identifiers = [str(case["id"]) for case in cases]
-    expected = PLATFORM_CASES | BACKGROUND_CASES | GRID_CASES | DISCRETE_CASES
+    expected = (
+        PLATFORM_CASES
+        | BACKGROUND_CASES
+        | GRID_CASES
+        | DISCCART_CASES
+        | DISCPOLR_CASES
+    )
     assert set(identifiers) == expected
-    assert len(identifiers) == len(set(identifiers)) == 30
+    assert len(identifiers) == len(set(identifiers)) == 40
 
 
 def test_batch4_controls_and_observation_targets_are_explicit() -> None:
@@ -79,8 +98,12 @@ def test_batch4_controls_and_observation_targets_are_explicit() -> None:
     }
     assert accepted == {
         "so_platform_valid_control",
+        "so_platform_one_extra_numeric",
+        "so_platform_two_extra_numeric",
         "so_backgrnd_global_annual_control",
         "so_backgrnd_sector_annual_control",
+        "so_backgrnd_hourly_only_control",
+        "so_backgrnd_static_only_control",
         "re_gridcart_keyword_and_id_omitted_control",
         "re_gridcart_keyword_omitted_id_present",
         "re_gridcart_full_explicit_control",
@@ -91,6 +114,9 @@ def test_batch4_controls_and_observation_targets_are_explicit() -> None:
         "re_disccart_flat_flag_control",
         "re_disccart_elev_no_flag_control",
         "re_disccart_elev_flag_control",
+        "re_discpolr_flat_no_flag_control",
+        "re_discpolr_flat_flag_control",
+        "re_discpolr_elev_no_flag_control",
     }
     assert all(case["expected_outcome"] in {"accepted", "observe"} for case in cases)
     assert all(str(case["question"]).endswith("?") for case in cases)
@@ -121,16 +147,21 @@ def test_grid_variants_cover_implicit_partial_and_explicit_forms() -> None:
     assert any(line.lstrip().startswith("GRIDCART CAR1 XYINC") for line in cart_lines)
 
 
-def test_batch4_source_searches_cover_handlers_and_diagnostics() -> None:
+def test_batch4_source_searches_cover_handlers_state_and_diagnostics() -> None:
     payload = json.loads(SOURCE_SEARCHES.read_text(encoding="utf-8"))
     identifiers = {str(item["id"]) for item in payload["searches"]}
     assert identifiers == {
         "platform-handler",
         "platform-nonpoint-e631",
         "platform-duplicate-e632",
+        "platform-prime-conflict-e633",
         "background-handler",
+        "background-fill-handler",
         "background-sector-handler",
-        "background-value-count-e260",
+        "background-value-count-e231",
+        "background-hourly-duplicate-e168",
+        "background-state-file-flag",
+        "background-state-value-flag",
         "gridcart-handler",
         "gridpolr-handler",
         "disccart-handler",
